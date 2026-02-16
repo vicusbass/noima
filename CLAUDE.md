@@ -15,6 +15,9 @@ pnpm build                # Production build
 pnpm preview              # Preview production build locally
 npx sanity schema deploy  # Deploy Sanity schema to Content Lake (required for MCP tools)
 npx sanity typegen        # Generate TypeScript types from schema + GROQ queries
+pnpm lint                 # Check linting + formatting (Biome)
+pnpm lint:fix             # Auto-fix linting + formatting issues
+pnpm format               # Format all files
 ```
 
 ## Architecture
@@ -25,6 +28,7 @@ npx sanity typegen        # Generate TypeScript types from schema + GROQ queries
 - **Mux** video: `sanity-plugin-mux-input` (Studio), `@mux/mux-player-astro` (frontend)
 - **Vercel** via `@astrojs/vercel` adapter
 - **Shopify** Storefront API (GraphQL) for featured products on homepage — shop is standalone
+- **Biome** for linting and formatting (replaces ESLint + Prettier)
 
 ## Project Structure
 

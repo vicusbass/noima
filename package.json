@@ -1,17 +1,26 @@
 {
-  "name": "noima",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "astro": "^5.17.1"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp"]
-  }
+	"name": "noima",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"lint": "biome check .",
+		"lint:fix": "biome check --fix .",
+		"format": "biome format --write ."
+	},
+	"dependencies": {
+		"astro": "^5.17.1"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild",
+			"sharp"
+		]
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.1"
+	}
 }
