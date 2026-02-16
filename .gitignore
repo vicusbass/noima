@@ -1,6 +1,9 @@
 # Astro
 .astro/
 
+# Vercel
+.vercel/
+
 # macOS
 .DS_Store
 

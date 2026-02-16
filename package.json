@@ -12,6 +12,7 @@
 		"format": "biome format --write ."
 	},
 	"dependencies": {
+		"@astrojs/vercel": "^9.0.4",
 		"@tailwindcss/vite": "^4.1.18",
 		"astro": "^5.17.1",
 		"tailwindcss": "^4.1.18"
