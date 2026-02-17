@@ -1,0 +1,75 @@
+---
+import Hero from '../components/Hero.astro';
+import Layout from '../layouts/Layout.astro';
+import { getFeaturedProducts, getProductUrl } from '../lib/shopify';
+import { loadQuery } from '../sanity/lib/load-query';
+
+const HOME_QUERY = `*[_type == "homePage" && _id == "homePage"][0]{
+	title,
+	hero {
+		heading,
+		subheading,
+		mediaType,
+		image {
+			asset,
+			alt
+		},
+		video {
+			"playbackId": asset->playbackId
+		}
+	}
+}`;
+
+const { data: homePage } = await loadQuery<{
+	title: string;
+	hero: {
+		heading?: string;
+		subheading?: string;
+		mediaType?: 'image' | 'video';
+		image?: { asset: { _ref: string }; alt?: string };
+		video?: { playbackId?: string };
+	};
+}>({ query: HOME_QUERY });
+
+const products = await getFeaturedProducts(4);
+---
+
+<Layout title={homePage?.title || "Noima"}>
+	{homePage?.hero && <Hero hero={homePage.hero} />}
+
+	{
+		products.length > 0 && (
+			<section>
+				<h2>Featured Products</h2>
+				<div>
+					{products.map((product) => (
+						<a
+							href={getProductUrl(product.handle)}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{product.featuredImage && (
+								<img
+									src={product.featuredImage.url}
+									alt={product.featuredImage.altText || product.title}
+									width="400"
+									height="400"
+								/>
+							)}
+							<h3>{product.title}</h3>
+							<p>
+								{new Intl.NumberFormat("en-US", {
+									style: "currency",
+									currency:
+										product.priceRange.minVariantPrice.currencyCode,
+								}).format(
+									Number(product.priceRange.minVariantPrice.amount),
+								)}
+							</p>
+						</a>
+					))}
+				</div>
+			</section>
+		)
+	}
+</Layout>

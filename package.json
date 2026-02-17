@@ -1,0 +1,43 @@
+{
+	"name": "noima",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"lint": "biome check .",
+		"lint:fix": "biome check --fix .",
+		"format": "biome format --write ."
+	},
+	"dependencies": {
+		"@astrojs/react": "^4.4.2",
+		"@astrojs/vercel": "^9.0.4",
+		"@mux/mux-player": "^3.11.4",
+		"@mux/mux-player-astro": "^3.11.4",
+		"@portabletext/types": "^4.0.1",
+		"@sanity/astro": "^3.2.11",
+		"@sanity/client": "^7.15.0",
+		"@sanity/icons": "^3.7.4",
+		"@sanity/image-url": "^2.0.3",
+		"@tailwindcss/vite": "^4.1.18",
+		"astro": "^5.17.1",
+		"astro-portabletext": "^0.13.0",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"sanity": "^5.9.0",
+		"sanity-plugin-mux-input": "^2.14.0",
+		"styled-components": "^6.3.9",
+		"tailwindcss": "^4.1.18"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild",
+			"sharp"
+		]
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.1"
+	}
+}
