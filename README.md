@@ -74,6 +74,14 @@ npx sanity deploy          # Deploy Studio to noima.sanity.studio
 - **Site**: Deploys to Vercel. Connect your GitHub repository in the Vercel dashboard and set environment variables in project settings.
 - **Sanity Studio**: Deployed separately via `npx sanity deploy` to [noima.sanity.studio](https://noima.sanity.studio).
 
+## Git Hooks
+
+This project uses [Lefthook](https://github.com/evilmartians/lefthook) for git hooks. Hooks are installed automatically when you run `pnpm install`.
+
+### Pre-commit
+
+- **Biome format** — Runs `biome check --fix` on staged `.js`, `.ts`, `.jsx`, `.tsx`, `.mjs`, `.cjs`, `.json`, and `.css` files, then re-stages them.
+
 ## Project Structure
 
 ```

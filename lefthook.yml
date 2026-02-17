@@ -1,0 +1,5 @@
+pre-commit:
+  jobs:
+    - name: biome format
+      glob: "*.{js,ts,jsx,tsx,mjs,cjs,json,css}"
+      run: pnpm biome check --fix {staged_files} && git add {staged_files}
