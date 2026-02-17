@@ -9,22 +9,22 @@ export const hero = defineType({
 	fields: [
 		defineField({
 			name: 'heading',
-			title: 'Heading',
+			title: 'Titlu',
 			type: 'string',
 			validation: (rule) => rule.required(),
 		}),
 		defineField({
 			name: 'subheading',
-			title: 'Subheading',
+			title: 'Subtitlu',
 			type: 'string',
 		}),
 		defineField({
 			name: 'mediaType',
-			title: 'Media Type',
+			title: 'Tip media',
 			type: 'string',
 			options: {
 				list: [
-					{ title: 'Image', value: 'image' },
+					{ title: 'Imagine', value: 'image' },
 					{ title: 'Video', value: 'video' },
 				],
 				layout: 'radio',
@@ -34,7 +34,7 @@ export const hero = defineType({
 		}),
 		defineField({
 			name: 'image',
-			title: 'Image',
+			title: 'Imagine',
 			type: 'image',
 			options: {
 				hotspot: true,
@@ -42,7 +42,7 @@ export const hero = defineType({
 			fields: [
 				defineField({
 					name: 'alt',
-					title: 'Alternative Text',
+					title: 'Text alternativ',
 					type: 'string',
 					validation: (rule) => rule.required(),
 				}),
@@ -51,7 +51,7 @@ export const hero = defineType({
 		}),
 		defineField({
 			name: 'video',
-			title: 'Video',
+			title: 'Videoclip',
 			type: 'mux.video',
 			hidden: ({ parent }) => parent?.mediaType !== 'video',
 		}),

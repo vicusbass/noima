@@ -4,16 +4,16 @@ import { muxInput } from 'sanity-plugin-mux-input';
 import { schemaTypes } from './src/sanity/schemaTypes';
 
 export default defineConfig({
-	projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
-	dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+	projectId: '4c9x2l5r',
+	dataset: 'production',
 	plugins: [
 		structureTool({
 			structure: (S) =>
 				S.list()
-					.title('Content')
+					.title('Conținut')
 					.items([
 						S.listItem()
-							.title('Home Page')
+							.title('Pagina principală')
 							.id('homePage')
 							.child(
 								S.document().schemaType('homePage').documentId('homePage'),

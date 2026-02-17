@@ -5,7 +5,7 @@ Marketing and content site built with [Astro](https://astro.build), [Sanity](htt
 ## Tech Stack
 
 - **Astro** v5+ — TypeScript, hybrid rendering (static-first)
-- **Sanity** — Headless CMS with embedded Studio at `/studio`
+- **Sanity** — Headless CMS with Studio hosted at [noima.sanity.studio](https://noima.sanity.studio)
 - **Tailwind CSS** v4 — Utility-first CSS via Vite plugin
 - **Mux** — Video hosting and playback
 - **Vercel** — Deployment and hosting
@@ -15,7 +15,7 @@ Marketing and content site built with [Astro](https://astro.build), [Sanity](htt
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+ (see `.nvmrc`)
 - [pnpm](https://pnpm.io)
 - A [Sanity](https://sanity.io) account
 - A [Mux](https://mux.com) account (for video)
@@ -30,7 +30,7 @@ pnpm install
 # Copy environment variables
 cp .env.example .env
 
-# Start development server (includes Sanity Studio at /studio)
+# Start development server
 pnpm dev
 ```
 
@@ -52,16 +52,27 @@ Mux credentials are configured through the Sanity Studio plugin UI on first use.
 ## Development
 
 ```bash
-pnpm dev       # Start dev server at http://localhost:4321
-pnpm build     # Production build
-pnpm preview   # Preview production build
+pnpm dev            # Start Astro dev server at http://localhost:4321
+npx sanity dev      # Start local Sanity Studio at http://localhost:3333
+pnpm build          # Production build
+pnpm preview        # Preview production build
 ```
 
-Sanity Studio is available at `http://localhost:4321/studio` during development.
+### Sanity Studio
+
+The Studio is hosted by Sanity at [noima.sanity.studio](https://noima.sanity.studio). For local development, run `npx sanity dev` to start a local instance at `http://localhost:3333`.
+
+To deploy schema or Studio changes:
+
+```bash
+npx sanity schema deploy   # Push schema to Content Lake
+npx sanity deploy          # Deploy Studio to noima.sanity.studio
+```
 
 ## Deployment
 
-The site deploys to Vercel. Connect your GitHub repository in the Vercel dashboard. Set environment variables in Vercel project settings.
+- **Site**: Deploys to Vercel. Connect your GitHub repository in the Vercel dashboard and set environment variables in project settings.
+- **Sanity Studio**: Deployed separately via `npx sanity deploy` to [noima.sanity.studio](https://noima.sanity.studio).
 
 ## Project Structure
 

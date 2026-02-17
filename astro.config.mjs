@@ -17,14 +17,18 @@ export default defineConfig({
 			dataset: DATASET,
 			useCdn: false,
 			apiVersion: '2026-02-16',
-			studioBasePath: '/studio',
-			stega: {
-				studioUrl: '/studio',
-			},
 		}),
 		react(),
 	],
 	vite: {
+		optimizeDeps: {
+			exclude: [
+				'react-compiler-runtime',
+				'react-is',
+				'styled-components',
+				'lodash',
+			],
+		},
 		plugins: [tailwindcss()],
 	},
 });
