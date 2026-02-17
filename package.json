@@ -39,6 +39,7 @@
 		]
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.1"
+		"@biomejs/biome": "^2.4.1",
+		"lefthook": "^2.1.1"
 	}
 }
