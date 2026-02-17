@@ -3,20 +3,18 @@ import vercel from '@astrojs/vercel';
 import sanity from '@sanity/astro';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
-import { loadEnv } from 'vite';
 
-const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
-	process.env.NODE_ENV,
-	process.cwd(),
-	'',
-);
+// These are public (non-secret) values, safe to hardcode.
+// Astro doesn't load .env for process.env in config files.
+const PROJECT_ID = '4c9x2l5r';
+const DATASET = 'production';
 
 export default defineConfig({
 	adapter: vercel(),
 	integrations: [
 		sanity({
-			projectId: PUBLIC_SANITY_PROJECT_ID,
-			dataset: PUBLIC_SANITY_DATASET,
+			projectId: PROJECT_ID,
+			dataset: DATASET,
 			useCdn: false,
 			apiVersion: '2026-02-16',
 			studioBasePath: '/studio',

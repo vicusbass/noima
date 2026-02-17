@@ -14,9 +14,11 @@
 	"dependencies": {
 		"@astrojs/react": "^4.4.2",
 		"@astrojs/vercel": "^9.0.4",
+		"@mux/mux-player": "^3.11.4",
 		"@mux/mux-player-astro": "^3.11.4",
 		"@portabletext/types": "^4.0.1",
 		"@sanity/astro": "^3.2.11",
+		"@sanity/client": "^7.15.0",
 		"@sanity/icons": "^3.7.4",
 		"@sanity/image-url": "^2.0.3",
 		"@tailwindcss/vite": "^4.1.18",

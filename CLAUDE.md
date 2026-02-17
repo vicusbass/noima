@@ -42,6 +42,12 @@ pnpm format               # Format all files
 - `sanity.config.ts` — Studio configuration (root level)
 - `sanity.cli.ts` — Sanity CLI configuration (root level)
 
+## pnpm Notes
+
+- Sanity project ID and dataset are hardcoded in `astro.config.mjs` (they are public, non-secret values)
+- `@sanity/client` and `@mux/mux-player` must be direct dependencies (pnpm strict hoisting)
+- React is a dependency of `@sanity/astro` for the embedded Studio — not used in Astro pages
+
 ## Sanity Conventions
 
 - Use `defineType`, `defineField`, `defineArrayMember` for all schema definitions
