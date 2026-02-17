@@ -21,14 +21,22 @@ export default defineConfig({
 		react(),
 	],
 	vite: {
-		optimizeDeps: {
-			exclude: [
-				'react-compiler-runtime',
-				'react-is',
-				'styled-components',
-				'lodash',
-			],
-		},
-		plugins: [tailwindcss()],
+		plugins: [
+			tailwindcss(),
+			{
+				name: 'remove-sanity-studio-deps',
+				configResolved(config) {
+					const deps = [
+						'react-compiler-runtime',
+						'react-is',
+						'styled-components',
+						'lodash/startCase.js',
+					];
+					config.optimizeDeps.include = config.optimizeDeps.include?.filter(
+						(d) => !deps.includes(d),
+					);
+				},
+			},
+		],
 	},
 });
