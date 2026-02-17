@@ -1,0 +1,59 @@
+---
+import { urlFor } from '../sanity/lib/image';
+
+interface Props {
+	hero: {
+		heading?: string;
+		subheading?: string;
+		mediaType?: 'image' | 'video';
+		image?: {
+			asset: { _ref: string };
+			alt?: string;
+		};
+		video?: {
+			playbackId?: string;
+		};
+	};
+}
+
+const { hero } = Astro.props;
+const { heading, subheading, mediaType, image, video } = hero;
+---
+
+<section>
+	{
+		mediaType === "image" && image?.asset && (
+			<img
+				src={urlFor(image).width(1920).height(1080).url()}
+				alt={image.alt || ""}
+				width="1920"
+				height="1080"
+			/>
+		)
+	}
+
+	{
+		mediaType === "video" && video?.playbackId && (
+			<mux-player
+				playback-id={video.playbackId}
+				muted
+				autoplay
+				loop
+				style="--controls: none;"
+			/>
+		)
+	}
+
+	<div>
+		{heading && <h1>{heading}</h1>}
+		{subheading && <p>{subheading}</p>}
+	</div>
+</section>
+
+{
+	mediaType === "video" && video?.playbackId && (
+		<script>
+			import "@mux/mux-player";
+		</script>
+	)
+}
