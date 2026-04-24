@@ -1,0 +1,58 @@
+---
+const year = new Date().getFullYear();
+
+const navLinks = [
+	{ label: 'Acasă', href: '/' },
+	{ label: 'Shop', href: '/shop' },
+	{ label: 'Despre noi', href: '/despre-noi' },
+	{ label: 'B2B', href: '/b2b' },
+	{ label: 'Contact', href: '/contact' },
+];
+---
+
+<footer class="bg-black text-white">
+	<div class="container-x py-20 grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
+		<div>
+			<div class="text-4xl font-black tracking-tight">noima</div>
+			<p class="mt-4 max-w-sm text-sm text-white/70 leading-relaxed">
+				Prăjitorie și cafea cu sens. Lotări alese atent, profiluri echilibrate,
+				gesturi comune.
+			</p>
+		</div>
+
+		<nav aria-label="Footer navigation">
+			<h3 class="eyebrow text-white/50">Meniu</h3>
+			<ul class="mt-5 space-y-3">
+				{
+					navLinks.map((l) => (
+						<li>
+							<a
+								href={l.href}
+								class="text-base hover:text-[var(--color-tan)] transition-colors"
+							>
+								{l.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<div>
+			<h3 class="eyebrow text-white/50">Contact</h3>
+			<ul class="mt-5 space-y-3 text-base text-white/80">
+				<li>hello@noima.ro</li>
+				<li>+40 700 000 000</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="border-t border-white/10">
+		<div
+			class="container-x py-6 text-xs text-white/50 flex flex-col md:flex-row gap-3 md:items-center md:justify-between"
+		>
+			<span>© {year} Noima. Toate drepturile rezervate.</span>
+			<span>Prăjită la Cluj</span>
+		</div>
+	</div>
+</footer>

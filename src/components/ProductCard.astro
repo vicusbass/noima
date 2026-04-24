@@ -1,0 +1,164 @@
+---
+import type { ShopifyProduct } from '../lib/shopify';
+import { getProductUrl } from '../lib/shopify';
+
+interface Props {
+	product: ShopifyProduct;
+}
+
+const { product } = Astro.props;
+
+const price = new Intl.NumberFormat('ro-RO', {
+	style: 'currency',
+	currency: product.priceRange.minVariantPrice.currencyCode,
+	minimumFractionDigits: 2,
+}).format(Number(product.priceRange.minVariantPrice.amount));
+
+const href = getProductUrl(product.handle);
+---
+
+<article class="product-card group">
+	<a
+		href={href}
+		target="_blank"
+		rel="noopener noreferrer"
+		class="block"
+		aria-label={`${product.title} — ${price}`}
+	>
+		<div class="product-media relative overflow-hidden">
+			{
+				product.featuredImage ? (
+					<img
+						src={product.featuredImage.url}
+						alt={product.featuredImage.altText || product.title}
+						width="600"
+						height="720"
+						class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+						loading="lazy"
+					/>
+				) : (
+					<div class="relative h-full w-full grain product-placeholder">
+						<span class="asset-placeholder-chip">PRODUCT IMAGE</span>
+					</div>
+				)
+			}
+		</div>
+
+		<div class="product-meta">
+			<div class="flex items-baseline justify-between gap-4">
+				<h3 class="product-title">{product.title}</h3>
+				<span class="product-price">{price}</span>
+			</div>
+			<div class="product-details">
+				<span>află detalii</span>
+				<svg
+					width="12"
+					height="12"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2.5"
+					aria-hidden="true"
+				>
+					<path d="M6 9l6 6 6-6" />
+				</svg>
+			</div>
+		</div>
+	</a>
+
+	<a
+		href={href}
+		target="_blank"
+		rel="noopener noreferrer"
+		class="add-to-cart"
+	>
+		<span>ADAUGĂ ÎN COȘ</span>
+		<svg
+			width="14"
+			height="14"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2.5"
+			aria-hidden="true"
+		>
+			<path d="M9 6l6 6-6 6" />
+		</svg>
+	</a>
+</article>
+
+<style>
+	.product-card {
+		background: #fff;
+		border: 1px solid var(--color-line);
+		display: flex;
+		flex-direction: column;
+		transition: box-shadow 0.3s ease, transform 0.3s ease;
+	}
+	.product-card:hover {
+		box-shadow: 0 14px 40px -20px rgba(0, 0, 0, 0.25);
+		transform: translateY(-2px);
+	}
+
+	.product-media {
+		aspect-ratio: 5 / 6;
+		background: #fff;
+	}
+
+	.product-placeholder {
+		background:
+			radial-gradient(
+				ellipse at 50% 45%,
+				rgba(215, 184, 143, 0.3),
+				transparent 60%
+			),
+			#fafafa;
+	}
+
+	.product-meta {
+		padding: 1rem 1.25rem 1.25rem;
+	}
+
+	.product-title {
+		font-size: 1rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		line-height: 1.2;
+	}
+
+	.product-price {
+		font-size: 0.9375rem;
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	.product-details {
+		margin-top: 1rem;
+		padding-top: 0.875rem;
+		border-top: 1px solid var(--color-line);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: var(--color-mute);
+		font-size: 0.8125rem;
+	}
+
+	.add-to-cart {
+		margin: 0 1.25rem 1.25rem;
+		background: #000;
+		color: #fff;
+		padding: 0.9rem 1.25rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		font-size: 0.75rem;
+		transition: background-color 0.25s ease, color 0.25s ease;
+	}
+	.add-to-cart:hover {
+		background: var(--color-tan);
+		color: #000;
+	}
+</style>
