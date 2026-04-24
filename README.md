@@ -51,28 +51,38 @@ Mux credentials are configured through the Sanity Studio plugin UI on first use.
 
 ## Development
 
+This repo is a pnpm workspace with two packages:
+
+- **Root** — the Astro site
+- **`studio/`** — the Sanity Studio (package name `noima-studio`)
+
+`pnpm install` at the root installs deps for both.
+
 ```bash
-pnpm dev            # Start Astro dev server at http://localhost:4321
-npx sanity dev      # Start local Sanity Studio at http://localhost:3333
-pnpm build          # Production build
-pnpm preview        # Preview production build
+pnpm dev                                  # Start Astro dev server at http://localhost:4321
+pnpm --filter noima-studio dev            # Start local Sanity Studio at http://localhost:3333
+pnpm build                                # Production build (Astro)
+pnpm preview                              # Preview production build
 ```
 
 ### Sanity Studio
 
-The Studio is hosted by Sanity at [noima.sanity.studio](https://noima.sanity.studio). For local development, run `npx sanity dev` to start a local instance at `http://localhost:3333`.
+The Studio is hosted by Sanity at [noima.sanity.studio](https://noima.sanity.studio). For local development, run `pnpm --filter noima-studio dev` to start a local instance at `http://localhost:3333`.
 
 To deploy schema or Studio changes:
 
 ```bash
-npx sanity schema deploy   # Push schema to Content Lake
-npx sanity deploy          # Deploy Studio to noima.sanity.studio
+pnpm --filter noima-studio schema:deploy   # Push schema to Content Lake
+pnpm --filter noima-studio deploy          # Deploy Studio to noima.sanity.studio
+pnpm --filter noima-studio typegen         # Generate TypeScript types from schema + GROQ
 ```
+
+You can also `cd studio` and run `pnpm dev`, `pnpm deploy`, etc. directly.
 
 ## Deployment
 
 - **Site**: Deploys to Vercel. Connect your GitHub repository in the Vercel dashboard and set environment variables in project settings.
-- **Sanity Studio**: Deployed separately via `npx sanity deploy` to [noima.sanity.studio](https://noima.sanity.studio).
+- **Sanity Studio**: Deployed separately via `pnpm --filter noima-studio deploy` to [noima.sanity.studio](https://noima.sanity.studio).
 
 ## Git Hooks
 
@@ -85,13 +95,18 @@ This project uses [Lefthook](https://github.com/evilmartians/lefthook) for git h
 ## Project Structure
 
 ```
-src/
-├── components/       # Astro/React components
-├── layouts/          # Page layouts
-├── lib/              # Shopify client and utilities
-├── pages/            # File-based routing
-├── styles/           # Global CSS (Tailwind entry)
-└── sanity/
-    ├── lib/          # Sanity client, image helpers, queries
-    └── schemaTypes/  # Sanity schema definitions
+.
+├── src/                      # Astro site
+│   ├── components/           # Astro/React components
+│   ├── layouts/              # Page layouts
+│   ├── lib/                  # Shopify client and utilities
+│   ├── pages/                # File-based routing
+│   ├── styles/               # Global CSS (Tailwind entry)
+│   └── sanity/
+│       └── lib/              # Sanity client, image helpers, queries (frontend-side)
+├── studio/                   # Sanity Studio (separate workspace)
+│   ├── sanity.config.ts      # Studio plugins, schema, structure
+│   ├── sanity.cli.ts         # CLI project ID, dataset, deploy appId
+│   └── schemaTypes/          # Schema definitions (documents/, objects/)
+└── pnpm-workspace.yaml       # Workspace definition
 ```

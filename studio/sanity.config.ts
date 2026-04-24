@@ -1,7 +1,7 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { muxInput } from 'sanity-plugin-mux-input';
-import { schemaTypes } from './src/sanity/schemaTypes';
+import { schemaTypes } from './schemaTypes';
 
 export default defineConfig({
 	projectId: '4c9x2l5r',
