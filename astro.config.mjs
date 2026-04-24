@@ -2,7 +2,7 @@ import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 import sanity from '@sanity/astro';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
 // These are public (non-secret) values, safe to hardcode.
 // Astro doesn't load .env for process.env in config files.
@@ -11,6 +11,16 @@ const DATASET = 'production';
 
 export default defineConfig({
 	adapter: vercel(),
+	fonts: [
+		{
+			provider: fontProviders.google(),
+			name: 'Google Sans',
+			cssVariable: '--font-google-sans',
+			weights: [400, 500, 700],
+			styles: ['normal'],
+			subsets: ['latin', 'latin-ext'],
+		},
+	],
 	integrations: [
 		sanity({
 			projectId: PROJECT_ID,
@@ -24,16 +34,19 @@ export default defineConfig({
 		plugins: [
 			tailwindcss(),
 			{
-				name: 'remove-sanity-studio-deps',
+				// @sanity/astro injects these into optimizeDeps.include for its embedded
+				// Studio route. The Studio lives in ./studio, so those packages aren't
+				// installed here — filter them out to silence Vite resolve warnings.
+				name: 'strip-sanity-studio-optimize-deps',
 				configResolved(config) {
-					const deps = [
+					const studioOnly = [
 						'react-compiler-runtime',
 						'react-is',
 						'styled-components',
 						'lodash/startCase.js',
 					];
 					config.optimizeDeps.include = config.optimizeDeps.include?.filter(
-						(d) => !deps.includes(d),
+						(d) => !studioOnly.includes(d),
 					);
 				},
 			},

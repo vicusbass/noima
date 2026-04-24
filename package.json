@@ -7,7 +7,6 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"sanity": "sanity dev",
 		"lint": "biome check .",
 		"lint:fix": "biome check --fix .",
 		"format": "biome format --write ."
@@ -19,23 +18,26 @@
 		"@portabletext/types": "^4.0.1",
 		"@sanity/astro": "^3.3.1",
 		"@sanity/client": "^7.22.0",
-		"@sanity/icons": "^3.7.4",
 		"@sanity/image-url": "^2.1.1",
 		"@tailwindcss/vite": "^4.1.18",
 		"astro": "^6.1.9",
 		"astro-portabletext": "^0.13.0",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"sanity": "^5.22.0",
-		"sanity-plugin-mux-input": "^2.17.0",
-		"styled-components": "^6.3.9",
 		"tailwindcss": "^4.1.18"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
 			"esbuild",
 			"sharp"
-		]
+		],
+		"peerDependencyRules": {
+			"ignoreMissing": [
+				"sanity",
+				"styled-components",
+				"react-is"
+			]
+		}
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.1",

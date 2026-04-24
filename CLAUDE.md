@@ -9,17 +9,17 @@ Marketing/content site with Astro (TypeScript, hybrid rendering), Sanity CMS, Ta
 ## Commands
 
 ```bash
-pnpm install              # Install dependencies
-pnpm dev                  # Start Astro dev server
-npx sanity dev            # Start local Sanity Studio at localhost:3333
-npx sanity deploy         # Deploy Studio to noima.sanity.studio
-pnpm build                # Production build
-pnpm preview              # Preview production build locally
-npx sanity schema deploy  # Deploy Sanity schema to Content Lake (required for MCP tools)
-npx sanity typegen        # Generate TypeScript types from schema + GROQ queries
-pnpm lint                 # Check linting + formatting (Biome)
-pnpm lint:fix             # Auto-fix linting + formatting issues
-pnpm format               # Format all files
+pnpm install                              # Install deps for both workspaces
+pnpm dev                                  # Start Astro dev server
+pnpm --filter noima-studio dev            # Start local Sanity Studio at localhost:3333
+pnpm --filter noima-studio deploy         # Deploy Studio to noima.sanity.studio
+pnpm build                                # Production build (Astro)
+pnpm preview                              # Preview production build locally
+pnpm --filter noima-studio schema:deploy  # Deploy schema to Content Lake (required for MCP tools)
+pnpm --filter noima-studio typegen        # Generate TypeScript types from schema + GROQ queries
+pnpm lint                                 # Check linting + formatting (Biome)
+pnpm lint:fix                             # Auto-fix linting + formatting issues
+pnpm format                               # Format all files
 ```
 
 ## Architecture
@@ -34,20 +34,27 @@ pnpm format               # Format all files
 
 ## Project Structure
 
-- `src/sanity/schemaTypes/` — Sanity schema definitions (documents/, objects/)
-- `src/sanity/lib/` — Sanity client utilities (load-query.ts, image.ts)
-- `src/lib/` — Non-Sanity utilities (shopify.ts)
+This is a pnpm workspace with two packages:
+
+**Astro site (root):**
+- `src/sanity/lib/` — frontend Sanity utilities (load-query.ts, image.ts)
+- `src/lib/` — non-Sanity utilities (shopify.ts)
 - `src/components/` — Astro/React components
-- `src/layouts/` — Page layouts
+- `src/layouts/` — page layouts
 - `src/pages/` — Astro file-based routing
 - `src/styles/global.css` — Tailwind entry + custom styles
-- `sanity.config.ts` — Studio configuration (root level)
-- `sanity.cli.ts` — Sanity CLI configuration (root level)
+
+**Sanity Studio (`studio/`):**
+- `studio/sanity.config.ts` — Studio configuration
+- `studio/sanity.cli.ts` — Sanity CLI configuration
+- `studio/schemaTypes/` — schema definitions (documents/, objects/)
+
+Studio deps (`sanity`, `@sanity/icons`, `sanity-plugin-mux-input`, `styled-components`, `react-is`) are isolated to `studio/` and never leak into the Astro build. `@sanity/astro` lists these as peer dependencies, but the Astro root uses `pnpm.peerDependencyRules.ignoreMissing` to suppress warnings since the embedded Studio route is not used.
 
 ## pnpm Notes
 
-- Sanity project ID and dataset are hardcoded in `astro.config.mjs`, `sanity.config.ts`, and `sanity.cli.ts` (public, non-secret values)
-- `@sanity/client` and `@mux/mux-player` must be direct dependencies (pnpm strict hoisting)
+- Sanity project ID and dataset are hardcoded in `astro.config.mjs`, `studio/sanity.config.ts`, and `studio/sanity.cli.ts` (public, non-secret values)
+- `@sanity/client` and `@mux/mux-player` must be direct dependencies of the Astro root (pnpm strict hoisting)
 
 ## Sanity Conventions
 
@@ -63,8 +70,9 @@ pnpm format               # Format all files
 | File | Purpose |
 |------|---------|
 | `astro.config.mjs` | Astro + Sanity + Tailwind + Vercel config |
-| `sanity.config.ts` | Studio plugins, schema, structure |
-| `sanity.cli.ts` | CLI project ID, dataset, deployment appId |
-| `src/sanity/schemaTypes/index.ts` | Schema type registry |
+| `pnpm-workspace.yaml` | pnpm workspace definition |
+| `studio/sanity.config.ts` | Studio plugins, schema, structure |
+| `studio/sanity.cli.ts` | CLI project ID, dataset, deployment appId |
+| `studio/schemaTypes/index.ts` | Schema type registry |
 | `src/sanity/lib/load-query.ts` | GROQ query wrapper (supports Visual Editing) |
 | `.env.example` | Required environment variables template |
