@@ -1,7 +1,9 @@
 ---
+import FeaturedProducts from '../components/FeaturedProducts.astro';
 import Hero from '../components/Hero.astro';
+import WhySection from '../components/WhySection.astro';
 import Layout from '../layouts/Layout.astro';
-import { getFeaturedProducts, getProductUrl } from '../lib/shopify';
+import { getFeaturedProducts } from '../lib/shopify';
 import { loadQuery } from '../sanity/lib/load-query';
 
 const HOME_QUERY = `*[_type == "homePage" && _id == "homePage"][0]{
@@ -34,42 +36,8 @@ const { data: homePage } = await loadQuery<{
 const products = await getFeaturedProducts(4);
 ---
 
-<Layout title={homePage?.title || "Noima"}>
-	{homePage?.hero && <Hero hero={homePage.hero} />}
-
-	{
-		products.length > 0 && (
-			<section>
-				<h2>Featured Products</h2>
-				<div>
-					{products.map((product) => (
-						<a
-							href={getProductUrl(product.handle)}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{product.featuredImage && (
-								<img
-									src={product.featuredImage.url}
-									alt={product.featuredImage.altText || product.title}
-									width="400"
-									height="400"
-								/>
-							)}
-							<h3>{product.title}</h3>
-							<p>
-								{new Intl.NumberFormat("en-US", {
-									style: "currency",
-									currency:
-										product.priceRange.minVariantPrice.currencyCode,
-								}).format(
-									Number(product.priceRange.minVariantPrice.amount),
-								)}
-							</p>
-						</a>
-					))}
-				</div>
-			</section>
-		)
-	}
+<Layout title={homePage?.title || 'Noima — Prăjitorie și cafea cu sens'} transparentHeader>
+	<Hero hero={homePage?.hero ?? {}} />
+	<WhySection />
+	<FeaturedProducts products={products} />
 </Layout>

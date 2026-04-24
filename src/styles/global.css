@@ -2,4 +2,97 @@
 
 @theme {
 	--font-sans: var(--font-google-sans), ui-sans-serif, system-ui, sans-serif;
+
+	--color-ink: #000000;
+	--color-ink-soft: #1a1a1a;
+	--color-cream: #f8f5ed;
+	--color-tan: #d7b88f;
+	--color-mute: #909090;
+	--color-mute-soft: #9b9b9b;
+	--color-line: #e2e2e2;
+	--color-line-soft: #d0d0d0;
+	--color-surface: #ffffff;
+}
+
+:root {
+	--header-height: 88px;
+	--container-max: 1440px;
+	--container-pad-sm: 1.25rem;
+	--container-pad-lg: 2.5rem;
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--color-surface);
+	color: var(--color-ink);
+	font-family: var(--font-sans);
+	line-height: 1.5;
+}
+
+/* Display heading — Black-weight approximation of Gravita HUM from the XD. */
+.display {
+	font-weight: 900;
+	letter-spacing: -0.02em;
+	line-height: 0.95;
+	text-transform: uppercase;
+}
+
+.display-lower {
+	font-weight: 900;
+	letter-spacing: -0.015em;
+	line-height: 1;
+}
+
+.eyebrow {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+}
+
+.container-x {
+	width: 100%;
+	max-width: var(--container-max);
+	margin-inline: auto;
+	padding-inline: var(--container-pad-sm);
+}
+
+@media (min-width: 768px) {
+	.container-x {
+		padding-inline: var(--container-pad-lg);
+	}
+}
+
+/* Chip shown over placeholder media until real assets arrive. Pinned to the
+   bottom-left so it doesn't collide with the fixed site header. */
+.asset-placeholder-chip {
+	position: absolute;
+	bottom: 1rem;
+	left: 1rem;
+	background: rgba(0, 0, 0, 0.7);
+	color: #fff;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	padding: 0.4rem 0.7rem;
+	border-radius: 999px;
+	z-index: 5;
+	pointer-events: none;
+}
+
+/* Subtle grain so placeholder blocks don't read as flat color. */
+.grain::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0.35;
+	mix-blend-mode: overlay;
+	background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }

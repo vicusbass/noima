@@ -18,42 +18,181 @@ interface Props {
 
 const { hero } = Astro.props;
 const { heading, subheading, mediaType, image, video } = hero;
+
+const hasImage = mediaType === 'image' && image?.asset;
+const hasVideo = mediaType === 'video' && video?.playbackId;
+const hasMedia = hasImage || hasVideo;
 ---
 
-<section>
-	{
-		mediaType === "image" && image?.asset && (
-			<img
-				src={urlFor(image).width(1920).height(1080).url()}
-				alt={image.alt || ""}
-				width="1920"
-				height="1080"
-			/>
-		)
-	}
+<section class="hero relative isolate overflow-hidden text-white">
+	<!-- Media layer -->
+	<div class="absolute inset-0 -z-10">
+		{
+			hasImage && (
+				<img
+					src={urlFor(image!).width(2400).height(1400).url()}
+					alt={image!.alt || ''}
+					width="2400"
+					height="1400"
+					class="h-full w-full object-cover"
+				/>
+			)
+		}
 
-	{
-		mediaType === "video" && video?.playbackId && (
-			<mux-player
-				playback-id={video.playbackId}
-				muted
-				autoplay
-				loop
-				style="--controls: none;"
-			/>
-		)
-	}
+		{
+			hasVideo && (
+				<mux-player
+					playback-id={video!.playbackId}
+					muted
+					autoplay
+					loop
+					playsinline
+					class="hero-video h-full w-full"
+					style="--controls: none; --media-object-fit: cover;"
+				/>
+			)
+		}
 
-	<div>
-		{heading && <h1>{heading}</h1>}
-		{subheading && <p>{subheading}</p>}
+		{
+			!hasMedia && (
+				<div class="relative h-full w-full grain placeholder-media">
+					<span class="asset-placeholder-chip">VIDEO PLACEHOLDER</span>
+				</div>
+			)
+		}
+
+		<!-- Dark gradient for text contrast on hero media -->
+		<div class="absolute inset-0 bg-linear-to-b from-black/45 via-black/15 to-black/55"></div>
+	</div>
+
+	<div class="container-x hero-inner relative pt-[calc(var(--header-height)+2rem)] pb-16 md:pb-24">
+		<div class="hero-grid">
+			<h1 class="display hero-title">
+				{heading || 'PRĂJITORIE ȘI CAFEA CU SENS'}
+			</h1>
+
+			<div class="hero-meta">
+				<p class="hero-sub">
+					{
+						subheading ||
+							'Cum e cafeaua făcută de oameni care trăiesc de 18 ani din cafea?'
+					}
+				</p>
+
+				<a href="#manifesto" class="cta-pill mt-6 md:mt-8">
+					<span>DESCOPERĂ</span>
+					<svg
+						width="14"
+						height="14"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2.5"
+						aria-hidden="true"
+					>
+						<path d="M9 6l6 6-6 6" />
+					</svg>
+				</a>
+			</div>
+		</div>
 	</div>
 </section>
 
+<style>
+	.hero {
+		min-height: min(100svh, 900px);
+		display: flex;
+		align-items: flex-end;
+	}
+
+	.placeholder-media {
+		background:
+			radial-gradient(
+				ellipse at 30% 40%,
+				rgba(215, 184, 143, 0.35) 0%,
+				transparent 55%
+			),
+			radial-gradient(
+				ellipse at 70% 70%,
+				rgba(0, 0, 0, 0.4) 0%,
+				transparent 60%
+			),
+			linear-gradient(135deg, #2a241f 0%, #15110d 100%);
+	}
+
+	.hero-video {
+		display: block;
+	}
+
+	.hero-inner {
+		width: 100%;
+	}
+
+	.hero-grid {
+		display: grid;
+		gap: 2rem;
+		grid-template-columns: 1fr;
+		align-items: end;
+	}
+
+	@media (min-width: 900px) {
+		.hero-grid {
+			grid-template-columns: 1.3fr 1fr;
+			gap: 4rem;
+		}
+	}
+
+	.hero-title {
+		font-size: clamp(2.75rem, 8vw, 6rem);
+		color: #fff;
+		text-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+	}
+
+	.hero-meta {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	@media (min-width: 900px) {
+		.hero-meta {
+			align-items: flex-end;
+			text-align: right;
+		}
+	}
+
+	.hero-sub {
+		font-size: clamp(1rem, 1.5vw, 1.25rem);
+		max-width: 28ch;
+		line-height: 1.45;
+		color: rgba(255, 255, 255, 0.92);
+	}
+
+	.cta-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 2rem;
+		background: #fff;
+		color: #000;
+		padding: 1rem 1.5rem 1rem 2rem;
+		border-radius: 999px;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		font-size: 0.8125rem;
+		transition: transform 0.25s ease, background-color 0.25s ease,
+			color 0.25s ease;
+	}
+	.cta-pill:hover {
+		background: var(--color-tan);
+		color: #000;
+		transform: translateX(4px);
+	}
+</style>
+
 {
-	mediaType === "video" && video?.playbackId && (
+	hasVideo && (
 		<script>
-			import "@mux/mux-player";
+			import '@mux/mux-player';
 		</script>
 	)
 }
