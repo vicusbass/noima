@@ -148,3 +148,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 .sanity
+
+design
+docs
