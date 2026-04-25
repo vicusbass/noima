@@ -1,0 +1,48 @@
+{%- liquid
+  assign font_family = 'Google Sans Flex'
+  assign font_stack = "'Google Sans Flex', system-ui, -apple-system, sans-serif"
+  assign font_regular = 'GoogleSansFlex-Regular.woff2'
+  assign font_bold = 'GoogleSansFlex-Bold.woff2'
+  assign font_black = 'GoogleSansFlex-Black.woff2'
+  assign body_weight = 400
+  assign body_weight_bold = 700
+  assign heading_weight = 900
+-%}
+
+<link rel="preload" as="font" href="{{ font_regular | asset_url }}" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="{{ font_bold | asset_url }}" type="font/woff2" crossorigin>
+
+{% style %}
+  @font-face {
+    font-family: '{{ font_family }}';
+    font-style: normal;
+    font-weight: {{ body_weight }};
+    font-display: swap;
+    src: url('{{ font_regular | asset_url }}') format('woff2');
+  }
+  @font-face {
+    font-family: '{{ font_family }}';
+    font-style: normal;
+    font-weight: {{ body_weight_bold }};
+    font-display: swap;
+    src: url('{{ font_bold | asset_url }}') format('woff2');
+  }
+  @font-face {
+    font-family: '{{ font_family }}';
+    font-style: normal;
+    font-weight: {{ heading_weight }};
+    font-display: swap;
+    src: url('{{ font_black | asset_url }}') format('woff2');
+  }
+
+  :root {
+    --font-body-family: {{ font_stack }};
+    --font-body-style: normal;
+    --font-body-weight: {{ body_weight }};
+    --font-body-weight-bold: {{ body_weight_bold }};
+
+    --font-heading-family: {{ font_stack }};
+    --font-heading-style: normal;
+    --font-heading-weight: {{ heading_weight }};
+  }
+{% endstyle %}

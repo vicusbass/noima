@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!.vercel"]
+		"includes": ["**", "!.vercel", "!noima-coffee-theme"]
 	},
 	"formatter": {
 		"enabled": true,

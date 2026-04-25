@@ -9,7 +9,7 @@ Marketing and content site built with [Astro](https://astro.build), [Sanity](htt
 - **Tailwind CSS** v4 — Utility-first CSS via Vite plugin
 - **Mux** — Video hosting and playback
 - **Vercel** — Deployment and hosting
-- **Shopify** — Storefront API for featured products (standalone shop)
+- **Shopify** — Storefront API for featured products + a custom Dawn-based theme in `noima-coffee-theme/`
 
 ## Getting Started
 
@@ -20,6 +20,7 @@ Marketing and content site built with [Astro](https://astro.build), [Sanity](htt
 - A [Sanity](https://sanity.io) account
 - A [Mux](https://mux.com) account (for video)
 - A [Shopify](https://shopify.com) store with Storefront API access (for featured products)
+- [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) (only for theme work — `pnpm add -g @shopify/cli`)
 
 ### Setup
 
@@ -83,6 +84,55 @@ You can also `cd studio` and run `pnpm dev`, `pnpm deploy`, etc. directly.
 
 - **Site**: Deploys to Vercel. Connect your GitHub repository in the Vercel dashboard and set environment variables in project settings.
 - **Sanity Studio**: Deployed separately via `pnpm --filter noima-studio deploy` to [noima.sanity.studio](https://noima.sanity.studio).
+- **Shopify theme**: See [Shopify Theme](#shopify-theme) below.
+
+## Shopify Theme
+
+The standalone Shopify store uses a custom theme based on [Dawn](https://github.com/Shopify/dawn), located at [`noima-coffee-theme/`](noima-coffee-theme/). Customizations include local Google Sans Flex fonts (see [`noima-coffee-theme/snippets/custom-fonts.liquid`](noima-coffee-theme/snippets/custom-fonts.liquid) for the single source of truth — change fonts there).
+
+All theme commands run against the Shopify store, not the Astro app. The theme is **not** deployed via Vercel.
+
+### Authenticate
+
+The first command you run opens a browser for OAuth and caches credentials. You'll be prompted for the store on each command unless you pass `--store <subdomain>.myshopify.com`.
+
+```bash
+shopify theme list --store <your-store>.myshopify.com
+```
+
+### Local preview against the store
+
+Hot-reloads the theme against live store data without uploading anything to the published theme:
+
+```bash
+shopify theme dev --path noima-coffee-theme --store <your-store>.myshopify.com
+```
+
+### First push — as an unpublished theme
+
+Safest first push: creates a new unpublished theme so the live site is untouched. Preview and *Publish* from the Shopify admin (Online Store → Themes) when ready.
+
+```bash
+shopify theme push --path noima-coffee-theme --unpublished --store <your-store>.myshopify.com
+```
+
+### Subsequent pushes — target an existing theme
+
+After the first push, target the same theme by name (or ID from `shopify theme list`) so you don't create duplicates:
+
+```bash
+shopify theme push --path noima-coffee-theme --theme "Noima Coffee" --store <your-store>.myshopify.com
+```
+
+Avoid `--live` — it pushes straight to the published theme with no preview. Use the admin's *Publish* button instead.
+
+### Pull theme changes from the store
+
+If a merchant edits sections/settings in the Shopify Theme Editor, pull those JSON updates back to git:
+
+```bash
+shopify theme pull --path noima-coffee-theme --theme "Noima Coffee" --store <your-store>.myshopify.com
+```
 
 ## Git Hooks
 
@@ -108,5 +158,6 @@ This project uses [Lefthook](https://github.com/evilmartians/lefthook) for git h
 │   ├── sanity.config.ts      # Studio plugins, schema, structure
 │   ├── sanity.cli.ts         # CLI project ID, dataset, deploy appId
 │   └── schemaTypes/          # Schema definitions (documents/, objects/)
+├── noima-coffee-theme/       # Shopify Dawn-based theme (deployed via Shopify CLI)
 └── pnpm-workspace.yaml       # Workspace definition
 ```
