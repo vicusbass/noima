@@ -97,7 +97,7 @@ All theme commands run against the Shopify store, not the Astro app. The theme i
 The first command you run opens a browser for OAuth and caches credentials. You'll be prompted for the store on each command unless you pass `--store <subdomain>.myshopify.com`.
 
 ```bash
-shopify theme list --store <your-store>.myshopify.com
+shopify theme list --store noima-coffee.myshopify.com
 ```
 
 ### Local preview against the store
@@ -105,7 +105,7 @@ shopify theme list --store <your-store>.myshopify.com
 Hot-reloads the theme against live store data without uploading anything to the published theme:
 
 ```bash
-shopify theme dev --path noima-coffee-theme --store <your-store>.myshopify.com
+shopify theme dev --path noima-coffee-theme --store noima-coffee.myshopify.com
 ```
 
 ### First push — as an unpublished theme
@@ -113,7 +113,7 @@ shopify theme dev --path noima-coffee-theme --store <your-store>.myshopify.com
 Safest first push: creates a new unpublished theme so the live site is untouched. Preview and *Publish* from the Shopify admin (Online Store → Themes) when ready.
 
 ```bash
-shopify theme push --path noima-coffee-theme --unpublished --store <your-store>.myshopify.com
+shopify theme push --path noima-coffee-theme --unpublished --store noima-coffee.myshopify.com
 ```
 
 ### Subsequent pushes — target an existing theme
@@ -121,7 +121,7 @@ shopify theme push --path noima-coffee-theme --unpublished --store <your-store>.
 After the first push, target the same theme by name (or ID from `shopify theme list`) so you don't create duplicates:
 
 ```bash
-shopify theme push --path noima-coffee-theme --theme "Noima Coffee" --store <your-store>.myshopify.com
+shopify theme push --path noima-coffee-theme --theme "Noima Coffee" --store noima-coffee.myshopify.com
 ```
 
 Avoid `--live` — it pushes straight to the published theme with no preview. Use the admin's *Publish* button instead.
@@ -131,7 +131,7 @@ Avoid `--live` — it pushes straight to the published theme with no preview. Us
 If a merchant edits sections/settings in the Shopify Theme Editor, pull those JSON updates back to git:
 
 ```bash
-shopify theme pull --path noima-coffee-theme --theme "Noima Coffee" --store <your-store>.myshopify.com
+shopify theme pull --path noima-coffee-theme --theme "Noima Coffee" --store noima-coffee.myshopify.com
 ```
 
 ## Git Hooks
