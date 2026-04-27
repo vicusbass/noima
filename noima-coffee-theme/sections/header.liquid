@@ -74,6 +74,34 @@
       padding-top: 0.5rem;
     }
   }
+
+  .section-header .header-wrapper {
+    margin: 1rem 1rem 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-header .header-wrapper {
+      margin: 1.5rem 2rem 0;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .header--middle-left.header--has-menu {
+      grid-template-columns: auto 1fr auto;
+      column-gap: 2rem;
+    }
+
+    .header--middle-left .header__inline-menu {
+      justify-self: stretch;
+      width: 100%;
+    }
+
+    .header--middle-left .header__inline-menu > .list-menu--inline {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+    }
+  }
 </style>
 
 {%- style -%}
