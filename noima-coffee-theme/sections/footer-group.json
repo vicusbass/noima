@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
@@ -6,16 +15,18 @@
       "type": "footer-noima",
       "settings": {
         "tagline": "PRĂJITORIE ȘI CAFEA CU SENS",
-        "facebook_url": "",
-        "instagram_url": "",
-        "whatsapp_url": "",
+        "facebook_url": "https://facebook.com/noima",
+        "instagram_url": "https://instagram.com/noima",
+        "whatsapp_url": "https://wa.me/40755123456",
         "email_url": "contact@noima.ro",
+        "menu": "menu-1-footer",
         "contact_email": "contact@noima.ro",
         "contact_phone": "0755123456",
         "contact_address": "Strada Bobâlnei, nr. 1",
         "contact_city": "Cluj-Napoca",
+        "legal_menu": "meniu-legal-footer",
         "bottom_text": "<p>design by Symbold</p>",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-6cd492f9-3e37-4a6d-9624-11882756ef8a",
         "padding_top": 60,
         "padding_bottom": 36
       }

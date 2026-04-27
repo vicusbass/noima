@@ -4,6 +4,41 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
+  .footer-noima__back-to-top {
+    margin: 0 3rem 4rem;
+    padding: 2rem 3rem;
+    background-color: rgba(var(--color-foreground), 0.04);
+    border: none;
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    width: calc(100% - 6rem);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 1.4rem;
+    color: rgb(var(--color-foreground));
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease;
+  }
+
+  .footer-noima__back-to-top:hover {
+    background-color: rgba(var(--color-foreground), 0.08);
+  }
+
+  .footer-noima__back-to-top svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .footer-noima__back-to-top {
+      display: none;
+    }
+  }
+
   .footer-noima__inner {
     display: grid;
     grid-template-columns: 1fr;
@@ -65,14 +100,34 @@
 
   .footer-noima__columns {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 3rem;
+    grid-template-columns: repeat(3, auto);
+    column-gap: 6rem;
+    row-gap: 2rem;
+    justify-content: end;
   }
 
   @media screen and (max-width: 749px) {
+    .footer-noima__brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-noima__social {
+      justify-content: center;
+    }
+
     .footer-noima__columns {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 2.4rem;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .footer-noima__column--menu,
+    .footer-noima__column--contact {
+      display: none;
     }
   }
 
@@ -112,9 +167,29 @@
   .footer-noima__bottom > * {
     margin: 0;
   }
+
+  @media screen and (max-width: 749px) {
+    .footer-noima__bottom {
+      text-align: center;
+    }
+  }
 {%- endstyle -%}
 
 <footer class="footer-noima color-{{ section.settings.color_scheme }} gradient">
+  {%- if section.settings.show_back_to_top -%}
+    <button
+      type="button"
+      class="footer-noima__back-to-top"
+      aria-label="Înapoi sus"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
+    >
+      <span>Înapoi sus</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+  {%- endif -%}
+
   <div class="footer-noima__inner">
     <div class="footer-noima__brand">
       {%- if section.settings.logo != blank -%}
@@ -170,7 +245,7 @@
 
     <div class="footer-noima__columns">
       {%- if section.settings.menu != blank -%}
-        <div class="footer-noima__column">
+        <div class="footer-noima__column footer-noima__column--menu">
           <ul class="footer-noima__column-list" role="list">
             {%- for link in section.settings.menu.links -%}
               <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
@@ -179,7 +254,7 @@
         </div>
       {%- endif -%}
 
-      <div class="footer-noima__column">
+      <div class="footer-noima__column footer-noima__column--contact">
         <ul class="footer-noima__column-list" role="list">
           {%- if section.settings.contact_email != blank -%}
             <li>
@@ -326,6 +401,12 @@
     {
       "type": "header",
       "content": "Aspect"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_to_top",
+      "label": "Afișează butonul „Înapoi sus” pe mobil",
+      "default": true
     },
     {
       "type": "color_scheme",
