@@ -1,0 +1,442 @@
+{%- style -%}
+  .footer-noima {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .footer-noima__back-to-top {
+    margin: 0 3rem 4rem;
+    padding: 2rem 3rem;
+    background-color: rgba(var(--color-foreground), 0.04);
+    border: none;
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    width: calc(100% - 6rem);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 1.4rem;
+    color: rgb(var(--color-foreground));
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease;
+  }
+
+  .footer-noima__back-to-top:hover {
+    background-color: rgba(var(--color-foreground), 0.08);
+  }
+
+  .footer-noima__back-to-top svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .footer-noima__back-to-top {
+      display: none;
+    }
+  }
+
+  .footer-noima__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    padding: 0 3rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .footer-noima__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+      gap: 6rem;
+    }
+  }
+
+  .footer-noima__brand-link {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .footer-noima__brand-logo {
+    display: block;
+    max-width: 18rem;
+    height: auto;
+  }
+
+  .footer-noima__social {
+    display: flex;
+    gap: 2rem;
+    margin: 2.4rem 0;
+    align-items: center;
+  }
+
+  .footer-noima__social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(var(--color-foreground), 0.7);
+    transition: color 0.2s ease;
+  }
+
+  .footer-noima__social a:hover {
+    color: rgb(var(--color-foreground));
+  }
+
+  .footer-noima__social svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    fill: currentColor;
+  }
+
+  .footer-noima__tagline {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.7);
+    margin: 0;
+  }
+
+  .footer-noima__columns {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    column-gap: 6rem;
+    row-gap: 2rem;
+    justify-content: end;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-noima__brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-noima__social {
+      justify-content: center;
+    }
+
+    .footer-noima__columns {
+      grid-template-columns: 1fr;
+      gap: 2.4rem;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .footer-noima__column--menu,
+    .footer-noima__column--contact {
+      display: none;
+    }
+  }
+
+  .footer-noima__column-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-noima__column-list li {
+    margin-bottom: 1.6rem;
+    line-height: 1.4;
+  }
+
+  .footer-noima__column-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .footer-noima__column-list a {
+    text-decoration: none;
+    color: rgba(var(--color-foreground), 0.7);
+    transition: color 0.2s ease;
+  }
+
+  .footer-noima__column-list a:hover {
+    color: rgb(var(--color-foreground));
+  }
+
+  .footer-noima__bottom {
+    margin-top: 4rem;
+    padding: 2rem 3rem 0;
+    border-top: 0.1rem solid rgba(var(--color-foreground), 0.1);
+    font-size: 1.2rem;
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  .footer-noima__bottom > * {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-noima__bottom {
+      text-align: center;
+    }
+  }
+{%- endstyle -%}
+
+<footer class="footer-noima color-{{ section.settings.color_scheme }} gradient">
+  {%- if section.settings.show_back_to_top -%}
+    <button
+      type="button"
+      class="footer-noima__back-to-top"
+      aria-label="Înapoi sus"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
+    >
+      <span>Înapoi sus</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+  {%- endif -%}
+
+  <div class="footer-noima__inner">
+    <div class="footer-noima__brand">
+      {%- if section.settings.logo != blank -%}
+        <a href="{{ routes.root_url }}" class="footer-noima__brand-link">
+          {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+          {{
+            section.settings.logo
+            | image_url: width: 400
+            | image_tag:
+              class: 'footer-noima__brand-logo',
+              alt: logo_alt,
+              loading: 'lazy',
+              widths: '180, 360, 540',
+              sizes: '180px'
+          }}
+        </a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="footer-noima__brand-link"><span class="h2">{{ shop.name }}</span></a>
+      {%- endif -%}
+
+      <div class="footer-noima__social">
+        {%- if section.settings.facebook_url != blank -%}
+          <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">
+            {{ 'icon-facebook.svg' | inline_asset_content }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.instagram_url != blank -%}
+          <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">
+            {{ 'icon-instagram.svg' | inline_asset_content }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.whatsapp_url != blank -%}
+          <a href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.email_url != blank -%}
+          <a href="mailto:{{ section.settings.email_url }}" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.tagline != blank -%}
+        <p class="footer-noima__tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="footer-noima__columns">
+      {%- if section.settings.menu != blank -%}
+        <div class="footer-noima__column footer-noima__column--menu">
+          <ul class="footer-noima__column-list" role="list">
+            {%- for link in section.settings.menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="footer-noima__column footer-noima__column--contact">
+        <ul class="footer-noima__column-list" role="list">
+          {%- if section.settings.contact_email != blank -%}
+            <li>
+              <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.contact_phone != blank -%}
+            <li>
+              <a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}">{{ section.settings.contact_phone }}</a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.contact_address != blank -%}
+            <li>{{ section.settings.contact_address }}</li>
+          {%- endif -%}
+          {%- if section.settings.contact_city != blank -%}
+            <li>{{ section.settings.contact_city }}</li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      {%- if section.settings.legal_menu != blank -%}
+        <div class="footer-noima__column">
+          <ul class="footer-noima__column-list" role="list">
+            {%- for link in section.settings.legal_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.bottom_text != blank -%}
+    <div class="footer-noima__bottom">
+      {{ section.settings.bottom_text }}
+    </div>
+  {%- endif -%}
+</footer>
+
+{% schema %}
+{
+  "name": "Subsol Noima",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Slogan",
+      "default": "PRĂJITORIE ȘI CAFEA CU SENS"
+    },
+    {
+      "type": "header",
+      "content": "Rețele sociale"
+    },
+    {
+      "type": "text",
+      "id": "facebook_url",
+      "label": "URL Facebook",
+      "info": "ex. https://facebook.com/noima"
+    },
+    {
+      "type": "text",
+      "id": "instagram_url",
+      "label": "URL Instagram",
+      "info": "ex. https://instagram.com/noima"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_url",
+      "label": "URL WhatsApp",
+      "info": "ex. https://wa.me/40755123456"
+    },
+    {
+      "type": "text",
+      "id": "email_url",
+      "label": "Adresă email (icon)",
+      "info": "Adresa folosită pentru iconul de email"
+    },
+    {
+      "type": "header",
+      "content": "Coloana 1 — Meniu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Meniu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Coloana 2 — Contact"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email",
+      "default": "contact@noima.ro"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Telefon",
+      "default": "0755123456"
+    },
+    {
+      "type": "text",
+      "id": "contact_address",
+      "label": "Adresă",
+      "default": "Strada Bobâlnei, nr. 1"
+    },
+    {
+      "type": "text",
+      "id": "contact_city",
+      "label": "Oraș",
+      "default": "Cluj-Napoca"
+    },
+    {
+      "type": "header",
+      "content": "Coloana 3 — Linkuri legale"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Meniu legal"
+    },
+    {
+      "type": "header",
+      "content": "Subsol"
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_text",
+      "label": "Text subsol",
+      "default": "<p>design by Symbold</p>"
+    },
+    {
+      "type": "header",
+      "content": "Aspect"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_to_top",
+      "label": "Afișează butonul „Înapoi sus” pe mobil",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere sus",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere jos",
+      "default": 36
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
+}
+{% endschema %}
