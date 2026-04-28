@@ -10,7 +10,7 @@
 		"deploy": "sanity deploy",
 		"schema:deploy": "sanity schema deploy",
 		"schema:extract": "sanity schema extract",
-		"typegen": "sanity typegen generate"
+		"typegen": "sanity schema extract && sanity typegen generate"
 	},
 	"dependencies": {
 		"@sanity/icons": "^3.7.4",
