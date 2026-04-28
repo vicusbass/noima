@@ -1,0 +1,115 @@
+---
+interface Props {
+	href?: string;
+	type?: 'button' | 'submit';
+	variant?: 'primary' | 'outline';
+	class?: string;
+	'aria-label'?: string;
+}
+
+const {
+	href,
+	type = 'button',
+	variant = 'primary',
+	class: className = '',
+	...rest
+} = Astro.props;
+---
+
+{
+	href ? (
+		<a href={href} class:list={['btn', `btn-${variant}`, className]} {...rest}>
+			<span class="btn-label"><slot /></span>
+			<svg
+				class="btn-icon"
+				width="11"
+				height="14"
+				viewBox="0 0 11 14"
+				fill="currentColor"
+				aria-hidden="true"
+			>
+				<path d="M0 0v14l11-7z" />
+			</svg>
+		</a>
+	) : (
+		<button type={type} class:list={['btn', `btn-${variant}`, className]} {...rest}>
+			<span class="btn-label"><slot /></span>
+			<svg
+				class="btn-icon"
+				width="11"
+				height="14"
+				viewBox="0 0 11 14"
+				fill="currentColor"
+				aria-hidden="true"
+			>
+				<path d="M0 0v14l11-7z" />
+			</svg>
+		</button>
+	)
+}
+
+<style>
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		min-width: 14rem;
+		padding: 1.05rem 1rem 1.05rem 1.25rem;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		font-size: 0.8125rem;
+		text-transform: uppercase;
+		line-height: 1;
+		cursor: pointer;
+		overflow: hidden;
+		transition:
+			background-color 0.25s ease,
+			color 0.25s ease,
+			border-color 0.25s ease;
+	}
+
+	.btn-label,
+	.btn-icon {
+		transition: transform 0.25s ease;
+	}
+
+	.btn-icon {
+		flex-shrink: 0;
+		color: #c3c3c3;
+	}
+
+	.btn-primary {
+		background: #fff;
+		color: #000;
+		border: 1px solid #fff;
+	}
+	.btn-primary:hover {
+		background: #000;
+		color: #fff;
+		border-color: #000;
+	}
+	.btn-primary:hover .btn-label {
+		transform: translateX(-6px);
+	}
+	.btn-primary:hover .btn-icon {
+		transform: translateX(6px);
+	}
+
+	.btn-outline {
+		background: transparent;
+		color: #fff;
+		border: 1px solid rgba(255, 255, 255, 0.6);
+	}
+	.btn-outline:hover {
+		background: #000;
+		color: #fff;
+		border-color: #000;
+	}
+	.btn-outline:hover .btn-label {
+		transform: translateX(-6px);
+	}
+	.btn-outline:hover .btn-icon {
+		transform: translateX(6px);
+	}
+</style>

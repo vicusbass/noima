@@ -14,9 +14,9 @@ export default defineConfig({
 	fonts: [
 		{
 			provider: fontProviders.google(),
-			name: 'Google Sans',
+			name: 'Google Sans Flex',
 			cssVariable: '--font-google-sans',
-			weights: [400, 500, 700],
+			weights: [400, 500, 700, 900],
 			styles: ['normal'],
 			subsets: ['latin', 'latin-ext'],
 		},

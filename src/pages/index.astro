@@ -36,7 +36,7 @@ const { data: homePage } = await loadQuery<{
 const products = await getFeaturedProducts(4);
 ---
 
-<Layout title={homePage?.title || 'Noima — Prăjitorie și cafea cu sens'} transparentHeader>
+<Layout title={homePage?.title || 'Noima — Prăjitorie și cafea cu sens'}>
 	<Hero hero={homePage?.hero ?? {}} />
 	<WhySection />
 	<FeaturedProducts products={products} />
