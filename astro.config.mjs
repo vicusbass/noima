@@ -10,7 +10,9 @@ const PROJECT_ID = '4c9x2l5r';
 const DATASET = 'production';
 
 export default defineConfig({
-	adapter: vercel(),
+	adapter: vercel({
+		imageService: true,
+	}),
 	fonts: [
 		{
 			provider: fontProviders.google(),
