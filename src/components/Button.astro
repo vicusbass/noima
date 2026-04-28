@@ -2,7 +2,7 @@
 interface Props {
 	href?: string;
 	type?: 'button' | 'submit';
-	variant?: 'primary' | 'outline';
+	variant?: 'primary' | 'outline' | 'dark';
 	class?: string;
 	'aria-label'?: string;
 }
@@ -50,11 +50,11 @@ const {
 
 <style>
 	.btn {
-		display: inline-flex;
+		display: flex;
+		width: 100%;
 		align-items: center;
 		justify-content: space-between;
 		gap: 2rem;
-		min-width: 14rem;
 		padding: 1.05rem 1rem 1.05rem 1.25rem;
 		font-weight: 500;
 		letter-spacing: 0.04em;
@@ -67,6 +67,14 @@ const {
 			background-color 0.25s ease,
 			color 0.25s ease,
 			border-color 0.25s ease;
+	}
+
+	@media (min-width: 900px) {
+		.btn {
+			display: inline-flex;
+			width: auto;
+			min-width: 14rem;
+		}
 	}
 
 	.btn-label,
@@ -110,6 +118,23 @@ const {
 		transform: translateX(-6px);
 	}
 	.btn-outline:hover .btn-icon {
+		transform: translateX(6px);
+	}
+
+	.btn-dark {
+		background: #000;
+		color: #fff;
+		border: 1px solid #000;
+	}
+	.btn-dark:hover {
+		background: #fff;
+		color: #000;
+		border-color: #000;
+	}
+	.btn-dark:hover .btn-label {
+		transform: translateX(-6px);
+	}
+	.btn-dark:hover .btn-icon {
 		transform: translateX(6px);
 	}
 </style>

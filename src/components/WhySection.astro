@@ -1,4 +1,8 @@
 ---
+import { Image } from 'astro:assets';
+import Bird from '../assets/main/bird.png';
+import Button from './Button.astro';
+
 interface Props {
 	heading?: string;
 	paragraphs?: string[];
@@ -9,138 +13,148 @@ interface Props {
 const {
 	heading = 'de ce există noima?',
 	paragraphs = [
-		'După 18 ani în distribuția de cafea, am făcut pasul spre bine. Pentru că vrem să ducem până la capăt experiența cafelei de calitate.',
-		'Nu suntem doar o altă cafenea, ci locul în care împărtășim împreună cu însemnatul o cafea bună, uniți într-o comunitate cu valori și gesturi comune.',
-		'Dacă și ție ți se pare că o cafea nu e doar o cafea, ai găsit tribul tău. Noi doar prăjim boabele — și pornim de aici.',
+		'După 18 ani în distribuția de cafea, am făcut pasul spre tine. Pentru că vrem să ducem până la capăt experiența ospitalității.',
+		'Nu suntem doar o altă cafenea, ci locul în care învățăm împreună ce înseamnă o cafea bună, uniți într-o comunitate cu valori și pasiuni comune.',
+		'Dacă ți se pune pata pe cafeaua noastră, o poți lua acasă. Nu doar pentru tine, ci și pentru prietenii tăi, care vor înțelege de ce.',
 	],
 	ctaLabel = 'DESCOPERĂ',
 	ctaHref = '/despre-noi',
 } = Astro.props;
 ---
 
-<section id="manifesto" class="why-section relative">
-	<div class="container-x py-20 md:py-32">
-		<h2 class="display-lower why-heading">{heading}</h2>
+<section id="manifesto" class="why-section py-16 md:py-24">
+  <div class="container-x">
+    <h2 class="display-lower why-heading">{heading}</h2>
+  </div>
 
-		<div class="why-panel mt-14 md:mt-20 relative overflow-hidden">
-			<div class="why-grid">
-				<div class="why-illu relative grain" aria-hidden="true">
-					<!-- Abstract coffee-grounds shape as placeholder until XD illustration arrives -->
-					<svg viewBox="0 0 640 380" preserveAspectRatio="xMidYMid meet" class="w-full h-full">
-						<defs>
-							<radialGradient id="tanGlow" cx="50%" cy="50%" r="60%">
-								<stop offset="0%" stop-color="#d7b88f" stop-opacity="0.85" />
-								<stop offset="100%" stop-color="#d7b88f" stop-opacity="0" />
-							</radialGradient>
-						</defs>
-						<circle cx="320" cy="190" r="180" fill="url(#tanGlow)" />
-						<g fill="#9b7a4e" opacity="0.85">
-							<ellipse cx="320" cy="200" rx="140" ry="70" />
-							<ellipse cx="220" cy="160" rx="32" ry="14" transform="rotate(-18 220 160)" />
-							<ellipse cx="430" cy="230" rx="38" ry="16" transform="rotate(12 430 230)" />
-							<circle cx="180" cy="210" r="8" />
-							<circle cx="470" cy="170" r="6" />
-							<circle cx="360" cy="120" r="5" />
-							<circle cx="250" cy="250" r="7" />
-						</g>
-					</svg>
-					<span class="asset-placeholder-chip">ILLUSTRATION PLACEHOLDER</span>
-				</div>
+  <div class="container-x why-panel-wrap">
+    <div class="why-panel">
+      <div class="why-illu" aria-hidden="true">
+        <Image
+          src={Bird}
+          alt=""
+          widths={[480, 800, 1200, 1600, 2000]}
+          sizes="(min-width: 900px) 50vw, 100vw"
+          class="bird-img"
+        />
+      </div>
 
-				<div class="why-copy">
-					{paragraphs.map((p) => <p>{p}</p>)}
-
-					<a href={ctaHref} class="cta-dark mt-10">
-						<span>{ctaLabel}</span>
-						<svg
-							width="14"
-							height="14"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2.5"
-							aria-hidden="true"
-						>
-							<path d="M9 6l6 6-6 6" />
-						</svg>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
+      <div class="why-copy">
+        {paragraphs.map((p) => <p>{p}</p>)}
+        <Button href={ctaHref} variant="dark" class="why-cta">{ctaLabel}</Button
+        >
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
-	.why-heading {
-		font-size: clamp(2.25rem, 6vw, 6rem);
-		text-align: center;
-		color: #000;
-	}
+  .why-heading {
+    font-size: clamp(2.375rem, 5vw, 6rem);
+    text-align: center;
+    color: #000;
+    margin-bottom: 1.5rem;
+  }
 
-	.why-panel {
-		background: var(--color-cream);
-		border-radius: 4px;
-	}
+  .why-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-	.why-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
-		padding: 2.5rem 1.5rem;
-	}
+  .why-illu {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    overflow: hidden;
+  }
 
-	@media (min-width: 900px) {
-		.why-grid {
-			grid-template-columns: 1.15fr 1fr;
-			gap: 5rem;
-			padding: 4rem 5rem;
-			align-items: center;
-		}
-	}
+  .bird-img {
+    display: block;
+    width: 150%;
+    max-width: none;
+    height: auto;
+    margin-block: -60vw -50vw;
+    margin-inline: -25%;
+    mix-blend-mode: multiply;
+  }
 
-	.why-illu {
-		aspect-ratio: 16 / 10;
-		width: 100%;
-	}
+  .why-copy {
+    display: flex;
+    flex-direction: column;
+  }
 
-	.why-copy {
-		display: flex;
-		flex-direction: column;
-	}
+  .why-copy p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: #000;
+  }
 
-	.why-copy p {
-		font-size: 1rem;
-		line-height: 1.65;
-		color: #000;
-	}
+  .why-copy p + p {
+    margin-top: 1.5rem;
+  }
 
-	.why-copy p + p {
-		margin-top: 1.25rem;
-	}
+  .why-cta {
+    align-self: flex-start;
+    margin-top: 2rem;
+  }
 
-	@media (min-width: 900px) {
-		.why-copy p {
-			font-size: 1.0625rem;
-		}
-	}
+  @media (min-width: 900px) {
+    .why-heading {
+      margin-bottom: 6rem;
+    }
 
-	.cta-dark {
-		align-self: flex-start;
-		display: inline-flex;
-		align-items: center;
-		gap: 2rem;
-		background: #000;
-		color: #fff;
-		padding: 1rem 1.5rem 1rem 2rem;
-		border-radius: 2px;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		font-size: 0.8125rem;
-		transition: transform 0.25s ease, background-color 0.25s ease;
-	}
-	.cta-dark:hover {
-		background: var(--color-tan);
-		color: #000;
-		transform: translateX(4px);
-	}
+    .why-panel {
+      background: #f8f5ed;
+      height: 720px;
+      overflow: visible;
+      display: block;
+    }
+
+    .why-illu {
+      position: absolute;
+      top: -160px;
+      bottom: 0;
+      left: -10%;
+      width: 70%;
+      margin-inline: 0;
+      overflow: hidden;
+    }
+
+    .bird-img {
+      position: absolute;
+      top: 48%;
+      left: -5%;
+      width: 110%;
+      height: auto;
+      max-width: none;
+      margin-block: 0;
+      margin-inline: 0;
+      transform: translateY(-50%);
+    }
+
+    .why-copy {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 45%;
+      padding-right: 5rem;
+      justify-content: center;
+    }
+
+    .why-copy p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      max-width: 50ch;
+    }
+
+    .why-copy p + p {
+      margin-top: 3.3rem;
+    }
+
+    .why-cta {
+      margin-top: 3rem;
+    }
+  }
 </style>
