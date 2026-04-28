@@ -1,5 +1,7 @@
 ---
+import { MuxPlayer } from '@mux/mux-player-astro';
 import { urlFor } from '../sanity/lib/image';
+import Button from './Button.astro';
 
 interface Props {
 	hero: {
@@ -16,11 +18,24 @@ interface Props {
 	};
 }
 
+const FALLBACK_HERO_PLAYBACK_ID =
+	'WliuGL1fX9wFEzidHUzxqbzRCW9YgHlJW02YMCkfrhjA';
+
 const { hero } = Astro.props;
 const { heading, subheading, mediaType, image, video } = hero;
 
+const headingText = heading || 'PRĂJITORIE ȘI CAFEA CU SENS';
+const [headingFirstWord, ...headingRestWords] = headingText.split(' ');
+const headingRest = headingRestWords.join(' ');
+
 const hasImage = mediaType === 'image' && image?.asset;
-const hasVideo = mediaType === 'video' && video?.playbackId;
+const heroPlaybackId =
+	mediaType === 'video' && video?.playbackId
+		? video.playbackId
+		: !hasImage
+			? FALLBACK_HERO_PLAYBACK_ID
+			: undefined;
+const hasVideo = Boolean(heroPlaybackId);
 const hasMedia = hasImage || hasVideo;
 ---
 
@@ -41,12 +56,14 @@ const hasMedia = hasImage || hasVideo;
 
 		{
 			hasVideo && (
-				<mux-player
-					playback-id={video!.playbackId}
+				<MuxPlayer
+					playbackId={heroPlaybackId}
 					muted
 					autoplay
 					loop
 					playsinline
+					nohotkeys
+					disableCookies
 					class="hero-video h-full w-full"
 					style="--controls: none; --media-object-fit: cover;"
 				/>
@@ -68,31 +85,19 @@ const hasMedia = hasImage || hasVideo;
 	<div class="container-x hero-inner relative pt-[calc(var(--header-height)+2rem)] pb-16 md:pb-24">
 		<div class="hero-grid">
 			<h1 class="display hero-title">
-				{heading || 'PRĂJITORIE ȘI CAFEA CU SENS'}
+				<span>{headingFirstWord}</span>
+				{headingRest && <span>{headingRest}</span>}
 			</h1>
 
 			<div class="hero-meta">
+				<Button href="#manifesto">DESCOPERĂ</Button>
+
 				<p class="hero-sub">
 					{
 						subheading ||
 							'Cum e cafeaua făcută de oameni care trăiesc de 18 ani din cafea?'
 					}
 				</p>
-
-				<a href="#manifesto" class="cta-pill mt-6 md:mt-8">
-					<span>DESCOPERĂ</span>
-					<svg
-						width="14"
-						height="14"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2.5"
-						aria-hidden="true"
-					>
-						<path d="M9 6l6 6-6 6" />
-					</svg>
-				</a>
 			</div>
 		</div>
 	</div>
@@ -124,10 +129,6 @@ const hasMedia = hasImage || hasVideo;
 		display: block;
 	}
 
-	.hero-inner {
-		width: 100%;
-	}
-
 	.hero-grid {
 		display: grid;
 		gap: 2rem;
@@ -143,21 +144,28 @@ const hasMedia = hasImage || hasVideo;
 	}
 
 	.hero-title {
-		font-size: clamp(2.75rem, 8vw, 6rem);
+		font-size: clamp(2.25rem, 6vw, 4.5rem);
+		line-height: 0.92;
 		color: #fff;
 		text-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+	}
+	.hero-title span {
+		display: block;
 	}
 
 	.hero-meta {
 		display: flex;
-		flex-direction: column;
+		flex-direction: column-reverse;
 		align-items: flex-start;
+		gap: 1.5rem;
 	}
 
 	@media (min-width: 900px) {
 		.hero-meta {
+			flex-direction: column;
 			align-items: flex-end;
 			text-align: right;
+			gap: 2rem;
 		}
 	}
 
@@ -168,31 +176,5 @@ const hasMedia = hasImage || hasVideo;
 		color: rgba(255, 255, 255, 0.92);
 	}
 
-	.cta-pill {
-		display: inline-flex;
-		align-items: center;
-		gap: 2rem;
-		background: #fff;
-		color: #000;
-		padding: 1rem 1.5rem 1rem 2rem;
-		border-radius: 999px;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		font-size: 0.8125rem;
-		transition: transform 0.25s ease, background-color 0.25s ease,
-			color 0.25s ease;
-	}
-	.cta-pill:hover {
-		background: var(--color-tan);
-		color: #000;
-		transform: translateX(4px);
-	}
 </style>
 
-{
-	hasVideo && (
-		<script>
-			import '@mux/mux-player';
-		</script>
-	)
-}

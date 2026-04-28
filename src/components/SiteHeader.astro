@@ -1,10 +1,5 @@
 ---
-interface Props {
-	/** Start transparent over a hero image/video; switch to cream on scroll. */
-	transparent?: boolean;
-}
-
-const { transparent = false } = Astro.props;
+import Logo from '../assets/logo.svg';
 
 const links = [
 	{ label: 'ACASĂ', href: '/' },
@@ -15,218 +10,210 @@ const links = [
 ];
 ---
 
-<header
-	data-transparent={transparent ? 'true' : 'false'}
-	class:list={[
-		'site-header fixed top-0 left-0 right-0 z-40 transition-colors duration-300',
-		transparent ? 'is-transparent' : 'is-solid',
-	]}
->
-	<div class="container-x flex items-center justify-between h-[var(--header-height)]">
-		<a href="/" class="flex items-center gap-2 text-2xl font-black tracking-tight logo">
-			<span>noima</span>
-		</a>
+<header class="site-header">
+  <div
+    class="site-header-inner flex items-center justify-between h-(--header-height) px-5 md:px-8 xl:px-15"
+  >
+    <a href="/" class="flex items-center logo" aria-label="Noima — acasă">
+      <Logo height={40} fill="currentColor" class="h-10 w-auto" />
+    </a>
 
-		<nav class="hidden md:flex items-center gap-10 desktop-nav" aria-label="Principal">
-			{
-				links.map((link) => (
-					<a
-						href={link.href}
-						class="text-[0.8125rem] font-medium tracking-[0.18em] nav-link hover:opacity-60 transition-opacity"
-					>
-						{link.label}
-					</a>
-				))
-			}
-		</nav>
+    <nav
+      class="hidden md:flex items-center gap-16 lg:gap-30 desktop-nav"
+      aria-label="Principal"
+    >
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="text-[0.8125rem] font-medium tracking-[0.18em] nav-link hover:opacity-60 transition-opacity"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
 
-		<div class="flex items-center gap-4">
-			<a
-				href="/cos"
-				aria-label="Coș de cumpărături"
-				class="cart-btn w-11 h-11 rounded-full grid place-items-center transition-colors"
-			>
-				<svg
-					width="22"
-					height="22"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.6"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					aria-hidden="true"
-				>
-					<circle cx="9" cy="21" r="1" />
-					<circle cx="20" cy="21" r="1" />
-					<path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.5L23 6H6" />
-				</svg>
-			</a>
-			<button
-				type="button"
-				class="mobile-toggle md:hidden w-11 h-11 rounded-full grid place-items-center"
-				aria-label="Deschide meniul"
-				aria-expanded="false"
-				aria-controls="mobile-menu"
-			>
-				<span class="burger">
-					<span></span>
-					<span></span>
-					<span></span>
-				</span>
-			</button>
-		</div>
-	</div>
+    <div class="flex items-center gap-2">
+      <a
+        href="/cos"
+        aria-label="Coș de cumpărături"
+        class="cart-btn w-11 h-11 rounded-full grid place-items-center transition-colors"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.5L23 6H6"
+          ></path>
+        </svg>
+      </a>
+      <button
+        type="button"
+        class="mobile-toggle md:hidden w-11 h-11 rounded-full grid place-items-center"
+        aria-label="Deschide meniul"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </div>
 
-	<div
-		id="mobile-menu"
-		class="mobile-menu md:hidden"
-		data-open="false"
-		aria-hidden="true"
-	>
-		<nav class="container-x py-8 flex flex-col gap-6" aria-label="Principal mobil">
-			{
-				links.map((link) => (
-					<a
-						href={link.href}
-						class="text-2xl font-black tracking-tight"
-					>
-						{link.label}
-					</a>
-				))
-			}
-		</nav>
-	</div>
 </header>
 
+<div
+  id="mobile-menu"
+  class="mobile-menu md:hidden"
+  data-open="false"
+  aria-hidden="true"
+>
+  <nav
+    class="container-x flex flex-col gap-6 pt-[calc(var(--header-height)+var(--site-inset)*2+1.5rem)] pb-8"
+    aria-label="Principal mobil"
+  >
+    {
+      links.map((link, i) => (
+        <a
+          href={link.href}
+          class="mobile-link text-2xl font-black tracking-tight"
+          style={`--i: ${i}`}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+</div>
+
 <style>
-	.site-header {
-		--header-fg: #000;
-		--header-bg: transparent;
-		--header-border: transparent;
-		color: var(--header-fg);
-		background: var(--header-bg);
-		border-bottom: 1px solid var(--header-border);
-		backdrop-filter: none;
-	}
+  .site-header {
+    position: fixed;
+    top: var(--site-inset);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - var(--site-inset) * 2);
+    max-width: var(--container-max);
+    z-index: 40;
+    color: #fff;
+  }
 
-	/* Solid (default non-hero pages, or after-scroll state) */
-	.site-header.is-solid {
-		--header-fg: #000;
-		--header-bg: var(--color-cream);
-		--header-border: var(--color-line);
-	}
+  .site-header-inner {
+    background: rgba(20, 20, 20, 0.18);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
 
-	/* Transparent over hero — white ink, dark tint behind for readability. */
-	.site-header.is-transparent {
-		--header-fg: #fff;
-		--header-bg: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0.55) 0%,
-			rgba(0, 0, 0, 0.15) 70%,
-			transparent 100%
-		);
-		--header-border: transparent;
-	}
+  .cart-btn {
+    color: #fff;
+    background: transparent;
+  }
+  .cart-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
 
-	/* After-scroll state flips transparent → cream */
-	.site-header.is-transparent[data-scrolled="true"] {
-		--header-fg: #000;
-		--header-bg: var(--color-cream);
-		--header-border: var(--color-line);
-	}
+  .mobile-toggle {
+    color: #fff;
+    background: transparent;
+  }
 
-	.cart-btn {
-		color: var(--header-fg);
-	}
-	.site-header.is-transparent .cart-btn {
-		background: rgba(255, 255, 255, 0.1);
-	}
-	.site-header.is-transparent[data-scrolled="true"] .cart-btn,
-	.site-header.is-solid .cart-btn {
-		background: rgba(0, 0, 0, 0.04);
-	}
-	.cart-btn:hover {
-		background: rgba(0, 0, 0, 0.08);
-	}
-	.site-header.is-transparent:not([data-scrolled="true"]) .cart-btn:hover {
-		background: rgba(255, 255, 255, 0.2);
-	}
+  .burger {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 22px;
+  }
+  .burger span {
+    display: block;
+    height: 2px;
+    background: currentColor;
+    transition:
+      transform 0.25s ease,
+      opacity 0.2s ease;
+  }
+  .mobile-toggle[aria-expanded="true"] .burger span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .mobile-toggle[aria-expanded="true"] .burger span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-toggle[aria-expanded="true"] .burger span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
 
-	.mobile-toggle {
-		color: var(--header-fg);
-		background: transparent;
-	}
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgba(20, 20, 20, 0.18);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    color: #fff;
+    transform-origin: top center;
+    transform: scaleY(0);
+    opacity: 0;
+    transition:
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .mobile-menu[data-open="true"] {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-	.burger {
-		display: inline-flex;
-		flex-direction: column;
-		gap: 4px;
-		width: 22px;
-	}
-	.burger span {
-		display: block;
-		height: 2px;
-		background: currentColor;
-		transition: transform 0.25s ease, opacity 0.2s ease;
-	}
-	.mobile-toggle[aria-expanded="true"] .burger span:nth-child(1) {
-		transform: translateY(6px) rotate(45deg);
-	}
-	.mobile-toggle[aria-expanded="true"] .burger span:nth-child(2) {
-		opacity: 0;
-	}
-	.mobile-toggle[aria-expanded="true"] .burger span:nth-child(3) {
-		transform: translateY(-6px) rotate(-45deg);
-	}
-
-	.mobile-menu {
-		position: fixed;
-		inset: var(--header-height) 0 0 0;
-		background: var(--color-cream);
-		color: #000;
-		transform: translateY(-100%);
-		transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-		pointer-events: none;
-	}
-	.mobile-menu[data-open="true"] {
-		transform: translateY(0);
-		pointer-events: auto;
-	}
+  .mobile-link {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mobile-menu[data-open="true"] .mobile-link {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(0.18s + var(--i) * 0.07s);
+  }
 </style>
 
 <script>
-	const header = document.querySelector<HTMLElement>('.site-header');
-	const toggle = document.querySelector<HTMLButtonElement>('.mobile-toggle');
-	const menu = document.querySelector<HTMLElement>('#mobile-menu');
+  const toggle = document.querySelector<HTMLButtonElement>(".mobile-toggle");
+  const menu = document.querySelector<HTMLElement>("#mobile-menu");
 
-	if (header?.classList.contains('is-transparent')) {
-		const update = () => {
-			const scrolled = window.scrollY > 60;
-			header.dataset.scrolled = scrolled ? 'true' : 'false';
-		};
-		update();
-		window.addEventListener('scroll', update, { passive: true });
-	}
-
-	if (toggle && menu) {
-		toggle.addEventListener('click', () => {
-			const open = toggle.getAttribute('aria-expanded') === 'true';
-			toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
-			toggle.setAttribute(
-				'aria-label',
-				open ? 'Deschide meniul' : 'Închide meniul',
-			);
-			menu.dataset.open = open ? 'false' : 'true';
-			menu.setAttribute('aria-hidden', open ? 'true' : 'false');
-			document.body.style.overflow = open ? '' : 'hidden';
-		});
-		menu.querySelectorAll('a').forEach((a) =>
-			a.addEventListener('click', () => {
-				toggle.setAttribute('aria-expanded', 'false');
-				menu.dataset.open = 'false';
-				document.body.style.overflow = '';
-			}),
-		);
-	}
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      toggle.setAttribute(
+        "aria-label",
+        open ? "Deschide meniul" : "Închide meniul",
+      );
+      menu.dataset.open = open ? "false" : "true";
+      menu.setAttribute("aria-hidden", open ? "true" : "false");
+      document.body.style.overflow = open ? "" : "hidden";
+    });
+    menu.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => {
+        toggle.setAttribute("aria-expanded", "false");
+        menu.dataset.open = "false";
+        document.body.style.overflow = "";
+      }),
+    );
+  }
 </script>

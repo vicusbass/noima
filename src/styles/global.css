@@ -15,10 +15,24 @@
 }
 
 :root {
-	--header-height: 88px;
-	--container-max: 1440px;
+	--header-height: 80px;
+	--container-max: 1818px;
 	--container-pad-sm: 1.25rem;
-	--container-pad-lg: 2.5rem;
+	--container-pad-md: 2rem;
+	--container-pad-lg: 3.75rem;
+	--site-inset: 0.75rem;
+}
+
+@media (min-width: 768px) {
+	:root {
+		--site-inset: 1.5rem;
+	}
+}
+
+@media (min-width: 1280px) {
+	:root {
+		--site-inset: 3rem;
+	}
 }
 
 html {
@@ -57,13 +71,19 @@ body {
 }
 
 .container-x {
-	width: 100%;
+	width: calc(100% - var(--site-inset) * 2);
 	max-width: var(--container-max);
 	margin-inline: auto;
 	padding-inline: var(--container-pad-sm);
 }
 
 @media (min-width: 768px) {
+	.container-x {
+		padding-inline: var(--container-pad-md);
+	}
+}
+
+@media (min-width: 1280px) {
 	.container-x {
 		padding-inline: var(--container-pad-lg);
 	}

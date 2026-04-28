@@ -7,14 +7,11 @@ import '../styles/global.css';
 interface Props {
 	title?: string;
 	description?: string;
-	/** When true the header starts transparent and turns cream after scroll. */
-	transparentHeader?: boolean;
 }
 
 const {
 	title = 'Noima — Prăjitorie și cafea cu sens',
 	description = 'Prăjitorie de cafea cu sens. Cafea de specialitate prăjită de oameni care trăiesc din cafea de 18 ani.',
-	transparentHeader = false,
 } = Astro.props;
 ---
 
@@ -29,7 +26,7 @@ const {
 		<title>{title}</title>
 	</head>
 	<body class="min-h-screen flex flex-col">
-		<SiteHeader transparent={transparentHeader} />
+		<SiteHeader />
 		<main class="flex-1">
 			<slot />
 		</main>
