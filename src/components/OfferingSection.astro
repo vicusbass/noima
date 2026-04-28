@@ -1,0 +1,131 @@
+---
+import { Image } from 'astro:assets';
+import NoimaSquare from '../assets/main/noima-square.png';
+
+interface Props {
+	headingTop?: string;
+	headingBottom?: string;
+	leftText?: string;
+	rightText?: string;
+}
+
+const {
+	headingTop = 'ce primește omul',
+	headingBottom = 'la noima',
+	leftText = 'La noi(ma) găsești cafea de specialitate, din loturi limitate, aleasă cu grijă și prăjită local, după gustul tău.',
+	rightText = 'La noima, fiecare barista știe totul despre cafeaua pe care ți-o pregătește și e gata să-ți spună și ție povestea.',
+} = Astro.props;
+---
+
+<section id="offering" class="offering-section py-16 md:py-24">
+  <div class="container-x">
+    <h2 class="display-lower offering-heading">
+      <span>{headingTop}</span>
+      <span>{headingBottom}</span>
+    </h2>
+  </div>
+
+  <div class="container-x offering-panel-wrap">
+    <div class="offering-panel">
+      <p class="offering-text offering-text--left">{leftText}</p>
+
+      <div class="offering-illu">
+        <Image
+          src={NoimaSquare}
+          alt=""
+          widths={[240, 360, 480, 720]}
+          sizes="(min-width: 900px) 320px, 60vw"
+          class="square-img"
+        />
+      </div>
+
+      <p class="offering-text offering-text--right">{rightText}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .offering-heading {
+    font-size: clamp(2.375rem, 5vw, 6rem);
+    text-align: center;
+    color: #000;
+    margin-bottom: 1.5rem;
+    line-height: 1.05;
+  }
+
+  .offering-heading span {
+    display: block;
+  }
+
+  .offering-heading span + span {
+    margin-top: 0;
+  }
+
+  .offering-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .offering-illu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .square-img {
+    display: block;
+    width: 60vw;
+    max-width: 320px;
+    height: auto;
+  }
+
+  .offering-text {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: #000;
+    max-width: 50ch;
+    text-align: center;
+  }
+
+  @media (min-width: 900px) {
+    .offering-heading {
+      margin-bottom: 4rem;
+    }
+
+    .offering-panel {
+      background: #f8f5ed;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      padding: 4rem 5rem;
+      min-height: 420px;
+    }
+
+    .offering-illu {
+      flex: 0 0 auto;
+    }
+
+    .square-img {
+      width: 320px;
+      max-width: none;
+    }
+
+    .offering-text {
+      flex: 1 1 0;
+      font-size: 1.125rem;
+      line-height: 1.8;
+      max-width: 32ch;
+    }
+
+    .offering-text--left {
+      text-align: right;
+    }
+
+    .offering-text--right {
+      text-align: left;
+    }
+  }
+</style>

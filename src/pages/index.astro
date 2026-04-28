@@ -1,6 +1,7 @@
 ---
 import FeaturedProducts from '../components/FeaturedProducts.astro';
 import Hero from '../components/Hero.astro';
+import OfferingSection from '../components/OfferingSection.astro';
 import WhySection from '../components/WhySection.astro';
 import Layout from '../layouts/Layout.astro';
 import { getFeaturedProducts } from '../lib/shopify';
@@ -40,4 +41,5 @@ const products = await getFeaturedProducts(4);
 	<Hero hero={homePage?.hero ?? {}} />
 	<WhySection />
 	<FeaturedProducts products={products} />
+	<OfferingSection />
 </Layout>
