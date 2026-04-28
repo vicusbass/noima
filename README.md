@@ -74,16 +74,24 @@ To deploy schema or Studio changes:
 
 ```bash
 pnpm --filter noima-studio schema:deploy   # Push schema to Content Lake
-pnpm --filter noima-studio deploy          # Deploy Studio to noima.sanity.studio
+pnpm --filter noima-studio run deploy          # Deploy Studio to noima.sanity.studio
 pnpm --filter noima-studio typegen         # Generate TypeScript types from schema + GROQ
 ```
 
 You can also `cd studio` and run `pnpm dev`, `pnpm deploy`, etc. directly.
 
+#### Typical schema-change flow
+
+After editing anything in [`studio/schemaTypes/`](studio/schemaTypes/):
+
+1. **`pnpm --filter noima-studio schema:deploy`** — pushes the schema to the Content Lake. Required for MCP tools (`get_schema`, `query_documents`) and any schema-aware webhooks/functions to see the new shape.
+2. **`pnpm --filter noima-studio run deploy`** — deploys the Studio bundle to [noima.sanity.studio](https://noima.sanity.studio) so editors get the new fields/types in the hosted UI. Skip this if you only edit locally via `pnpm --filter noima-studio dev` (local Studio reads schema files directly and hot-reloads).
+3. **`pnpm --filter noima-studio typegen`** — regenerates TypeScript types from the schema + GROQ queries. Run whenever the Astro app queries the changed type.
+
 ## Deployment
 
 - **Site**: Deploys to Vercel. Connect your GitHub repository in the Vercel dashboard and set environment variables in project settings.
-- **Sanity Studio**: Deployed separately via `pnpm --filter noima-studio deploy` to [noima.sanity.studio](https://noima.sanity.studio).
+- **Sanity Studio**: Deployed separately via `pnpm --filter noima-studio run deploy` to [noima.sanity.studio](https://noima.sanity.studio).
 - **Shopify theme**: See [Shopify Theme](#shopify-theme) below.
 
 ## Shopify Theme

@@ -1,0 +1,240 @@
+---
+import type { PortableTextBlock } from '@portabletext/types';
+import { PortableText } from 'astro-portabletext';
+import Button from '../../components/Button.astro';
+import Layout from '../../layouts/Layout.astro';
+import { urlFor } from '../../sanity/lib/image';
+import { loadQuery } from '../../sanity/lib/load-query';
+
+type EventDoc = {
+	title: string;
+	slug: { current: string };
+	date: string;
+	image?: {
+		asset: { _ref: string };
+		alt?: string;
+	};
+	description?: PortableTextBlock[];
+};
+
+export async function getStaticPaths() {
+	const { data } = await loadQuery<{ slug: string }[]>({
+		query: `*[_type == "event" && defined(slug.current)]{ "slug": slug.current }`,
+	});
+
+	return (data ?? []).map(({ slug }) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+
+const { data: event } = await loadQuery<EventDoc | null>({
+	query: `*[_type == "event" && slug.current == $slug][0]{
+		title,
+		slug,
+		date,
+		image { asset, alt },
+		description
+	}`,
+	params: { slug },
+});
+
+if (!event) {
+	return Astro.redirect('/404');
+}
+
+const [year, month, day] = event.date.split('-');
+const formattedDate = `${day}.${month}.${year}`;
+
+const IMAGE_WIDTHS = [320, 480, 640, 768, 960, 1200];
+
+function buildEventImage(image: NonNullable<EventDoc['image']>, width: number) {
+	return urlFor(image)
+		.width(width)
+		.height(width)
+		.fit('crop')
+		.auto('format')
+		.quality(75)
+		.url();
+}
+
+const eventImage = event.image?.asset ? event.image : undefined;
+const imageSrc = eventImage ? buildEventImage(eventImage, 768) : undefined;
+const imageSrcSet = eventImage
+	? IMAGE_WIDTHS.map((w) => `${buildEventImage(eventImage, w)} ${w}w`).join(
+			', ',
+		)
+	: undefined;
+---
+
+<Layout title={`${event.title} — Noima`}>
+	<article class="event">
+		<div class="container-x event-inner">
+			<div class="event-grid">
+				<div class="event-media">
+					{
+						imageSrc ? (
+							<img
+								src={imageSrc}
+								srcset={imageSrcSet}
+								sizes="(min-width: 900px) 35vw, min(22rem, 90vw)"
+								alt={event.image?.alt || event.title}
+								width="1600"
+								height="1600"
+								loading="eager"
+								decoding="async"
+								fetchpriority="high"
+								class="event-image"
+							/>
+						) : (
+							<div class="event-image event-image--placeholder grain" />
+						)
+					}
+				</div>
+
+				<div class="event-body">
+					<p class="event-date">{formattedDate}</p>
+					<h1 class="display event-title">{event.title}</h1>
+					{
+						event.description && (
+							<div class="event-description">
+								<PortableText value={event.description} />
+							</div>
+						)
+					}
+					<Button href="#rezerva" variant="dark" class="event-cta">
+						REZERVĂ UN LOC
+					</Button>
+				</div>
+			</div>
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.event {
+		background: var(--color-cream);
+		padding-top: var(--header-height);
+	}
+
+	.event-inner {
+		padding-block: 3.5rem 4rem;
+	}
+
+	.event-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.event-media {
+		max-width: 22rem;
+		margin-inline: 0;
+		width: 100%;
+	}
+
+	.event-image {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
+	}
+
+	.event-image--placeholder {
+		background: linear-gradient(135deg, #2a241f, #15110d);
+		position: relative;
+	}
+
+	.event-body {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		padding-inline: 0;
+	}
+
+	.event-date {
+		font-size: 0.9375rem;
+		color: var(--color-tan);
+		letter-spacing: 0.02em;
+	}
+
+	.event-title {
+		font-size: clamp(2.25rem, 3.4375vw, 4.125rem);
+		color: var(--color-ink);
+		max-width: 16ch;
+	}
+
+	.event-description {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: var(--color-ink);
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.event-description :global(p) {
+		margin: 0;
+	}
+
+	.event-description :global(a) {
+		color: var(--color-ink);
+		text-decoration: underline;
+	}
+
+	.event-description :global(h1),
+	.event-description :global(h2),
+	.event-description :global(h3),
+	.event-description :global(h4) {
+		font-weight: 700;
+		line-height: 1.2;
+		margin: 0;
+	}
+
+	.event-description :global(ul),
+	.event-description :global(ol) {
+		padding-left: 1.25rem;
+		margin: 0;
+	}
+
+	.event-cta {
+		align-self: flex-start;
+		margin-top: 1rem;
+	}
+
+	@media (min-width: 900px) {
+		.event-inner {
+			padding-block: 7rem 6rem;
+		}
+
+		.event-grid {
+			grid-template-columns: 7fr 13fr;
+			gap: 7rem;
+			align-items: center;
+		}
+
+		.event-media {
+			max-width: none;
+			margin-inline: 0;
+			width: auto;
+		}
+
+		.event-image {
+			aspect-ratio: 1 / 1;
+		}
+
+		.event-body {
+			gap: 2rem;
+		}
+
+		.event-description {
+			font-size: 1.0625rem;
+			line-height: 1.7;
+			max-width: 48ch;
+		}
+
+		.event-cta {
+			margin-top: 1rem;
+		}
+	}
+</style>
