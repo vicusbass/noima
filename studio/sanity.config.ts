@@ -18,6 +18,8 @@ export default defineConfig({
 							.child(
 								S.document().schemaType('homePage').documentId('homePage'),
 							),
+						S.divider(),
+						S.documentTypeListItem('event').title('Evenimente'),
 					]),
 		}),
 		muxInput(),
