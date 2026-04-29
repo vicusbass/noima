@@ -1,0 +1,425 @@
+---
+import { Image } from 'astro:assets';
+import EventBackground from '../assets/main/event-background.png';
+import Button from './Button.astro';
+
+interface EventItem {
+	_id: string;
+	title: string;
+	slug: string;
+	date: string;
+	summary?: string;
+}
+
+interface Props {
+	heading?: string;
+	calendarHref?: string;
+	events: EventItem[];
+}
+
+const {
+	heading = 'comunitate',
+	calendarHref = '/despre-noi#evenimente',
+	events,
+} = Astro.props;
+
+function truncate(text: string | undefined, max = 200) {
+	if (!text) return '';
+	const clean = text.replace(/\s+/g, ' ').trim();
+	if (clean.length <= max) return clean;
+	const slice = clean.slice(0, max);
+	const lastSpace = slice.lastIndexOf(' ');
+	return `${slice.slice(0, lastSpace > 80 ? lastSpace : max)}…`;
+}
+---
+
+{
+	events.length > 0 && (
+		<section id="evenimente" class="events-section py-16 md:py-24">
+			<div class="container-x">
+				<h2 class="display-lower events-heading">{heading}</h2>
+			</div>
+
+			<div class="container-x events-panel-wrap">
+				<div
+					class="events-panel"
+					data-events-carousel
+					data-count={events.length}
+				>
+					<div class="events-bg" aria-hidden="true">
+						<Image
+							src={EventBackground}
+							alt=""
+							widths={[960, 1440, 1920, 2560, 3200]}
+							sizes="(min-width: 1818px) 1818px, 100vw"
+							quality={85}
+							format="webp"
+							class="events-bg-img"
+						/>
+						<div class="events-bg-overlay" />
+					</div>
+
+					<a href={calendarHref} class="events-calendar-btn">
+						<svg
+							width="18"
+							height="18"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.6"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							<rect x="3" y="4" width="18" height="18" rx="2" />
+							<path d="M16 2v4M8 2v4M3 10h18" />
+						</svg>
+						<span>Vezi calendarul cu evenimente</span>
+					</a>
+
+					<div class="events-slides">
+						{events.map((event, i) => (
+							<article
+								class="events-slide"
+								data-slide-index={i}
+								data-active={i === 0 ? 'true' : 'false'}
+								aria-hidden={i === 0 ? 'false' : 'true'}
+							>
+								<h3
+								class="display events-slide-title"
+								transition:name={`event-title-${event.slug}`}
+							>
+								{event.title}
+							</h3>
+								{event.summary && (
+									<p class="events-slide-text">
+										{truncate(event.summary, 220)}
+									</p>
+								)}
+								<Button
+									href={`/evenimente/${event.slug}`}
+									variant="primary"
+									class="events-slide-cta"
+								>
+									VEZI EVENIMENTUL
+								</Button>
+							</article>
+						))}
+					</div>
+
+					{events.length > 1 && (
+						<>
+							<button
+								type="button"
+								class="events-arrow events-arrow--prev"
+								data-events-prev
+								aria-label="Evenimentul anterior"
+							>
+								<svg
+									width="14"
+									height="14"
+									viewBox="0 0 14 14"
+									fill="currentColor"
+									aria-hidden="true"
+								>
+									<path d="M14 0v14L0 7z" />
+								</svg>
+							</button>
+							<button
+								type="button"
+								class="events-arrow events-arrow--next"
+								data-events-next
+								aria-label="Evenimentul următor"
+							>
+								<svg
+									width="14"
+									height="14"
+									viewBox="0 0 14 14"
+									fill="currentColor"
+									aria-hidden="true"
+								>
+									<path d="M0 0v14l14-7z" />
+								</svg>
+							</button>
+
+							<div
+								class="events-dots"
+								role="tablist"
+								aria-label="Selectează evenimentul"
+							>
+								{events.map((event, i) => (
+									<button
+										type="button"
+										class="events-dot"
+										data-events-dot={i}
+										data-active={i === 0 ? 'true' : 'false'}
+										role="tab"
+										aria-selected={i === 0 ? 'true' : 'false'}
+										aria-label={`Eveniment ${i + 1}: ${event.title}`}
+									/>
+								))}
+							</div>
+						</>
+					)}
+				</div>
+			</div>
+		</section>
+	)
+}
+
+<style>
+	.events-heading {
+		font-size: clamp(2.375rem, 5vw, 6rem);
+		text-align: center;
+		color: #000;
+		margin-bottom: 2rem;
+		line-height: 1.05;
+	}
+
+	.events-panel {
+		position: relative;
+		overflow: hidden;
+		border-radius: 4px;
+		min-height: 480px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		padding: 1.5rem;
+		color: #fff;
+		isolation: isolate;
+	}
+
+	.events-bg {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+	}
+
+	.events-bg-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.events-bg-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.25) 0%,
+			rgba(0, 0, 0, 0.35) 40%,
+			rgba(0, 0, 0, 0.6) 100%
+		);
+	}
+
+	.events-calendar-btn {
+		position: absolute;
+		top: 1.5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.85rem 1.5rem;
+		font-size: 0.875rem;
+		letter-spacing: 0.02em;
+		color: #fff;
+		border: 1px solid rgba(255, 255, 255, 0.7);
+		background: transparent;
+		text-decoration: none;
+		white-space: nowrap;
+		transition:
+			background-color 0.25s ease,
+			color 0.25s ease;
+		z-index: 3;
+	}
+
+	.events-calendar-btn:hover {
+		background: rgba(255, 255, 255, 0.92);
+		color: #000;
+	}
+
+	.events-slides {
+		position: relative;
+		display: grid;
+	}
+
+	.events-slide {
+		grid-area: 1 / 1;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		max-width: 36rem;
+		opacity: 0;
+		transform: translateY(8px);
+		pointer-events: none;
+		transition:
+			opacity 0.4s ease,
+			transform 0.4s ease;
+	}
+
+	.events-slide[data-active='true'] {
+		opacity: 1;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+
+	.events-slide-title {
+		font-size: clamp(2rem, 4.5vw, 3.75rem);
+		color: #fff;
+		max-width: 14ch;
+	}
+
+	.events-slide-text {
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.92);
+		max-width: 36ch;
+	}
+
+	.events-slide-cta {
+		align-self: flex-start;
+		margin-top: 0.5rem;
+	}
+
+	.events-arrow {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 44px;
+		height: 44px;
+		border-radius: 999px;
+		display: grid;
+		place-items: center;
+		background: rgba(255, 255, 255, 0.18);
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		color: #fff;
+		cursor: pointer;
+		transition:
+			background-color 0.2s ease,
+			transform 0.2s ease;
+		z-index: 3;
+	}
+
+	.events-arrow:hover {
+		background: rgba(255, 255, 255, 0.32);
+	}
+
+	.events-arrow--prev {
+		left: 1rem;
+	}
+
+	.events-arrow--next {
+		right: 1rem;
+	}
+
+	.events-dots {
+		position: absolute;
+		bottom: 1rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 0.5rem;
+		z-index: 3;
+	}
+
+	.events-dot {
+		width: 28px;
+		height: 4px;
+		border-radius: 999px;
+		border: 0;
+		background: rgba(255, 255, 255, 0.4);
+		cursor: pointer;
+		padding: 0;
+		transition: background-color 0.2s ease;
+	}
+
+	.events-dot[data-active='true'] {
+		background: #fff;
+	}
+
+	@media (min-width: 900px) {
+		.events-panel {
+			min-height: 620px;
+			padding: 4rem 5rem;
+		}
+
+		.events-calendar-btn {
+			top: 3rem;
+		}
+
+		.events-slide {
+			gap: 1.5rem;
+		}
+
+		.events-slide-text {
+			font-size: 1rem;
+		}
+
+		.events-arrow--prev {
+			left: 1.5rem;
+		}
+
+		.events-arrow--next {
+			right: 1.5rem;
+		}
+
+		.events-dots {
+			bottom: 1.5rem;
+		}
+	}
+</style>
+
+<script>
+	function initCarousels() {
+		const carousels = document.querySelectorAll<HTMLElement>(
+			'[data-events-carousel]',
+		);
+
+		for (const carousel of carousels) {
+			if (carousel.dataset.eventsCarouselReady === 'true') continue;
+			carousel.dataset.eventsCarouselReady = 'true';
+
+			const slides = Array.from(
+				carousel.querySelectorAll<HTMLElement>('[data-slide-index]'),
+			);
+			const dots = Array.from(
+				carousel.querySelectorAll<HTMLButtonElement>('[data-events-dot]'),
+			);
+			const prev = carousel.querySelector<HTMLButtonElement>(
+				'[data-events-prev]',
+			);
+			const next = carousel.querySelector<HTMLButtonElement>(
+				'[data-events-next]',
+			);
+
+			if (slides.length <= 1) continue;
+
+			let current = 0;
+
+			function show(index: number) {
+				current = (index + slides.length) % slides.length;
+				slides.forEach((slide, i) => {
+					const isActive = i === current;
+					slide.dataset.active = isActive ? 'true' : 'false';
+					slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+				});
+				dots.forEach((dot, i) => {
+					const isActive = i === current;
+					dot.dataset.active = isActive ? 'true' : 'false';
+					dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+				});
+			}
+
+			prev?.addEventListener('click', () => show(current - 1));
+			next?.addEventListener('click', () => show(current + 1));
+			dots.forEach((dot, i) =>
+				dot.addEventListener('click', () => show(i)),
+			);
+		}
+	}
+
+	initCarousels();
+	document.addEventListener('astro:page-load', initCarousels);
+</script>

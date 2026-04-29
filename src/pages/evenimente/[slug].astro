@@ -93,7 +93,12 @@ const imageSrcSet = eventImage
 
 				<div class="event-body">
 					<p class="event-date">{formattedDate}</p>
-					<h1 class="display event-title">{event.title}</h1>
+					<h1
+						class="display event-title"
+						transition:name={`event-title-${slug}`}
+					>
+						{event.title}
+					</h1>
 					{
 						event.description && (
 							<div class="event-description">
