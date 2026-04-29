@@ -38,7 +38,10 @@
 				"styled-components",
 				"react-is"
 			]
-		}
+		},
+		"ignoredBuiltDependencies": [
+			"lefthook"
+		]
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.1",
