@@ -1,0 +1,149 @@
+---
+import { Image } from 'astro:assets';
+import HeroStain from '../../assets/contact/hero.png';
+import MapImage from '../../assets/contact/map.png';
+import { contactInfo } from '../../lib/contact';
+
+const { address } = contactInfo;
+---
+
+<section class="contact-hero">
+	<div class="container-x contact-hero-inner">
+		<div class="contact-title-wrap">
+			<h1 class="sr-only">Contact</h1>
+			<Image
+				src={HeroStain}
+				alt=""
+				widths={[600, 900, 1200, 1801]}
+				sizes="(min-width: 900px) 55vw, 100vw"
+				quality={90}
+				format="webp"
+				class="contact-title-img"
+				aria-hidden="true"
+			/>
+		</div>
+
+		<div class="contact-hero-aside">
+			<h2 class="section-heading contact-aside-heading">unde ne găsești</h2>
+
+			<div class="contact-map">
+				<Image
+					src={MapImage}
+					alt="Hartă cu locația prăjitoriei Noima în Cluj-Napoca"
+					widths={[480, 720, 960, 1352]}
+					sizes="(min-width: 900px) 50vw, 100vw"
+					quality={85}
+					format="webp"
+					class="contact-map-img"
+				/>
+			</div>
+
+			<address class="contact-address">
+				<p class="contact-address-label">Adresa:</p>
+				<p class="contact-address-lines">
+					<span>{address.street}</span>
+					<span>{address.city}, {address.postalCode}</span>
+				</p>
+			</address>
+		</div>
+	</div>
+</section>
+
+<style>
+	.contact-hero {
+		background: var(--color-surface);
+		padding-top: calc(var(--header-height) + 2.5rem);
+		padding-bottom: 3rem;
+	}
+
+	.contact-hero-inner {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		align-items: start;
+	}
+
+	.contact-title-wrap {
+		display: flex;
+		justify-content: flex-start;
+	}
+
+	.contact-title-img {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-width: 36rem;
+	}
+
+	.contact-aside-heading {
+		text-align: left;
+		font-size: clamp(1.6rem, 4vw, 2.5rem);
+		margin-bottom: 1.25rem;
+	}
+
+	.contact-map {
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.contact-map-img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.contact-address {
+		font-style: normal;
+		margin-top: 1.25rem;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 1rem 2rem;
+		font-size: 0.9375rem;
+		color: var(--color-ink);
+	}
+
+	.contact-address-label {
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.contact-address-lines {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	@media (min-width: 900px) {
+		.contact-hero {
+			padding-top: calc(var(--header-height) + 4rem);
+			padding-bottom: 5rem;
+		}
+
+		.contact-hero-inner {
+			grid-template-columns: 1.1fr 1fr;
+			gap: 4rem;
+			align-items: center;
+		}
+
+		.contact-title-img {
+			max-width: 100%;
+		}
+
+		.contact-aside-heading {
+			font-size: clamp(2rem, 3vw, 3rem);
+			margin-bottom: 1.75rem;
+		}
+
+		.contact-address {
+			font-size: 1rem;
+			margin-top: 1.5rem;
+			grid-template-columns: auto 1fr;
+			justify-content: space-between;
+		}
+
+		.contact-address-lines {
+			text-align: right;
+		}
+	}
+</style>
