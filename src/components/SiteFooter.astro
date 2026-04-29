@@ -2,57 +2,188 @@
 const year = new Date().getFullYear();
 
 const navLinks = [
-	{ label: 'Acasă', href: '/' },
-	{ label: 'Shop', href: '/shop' },
-	{ label: 'Despre noi', href: '/despre-noi' },
-	{ label: 'B2B', href: '/b2b' },
-	{ label: 'Contact', href: '/contact' },
+  { label: "Acasă", href: "/" },
+  { label: "Shop", href: "/shop" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Ajutor", href: "/ajutor" },
+];
+
+const legalLinks = [
+  {
+    label: "Politica de Confidențialitate",
+    href: "/politica-de-confidentialitate",
+  },
+  { label: "Termeni și Condiții", href: "/termeni-si-conditii" },
+  { label: "Setări Coookies", href: "/setari-cookies" },
 ];
 ---
 
-<footer class="bg-black text-white">
-	<div class="container-x py-20 grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
-		<div>
-			<div class="text-4xl font-black tracking-tight">noima</div>
-			<p class="mt-4 max-w-sm text-sm text-white/70 leading-relaxed">
-				Prăjitorie și cafea cu sens. Lotări alese atent, profiluri echilibrate,
-				gesturi comune.
-			</p>
-		</div>
+<footer class="bg-surface text-ink">
+  <div class="container-x pt-16 pb-12 md:pt-20 md:pb-16">
+    <div class="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
+      <!-- Col 1: Brand -->
+      <div
+        class="flex flex-col items-center text-center md:items-start md:text-left"
+      >
+        <a href="/" aria-label="Noima acasă">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1219.3 448.61"
+            class="h-10 w-auto fill-current"
+            aria-hidden="true"
+          >
+            <path
+              d="M274.4,260.42c0-60.81,47.21-106.82,109.62-106.82s109.62,46.01,109.62,106.82-47.21,106.82-109.62,106.82-109.62-46.01-109.62-106.82ZM440.03,260.42c0-32.01-23.6-56.41-56.01-56.41s-56.01,24.4-56.01,56.41,24,56.41,56.01,56.41,56.01-24.4,56.01-56.41Z"
+            ></path>
+            <path
+              d="M508.03,97.2c0-18.4,14.4-32.4,32.81-32.4s32.8,14,32.8,32.4-14.4,32.4-32.8,32.4-32.81-14-32.81-32.4ZM514.84,158.41h52.01v204.03h-52.01v-204.03Z"
+            ></path>
+            <path
+              d="M600.45,158.41h52.01v10.37c0,8.41,10.51,12.32,15.94,5.9,9.38-11.1,23.62-21.07,44.47-21.07,29.2,0,52.41,13.2,64.81,35.21,16-22.8,40.01-35.21,70.01-35.21,44.81,0,74.81,30,74.81,76.01v132.82h-52.01v-117.22c0-24.8-15.6-41.21-40.01-41.21-25.6,0-42.81,16.8-42.81,42.01v116.42h-52.01v-117.22c0-24.8-16-41.21-40.01-41.21-25.6,0-43.21,16.8-43.21,42.01v116.42h-52.01v-204.03Z"
+            ></path>
+            <path
+              d="M942.49,260.42c0-60.81,42.81-106.82,99.62-106.82,24.45,0,40.31,10.68,50.37,22.51,5.5,6.47,16.04,2.71,16.04-5.78v-11.93h52.01v204.03h-52.01v-24c-16.4,18-39.21,28.8-66.41,28.8-56.81,0-99.62-46.01-99.62-106.82ZM1108.51,260.42c0-32.01-24-56.41-56.41-56.41s-56.01,24.4-56.01,56.41,24,56.41,56.01,56.41,56.41-24.4,56.41-56.41Z"
+            ></path>
+            <path
+              d="M181.37,153.8c-27.99-2.15-66.51,15.97-64.45,60.07.46,9.81,2.39,22.21,6.52,37.82,7.89,29.83,2.43,51.05-12.32,51.05s-17.68-17.24-15.9-29.52c3.19-22.05,15.15-54.34,15.15-91.05v-23.8h-51.59v204.03h51.59v-33.16c37.18,0,46.33-27.45,29.26-65.51-3.58-7.97-6.3-14.93-8.37-20.95-6.47-18.78,7.25-38.67,27.12-38.8.14,0,.28,0,.42,0,26.8,0,44.41,18,44.41,45.61v112.82h52.01v-127.73c0-41.99-31.97-77.66-73.84-80.88ZM124.86,215.34"
+            ></path>
+          </svg>
+        </a>
 
-		<nav aria-label="Footer navigation">
-			<h3 class="eyebrow text-white/50">Meniu</h3>
-			<ul class="mt-5 space-y-3">
-				{
-					navLinks.map((l) => (
-						<li>
-							<a
-								href={l.href}
-								class="text-base hover:text-[var(--color-tan)] transition-colors"
-							>
-								{l.label}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</nav>
+        <!-- Social icons -->
+        <div class="mt-6 flex gap-5 order-3 md:order-2">
+          <!-- Facebook -->
+          <a
+            href="#"
+            aria-label="Facebook"
+            class="text-mute hover:text-ink transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="h-6 w-6 fill-current"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"
+              ></path>
+            </svg>
+          </a>
+          <!-- Instagram -->
+          <a
+            href="#"
+            aria-label="Instagram"
+            class="text-mute hover:text-ink transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="h-6 w-6 fill-current"
+              aria-hidden="true"
+            >
+              <path
+                d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2A5.8 5.8 0 0 1 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2M7.6 4A3.6 3.6 0 0 0 4 7.6V16.4C4 18.39 5.61 20 7.6 20H16.4A3.6 3.6 0 0 0 20 16.4V7.6C20 5.61 18.39 4 16.4 4H7.6M17.25 5.5A1.25 1.25 0 0 1 18.5 6.75A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75A1.25 1.25 0 0 1 17.25 5.5M12 7A5 5 0 0 1 17 12A5 5 0 0 1 12 17A5 5 0 0 1 7 12A5 5 0 0 1 12 7M12 9A3 3 0 0 0 9 12A3 3 0 0 0 12 15A3 3 0 0 0 15 12A3 3 0 0 0 12 9Z"
+              ></path>
+            </svg>
+          </a>
+          <!-- WhatsApp -->
+          <a
+            href="#"
+            aria-label="WhatsApp"
+            class="text-mute hover:text-ink transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="h-6 w-6 fill-current"
+              aria-hidden="true"
+            >
+              <path
+                d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8 12.27C8.14 12.44 9.76 14.94 12.25 16C12.84 16.27 13.3 16.42 13.66 16.53C14.25 16.72 14.79 16.69 15.22 16.63C15.7 16.56 16.68 16.03 16.89 15.45C17.1 14.87 17.1 14.38 17.04 14.27C16.97 14.17 16.81 14.1 16.56 13.98C16.31 13.86 15.09 13.26 14.87 13.18C14.64 13.1 14.5 13.06 14.31 13.31C14.13 13.55 13.67 14.1 13.53 14.27C13.38 14.44 13.24 14.46 13 14.34C12.75 14.21 11.97 13.96 11.04 13.13C10.32 12.49 9.84 11.7 9.7 11.46C9.56 11.21 9.68 11.08 9.81 10.96C9.93 10.85 10.06 10.67 10.19 10.53C10.31 10.4 10.35 10.3 10.43 10.14C10.51 9.97 10.47 9.83 10.41 9.71C10.35 9.59 9.86 8.36 9.65 7.87C9.45 7.39 9.24 7.46 9.09 7.45C8.94 7.45 8.78 7.44 8.61 7.44L8.53 7.33Z"
+              ></path>
+            </svg>
+          </a>
+          <!-- Email -->
+          <a
+            href="#"
+            aria-label="Email"
+            class="text-mute hover:text-ink transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="h-6 w-6 fill-current"
+              aria-hidden="true"
+            >
+              <path
+                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+              ></path>
+            </svg>
+          </a>
+        </div>
 
-		<div>
-			<h3 class="eyebrow text-white/50">Contact</h3>
-			<ul class="mt-5 space-y-3 text-base text-white/80">
-				<li>hello@noima.ro</li>
-				<li>+40 700 000 000</li>
-			</ul>
-		</div>
-	</div>
+        <!-- Tagline (desktop only, after icons) -->
+        <p class="eyebrow mt-6 text-mute order-2 md:order-3">
+          Prăjitorie<br />și cafea cu sens
+        </p>
+      </div>
 
-	<div class="border-t border-white/10">
-		<div
-			class="container-x py-6 text-xs text-white/50 flex flex-col md:flex-row gap-3 md:items-center md:justify-between"
-		>
-			<span>© {year} Noima. Toate drepturile rezervate.</span>
-			<span>Prăjită la Cluj</span>
-		</div>
-	</div>
+      <!-- Col 2: Nav — hidden on mobile -->
+      <nav class="hidden md:block" aria-label="Footer navigation">
+        <ul class="space-y-4">
+          {
+            navLinks.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  class="text-base text-mute hover:text-ink transition-colors"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Col 3: Contact — hidden on mobile -->
+      <div class="hidden md:block">
+        <ul class="space-y-4 text-base text-mute">
+          <li>contact@noima.ro</li>
+          <li>0755123456</li>
+          <li>Strada Bobâlnei, nr. 1</li>
+          <li>Cluj-Napoca</li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Legal -->
+      <div
+        class="flex flex-col items-center md:items-start text-center md:text-left"
+      >
+        <ul class="space-y-4">
+          {
+            legalLinks.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  class="text-base text-mute hover:text-ink transition-colors"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-line">
+    <div
+      class="container-x py-5 text-xs text-mute flex flex-col items-center gap-2 md:flex-row md:justify-between"
+    >
+      <span>design by Symbold ®</span>
+      <span>© {year} Noima. Toate drepturile rezervate.</span>
+    </div>
+  </div>
 </footer>
