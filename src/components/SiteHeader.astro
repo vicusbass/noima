@@ -10,7 +10,7 @@ const links = [
 ];
 ---
 
-<header class="site-header">
+<header class="site-header" transition:persist>
   <div
     class="site-header-inner flex items-center justify-between h-(--header-height) px-5 md:px-8 xl:px-15"
   >
@@ -80,6 +80,7 @@ const links = [
   class="mobile-menu md:hidden"
   data-open="false"
   aria-hidden="true"
+  transition:persist
 >
   <nav
     class="container-x flex flex-col gap-6 pt-[calc(var(--header-height)+var(--site-inset)*2+1.5rem)] pb-8"
@@ -108,18 +109,18 @@ const links = [
     width: calc(100% - var(--site-inset) * 2);
     max-width: var(--container-max);
     z-index: 40;
-    color: #fff;
+    color: var(--color-header-fg);
   }
 
   .site-header-inner {
-    background: rgba(20, 20, 20, 0.18);
+    background: var(--color-header-bg);
     backdrop-filter: blur(20px) saturate(140%);
     -webkit-backdrop-filter: blur(20px) saturate(140%);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .cart-btn {
-    color: #fff;
+    color: var(--color-header-fg);
     background: transparent;
   }
   .cart-btn:hover {
@@ -127,7 +128,7 @@ const links = [
   }
 
   .mobile-toggle {
-    color: #fff;
+    color: var(--color-header-fg);
     background: transparent;
   }
 
@@ -159,10 +160,10 @@ const links = [
     position: fixed;
     inset: 0;
     z-index: 30;
-    background: rgba(20, 20, 20, 0.18);
+    background: var(--color-header-bg);
     backdrop-filter: blur(20px) saturate(140%);
     -webkit-backdrop-filter: blur(20px) saturate(140%);
-    color: #fff;
+    color: var(--color-header-fg);
     transform-origin: top center;
     transform: scaleY(0);
     opacity: 0;

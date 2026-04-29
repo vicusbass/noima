@@ -12,6 +12,9 @@
 	--color-line: #e2e2e2;
 	--color-line-soft: #d0d0d0;
 	--color-surface: #ffffff;
+
+	--color-header-bg: rgba(31, 31, 30, 0.55);
+	--color-header-fg: #ffffff;
 }
 
 :root {

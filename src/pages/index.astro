@@ -1,10 +1,11 @@
 ---
-import FeaturedProducts from '../components/FeaturedProducts.astro';
+import EventsSection from '../components/EventsSection.astro';
+// import FeaturedProducts from '../components/FeaturedProducts.astro';
 import Hero from '../components/Hero.astro';
 import OfferingSection from '../components/OfferingSection.astro';
 import WhySection from '../components/WhySection.astro';
 import Layout from '../layouts/Layout.astro';
-import { getFeaturedProducts } from '../lib/shopify';
+// import { getFeaturedProducts } from '../lib/shopify';
 import { loadQuery } from '../sanity/lib/load-query';
 
 const HOME_QUERY = `*[_type == "homePage" && _id == "homePage"][0]{
@@ -34,12 +35,33 @@ const { data: homePage } = await loadQuery<{
 	};
 }>({ query: HOME_QUERY });
 
-const products = await getFeaturedProducts(4);
+const today = new Date().toISOString().slice(0, 10);
+
+const EVENTS_QUERY = `*[_type == "event" && date >= $today] | order(date asc){
+	_id,
+	title,
+	"slug": slug.current,
+	date,
+	"summary": pt::text(description)
+}`;
+
+const { data: events } = await loadQuery<
+	{
+		_id: string;
+		title: string;
+		slug: string;
+		date: string;
+		summary?: string;
+	}[]
+>({ query: EVENTS_QUERY, params: { today } });
+
+// const products = await getFeaturedProducts(4);
 ---
 
 <Layout title={homePage?.title || 'Noima — Prăjitorie și cafea cu sens'}>
 	<Hero hero={homePage?.hero ?? {}} />
 	<WhySection />
-	<FeaturedProducts products={products} />
+	{/* <FeaturedProducts products={products} /> */}
 	<OfferingSection />
+	<EventsSection events={events ?? []} />
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import '../styles/global.css';
@@ -24,6 +25,7 @@ const {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<Font cssVariable="--font-google-sans" preload />
 		<title>{title}</title>
+		<ClientRouter />
 	</head>
 	<body class="min-h-screen flex flex-col">
 		<SiteHeader />
