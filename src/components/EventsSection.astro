@@ -37,7 +37,7 @@ function truncate(text: string | undefined, max = 200) {
 	events.length > 0 && (
 		<section id="evenimente" class="events-section py-16 md:py-24">
 			<div class="container-x">
-				<h2 class="display-lower events-heading">{heading}</h2>
+				<h2 class="section-heading events-heading">{heading}</h2>
 			</div>
 
 			<div class="container-x events-panel-wrap">
@@ -169,11 +169,7 @@ function truncate(text: string | undefined, max = 200) {
 
 <style>
 	.events-heading {
-		font-size: clamp(2.375rem, 5vw, 6rem);
-		text-align: center;
-		color: #000;
 		margin-bottom: 2rem;
-		line-height: 1.05;
 	}
 
 	.events-panel {

@@ -60,10 +60,13 @@ body {
 	text-transform: uppercase;
 }
 
-.display-lower {
-	font-weight: 900;
+.section-heading {
+	font-weight: 700;
 	letter-spacing: -0.015em;
-	line-height: 1;
+	line-height: 1.05;
+	font-size: clamp(1.9rem, 4vw, 4.8rem);
+	text-align: center;
+	color: #000;
 }
 
 .eyebrow {
