@@ -1,0 +1,146 @@
+---
+import { Image } from 'astro:assets';
+import squareImg from '../../assets/cafenea/square.png';
+
+interface MenuItem {
+	_key: string;
+	name: string;
+	price: number;
+}
+
+interface Props {
+	items?: MenuItem[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+{
+	items.length > 0 && (
+		<section id="meniu" class="menu-section py-16 md:py-24">
+			<div class="container-x">
+				<h2 class="section-heading mb-10 md:mb-14">meniu</h2>
+
+				<div class="menu-panel">
+					<div class="menu-layout">
+						<div class="menu-image-wrap">
+							<Image
+								src={squareImg}
+								alt=""
+								class="menu-image"
+								loading="lazy"
+							/>
+						</div>
+
+						<ul class="menu-list">
+							{items.map((item) => (
+								<li class="menu-row">
+									<span class="menu-name">{item.name}</span>
+									<span class="menu-leader" aria-hidden="true" />
+									<span class="menu-price">{item.price}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	)
+}
+
+<style>
+	.menu-section {
+		background: transparent;
+	}
+
+	.menu-panel {
+		background: var(--color-surface);
+		padding: 2.5rem 1.5rem;
+	}
+
+	@media (min-width: 768px) {
+		.menu-panel {
+			padding: 4rem 3rem;
+		}
+	}
+
+	.menu-layout {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		align-items: center;
+	}
+
+	.menu-image-wrap {
+		display: flex;
+		justify-content: center;
+	}
+
+	.menu-image {
+		width: 100%;
+		max-width: 220px;
+		height: auto;
+		display: block;
+	}
+
+	.menu-list {
+		list-style: none;
+		margin: 0;
+		padding: 0 0 0 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.9rem;
+	}
+
+	@media (min-width: 768px) {
+		.menu-list {
+			padding-left: 3rem;
+		}
+	}
+
+	.menu-row {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: end;
+		gap: 0.75rem;
+		font-size: clamp(1rem, 1.3vw, 1.125rem);
+		line-height: 1.2;
+	}
+
+	.menu-name {
+		color: var(--color-ink);
+	}
+
+	.menu-leader {
+		display: block;
+		height: 0;
+		border-top: 1px solid var(--color-line-soft);
+		transform: translateY(-0.35em);
+	}
+
+	.menu-price {
+		color: var(--color-ink);
+		font-variant-numeric: tabular-nums;
+	}
+
+	@media (min-width: 900px) {
+		.menu-layout {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			gap: 4rem;
+		}
+
+		/* Desktop: list on the left, image on the right */
+		.menu-image-wrap {
+			order: 2;
+		}
+
+		.menu-list {
+			order: 1;
+			max-width: 520px;
+		}
+
+		.menu-image {
+			max-width: 360px;
+		}
+	}
+</style>

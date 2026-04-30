@@ -74,11 +74,11 @@ To deploy schema or Studio changes:
 
 ```bash
 pnpm --filter noima-studio schema:deploy   # Push schema to Content Lake
-pnpm --filter noima-studio run deploy          # Deploy Studio to noima.sanity.studio
+pnpm --filter noima-studio run deploy      # Deploy Studio to noima.sanity.studio
 pnpm --filter noima-studio typegen         # Generate TypeScript types from schema + GROQ
 ```
 
-You can also `cd studio` and run `pnpm dev`, `pnpm deploy`, etc. directly.
+> **Note:** Use `run deploy` (not `deploy`) — `pnpm deploy` is a reserved pnpm command and will fail with `ERR_PNPM_INVALID_DEPLOY_TARGET`. The same applies inside `cd studio` (use `pnpm run deploy`). Other scripts like `dev`, `schema:deploy`, and `typegen` work without `run` because their names don't collide with built-ins.
 
 #### Typical schema-change flow
 

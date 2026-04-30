@@ -18,6 +18,15 @@ export default defineConfig({
 							.child(
 								S.document().schemaType('homePage').documentId('homePage'),
 							),
+						S.listItem()
+							.title('Pagina cafenea')
+							.id('cafeneaPage')
+							.child(
+								S.document()
+									.schemaType('cafeneaPage')
+									.documentId('cafeneaPage')
+									.title('Cafenea'),
+							),
 						S.divider(),
 						S.documentTypeListItem('event').title('Evenimente'),
 					]),
