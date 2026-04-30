@@ -3,17 +3,51 @@ import { Font } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import { contactInfo } from '../lib/contact';
 import '../styles/global.css';
 
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
-	title = 'Noima — Prăjitorie și cafea cu sens',
-	description = 'Prăjitorie de cafea cu sens. Cafea de specialitate prăjită de oameni care trăiesc din cafea de 18 ani.',
+	title = 'Noima — Prăjitorie de cafea de specialitate în Cluj',
+	description = 'Cafea de specialitate prăjită în Cluj-Napoca. Single origin și blend-uri locale, prăjite proaspăt de oameni care trăiesc din cafea de 18 ani.',
+	image = '/og.png',
+	jsonLd,
 } = Astro.props;
+
+const baseUrl = Astro.site ?? Astro.url;
+const ogImage = new URL(image, baseUrl).href;
+const canonical = new URL(Astro.url.pathname, baseUrl).href;
+const siteUrl = new URL('/', baseUrl).href;
+
+const organizationSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	'@id': `${siteUrl}#organization`,
+	name: 'Noima',
+	alternateName: 'Prăjitoria Noima',
+	url: siteUrl,
+	logo: new URL('/og.png', baseUrl).href,
+	email: contactInfo.email,
+	telephone: contactInfo.phone,
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: contactInfo.address.street,
+		addressLocality: contactInfo.address.city,
+		postalCode: contactInfo.address.postalCode,
+		addressCountry: 'RO',
+	},
+};
+
+const schemas = [
+	organizationSchema,
+	...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
+];
 ---
 
 <!doctype html>
@@ -22,9 +56,33 @@ const {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Noima" />
+		<meta property="og:locale" content="ro_RO" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Noima — prăjitorie și cafea cu sens" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
 		<Font cssVariable="--font-google-sans" preload />
 		<title>{title}</title>
+		{
+			schemas.map((schema) => (
+				<script
+					is:inline
+					type="application/ld+json"
+					set:html={JSON.stringify(schema)}
+				/>
+			))
+		}
 		<ClientRouter />
 	</head>
 	<body class="min-h-screen flex flex-col">
