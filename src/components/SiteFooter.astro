@@ -1,5 +1,9 @@
 ---
+import { contactInfo } from '../lib/contact';
+
 const year = new Date().getFullYear();
+
+const { email, phone, address } = contactInfo;
 
 const navLinks = [
 	{ label: 'Acasă', href: '/' },
@@ -149,10 +153,10 @@ const legalLinks = [
       <!-- Col 3: Contact — hidden on mobile -->
       <div class="hidden md:block">
         <ul class="space-y-4 text-base text-mute">
-          <li>contact@noima.ro</li>
-          <li>0755123456</li>
-          <li>Strada Bobâlnei, nr. 1</li>
-          <li>Cluj-Napoca</li>
+          <li>{email}</li>
+          <li>{phone}</li>
+          <li>{address.street}</li>
+          <li>{address.city}</li>
         </ul>
       </div>
 
