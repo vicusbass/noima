@@ -1,5 +1,6 @@
 ---
 import CafeneaHero from '../components/cafenea/CafeneaHero.astro';
+import ContactSection from '../components/cafenea/ContactSection.astro';
 import EventsCarousel from '../components/cafenea/EventsCarousel.astro';
 import LocationSection from '../components/cafenea/LocationSection.astro';
 import MenuSection from '../components/cafenea/MenuSection.astro';
@@ -69,6 +70,7 @@ const { data: cafeneaPage } = await loadQuery<{
 		<MenuSection items={cafeneaPage?.menuItems ?? []} />
 		<EventsCarousel events={events ?? []} />
 		<LocationSection gallery={cafeneaPage?.locationGallery} />
+		<ContactSection />
 	</div>
 </Layout>
 
