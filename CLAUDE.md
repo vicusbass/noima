@@ -12,7 +12,7 @@ Marketing/content site with Astro (TypeScript, hybrid rendering), Sanity CMS, Ta
 pnpm install                              # Install deps for both workspaces
 pnpm dev                                  # Start Astro dev server
 pnpm --filter noima-studio dev            # Start local Sanity Studio at localhost:3333
-pnpm --filter noima-studio deploy         # Deploy Studio to noima.sanity.studio
+pnpm --filter noima-studio run deploy     # Deploy Studio to noima.sanity.studio (use `run` — `pnpm deploy` is a reserved built-in)
 pnpm build                                # Production build (Astro)
 pnpm preview                              # Preview production build locally
 pnpm --filter noima-studio schema:deploy  # Deploy schema to Content Lake (required for MCP tools)
