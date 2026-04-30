@@ -33,5 +33,25 @@ const {
 			<slot />
 		</main>
 		<SiteFooter />
+		<script>
+			import Lenis from 'lenis';
+
+			const INIT_FLAG = '__lenisInitialized';
+			if (!(INIT_FLAG in document.documentElement.dataset)) {
+				document.documentElement.dataset[INIT_FLAG] = 'true';
+
+				const lenis = new Lenis({
+					autoRaf: true,
+					autoToggle: true,
+					anchors: true,
+					lerp: 0.13,
+					wheelMultiplier: 1.1,
+				});
+
+				document.addEventListener('astro:after-swap', () => {
+					lenis.scrollTo(0, { immediate: true });
+				});
+			}
+		</script>
 	</body>
 </html>
