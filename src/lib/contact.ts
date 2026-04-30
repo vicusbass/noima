@@ -1,14 +1,14 @@
 export const contactInfo = {
 	email: 'hello@prajitorianoima.ro',
-	phone: '+40 721 000 000',
-	phoneHref: 'tel:+40721000000',
+	phone: '+40743595002',
+	phoneHref: 'tel:+40743595002',
 	address: {
 		street: 'Strada Bobâlnei, 18',
 		city: 'Cluj-Napoca',
-		postalCode: '400300',
+		postalCode: '400628',
 	},
 	hours: [
-		{ days: 'Luni – Vineri', time: '09:00 – 18:00' },
-		{ days: 'Sâmbătă', time: '10:00 – 14:00' },
+		{ days: 'Luni – Sâmbătă', time: '07:30 – 19:00' },
+		{ days: 'Duminică', time: '09:00 – 15:00' },
 	],
 } as const;
