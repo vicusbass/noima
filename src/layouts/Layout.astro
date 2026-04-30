@@ -49,7 +49,7 @@ const {
 				});
 
 				document.addEventListener('astro:after-swap', () => {
-					lenis.scrollTo(0, { immediate: true });
+					lenis.scrollTo(window.scrollY, { immediate: true, force: true });
 				});
 			}
 		</script>
