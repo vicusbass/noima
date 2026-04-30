@@ -11,7 +11,7 @@ const links = [
 ];
 ---
 
-<header class="site-header" transition:persist>
+<header class="site-header" transition:persist="site-header">
   <div
     class="site-header-inner flex items-center justify-between h-(--header-height) px-5 md:px-8 xl:px-15"
   >
@@ -81,7 +81,7 @@ const links = [
   class="mobile-menu md:hidden"
   data-open="false"
   aria-hidden="true"
-  transition:persist
+  transition:persist="mobile-menu"
 >
   <nav
     class="container-x flex flex-col gap-6 pt-[calc(var(--header-height)+var(--site-inset)*2+1.5rem)] pb-8"
