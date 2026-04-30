@@ -1,0 +1,161 @@
+---
+import { urlFor } from '../../sanity/lib/image';
+
+type SanityImage =
+	| {
+			asset?: { _ref?: string };
+			alt?: string;
+	  }
+	| null
+	| undefined;
+
+interface Props {
+	gallery?: {
+		topLeft?: SanityImage;
+		topCenter?: SanityImage;
+		topRight?: SanityImage;
+		bottomLeft?: SanityImage;
+		bottomCenter?: SanityImage;
+		bottomRight?: SanityImage;
+	};
+}
+
+const { gallery } = Astro.props;
+
+type Shape = 'square' | 'wide';
+
+interface Slot {
+	key: string;
+	shape: Shape;
+	gridArea: string;
+	sanity: SanityImage;
+}
+
+const slots: Slot[] = [
+	{
+		key: 'topLeft',
+		shape: 'square',
+		gridArea: '1 / 1 / 2 / 4',
+		sanity: gallery?.topLeft,
+	},
+	{
+		key: 'topCenter',
+		shape: 'wide',
+		gridArea: '1 / 4 / 2 / 10',
+		sanity: gallery?.topCenter,
+	},
+	{
+		key: 'topRight',
+		shape: 'square',
+		gridArea: '1 / 10 / 2 / 13',
+		sanity: gallery?.topRight,
+	},
+	{
+		key: 'bottomLeft',
+		shape: 'square',
+		gridArea: '2 / 1 / 3 / 4',
+		sanity: gallery?.bottomLeft,
+	},
+	{
+		key: 'bottomCenter',
+		shape: 'square',
+		gridArea: '2 / 4 / 3 / 7',
+		sanity: gallery?.bottomCenter,
+	},
+	{
+		key: 'bottomRight',
+		shape: 'wide',
+		gridArea: '2 / 7 / 3 / 13',
+		sanity: gallery?.bottomRight,
+	},
+];
+
+const allSlotsFilled = slots.every((s) => Boolean(s.sanity?.asset?._ref));
+
+function buildSanityUrl(img: SanityImage, shape: Shape) {
+	const ratio = shape === 'wide' ? [1600, 800] : [800, 800];
+	return urlFor(img as never)
+		.width(ratio[0])
+		.height(ratio[1])
+		.fit('crop')
+		.auto('format')
+		.url();
+}
+---
+
+{
+	allSlotsFilled && (
+		<section class="location-section py-16 md:py-24">
+			<div class="container-x">
+				<h2 class="section-heading mb-10 md:mb-14">locație</h2>
+
+				<div class="location-grid">
+					{slots.map((slot) => (
+						<div
+							class="location-cell"
+							data-shape={slot.shape}
+							style={`--ga: ${slot.gridArea};`}
+						>
+							<img
+								src={buildSanityUrl(slot.sanity, slot.shape)}
+								alt={slot.sanity?.alt || ''}
+								loading="lazy"
+								class="location-img"
+							/>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+	)
+}
+
+<style>
+	.location-section {
+		background: transparent;
+	}
+
+	.location-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.75rem;
+	}
+
+	.location-cell {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.location-cell[data-shape='square'] {
+		aspect-ratio: 1 / 1;
+	}
+
+	.location-cell[data-shape='wide'] {
+		aspect-ratio: 2 / 1;
+	}
+
+	@media (min-width: 900px) {
+		.location-grid {
+			grid-template-columns: repeat(12, 1fr);
+			gap: 1rem;
+		}
+
+		.location-cell {
+			grid-area: var(--ga);
+		}
+
+		/* Squares drive row height via aspect-ratio; wides stretch to match. */
+		.location-cell[data-shape='wide'] {
+			aspect-ratio: auto;
+		}
+	}
+
+	.location-img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+</style>

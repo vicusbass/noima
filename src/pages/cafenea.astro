@@ -1,0 +1,79 @@
+---
+import CafeneaHero from '../components/cafenea/CafeneaHero.astro';
+import EventsCarousel from '../components/cafenea/EventsCarousel.astro';
+import LocationSection from '../components/cafenea/LocationSection.astro';
+import MenuSection from '../components/cafenea/MenuSection.astro';
+import Layout from '../layouts/Layout.astro';
+import { loadQuery } from '../sanity/lib/load-query';
+
+const today = new Date().toISOString().slice(0, 10);
+
+const EVENTS_QUERY = `*[_type == "event" && date >= $today] | order(date asc){
+	_id,
+	title,
+	"slug": slug.current,
+	date,
+	image {
+		asset,
+		alt
+	}
+}`;
+
+const { data: events } = await loadQuery<
+	{
+		_id: string;
+		title: string;
+		slug: string;
+		date: string;
+		image: { asset: { _ref: string }; alt?: string };
+	}[]
+>({ query: EVENTS_QUERY, params: { today } });
+
+type GalleryImage = { asset?: { _ref?: string }; alt?: string } | null;
+
+const CAFENEA_QUERY = `*[_type == "cafeneaPage" && _id == "cafeneaPage"][0]{
+	menuItems[]{
+		_key,
+		name,
+		price
+	},
+	locationGallery {
+		topLeft { asset, alt },
+		topCenter { asset, alt },
+		topRight { asset, alt },
+		bottomLeft { asset, alt },
+		bottomCenter { asset, alt },
+		bottomRight { asset, alt }
+	}
+}`;
+
+const { data: cafeneaPage } = await loadQuery<{
+	menuItems?: { _key: string; name: string; price: number }[];
+	locationGallery?: {
+		topLeft?: GalleryImage;
+		topCenter?: GalleryImage;
+		topRight?: GalleryImage;
+		bottomLeft?: GalleryImage;
+		bottomCenter?: GalleryImage;
+		bottomRight?: GalleryImage;
+	};
+} | null>({ query: CAFENEA_QUERY });
+---
+
+<Layout
+	title="Cafenea — Noima"
+	description="Cafeneaua Noima — locul unde cafeaua de specialitate prinde viață."
+>
+	<div class="cafenea-page">
+		<CafeneaHero />
+		<MenuSection items={cafeneaPage?.menuItems ?? []} />
+		<EventsCarousel events={events ?? []} />
+		<LocationSection gallery={cafeneaPage?.locationGallery} />
+	</div>
+</Layout>
+
+<style>
+	.cafenea-page {
+		background: var(--color-cream);
+	}
+</style>

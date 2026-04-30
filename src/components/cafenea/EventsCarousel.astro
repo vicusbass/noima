@@ -1,0 +1,378 @@
+---
+import { urlFor } from '../../sanity/lib/image';
+
+interface EventItem {
+	_id: string;
+	title: string;
+	slug: string;
+	date: string;
+	image: {
+		asset: { _ref: string };
+		alt?: string;
+	};
+}
+
+interface Props {
+	heading?: string;
+	events: EventItem[];
+}
+
+const { heading = 'evenimente', events } = Astro.props;
+---
+
+{
+	events.length > 0 && (
+		<section class="events-carousel-section py-16 md:py-24">
+			<div class="container-x">
+				<h2 class="section-heading mb-10 md:mb-14">{heading}</h2>
+			</div>
+
+			<div
+				class="events-carousel"
+				data-events-carousel
+				data-count={events.length}
+			>
+				<div class="events-track" data-events-track>
+					{events.map((event, i) => (
+						<a
+							href={`/evenimente/${event.slug}`}
+							class="events-card"
+							data-card-index={i}
+						>
+							<img
+								src={urlFor(event.image)
+									.width(900)
+									.height(900)
+									.fit('crop')
+									.auto('format')
+									.url()}
+								alt={event.image.alt || ''}
+								loading={i < 3 ? 'eager' : 'lazy'}
+								class="events-card-img"
+							/>
+							<div class="events-card-overlay" aria-hidden="true" />
+							<h3
+								class="display events-card-title"
+								transition:name={`event-title-${event.slug}`}
+							>
+								{event.title}
+							</h3>
+							<span class="events-card-cta">VEZI EVENIMENTUL</span>
+						</a>
+					))}
+				</div>
+
+				{events.length > 1 && (
+					<>
+						<button
+							type="button"
+							class="events-arrow events-arrow--prev"
+							data-events-prev
+							aria-label="Evenimentul anterior"
+						>
+							<svg
+								width="14"
+								height="14"
+								viewBox="0 0 14 14"
+								fill="currentColor"
+								aria-hidden="true"
+							>
+								<path d="M14 0v14L0 7z" />
+							</svg>
+						</button>
+						<button
+							type="button"
+							class="events-arrow events-arrow--next"
+							data-events-next
+							aria-label="Evenimentul următor"
+						>
+							<svg
+								width="14"
+								height="14"
+								viewBox="0 0 14 14"
+								fill="currentColor"
+								aria-hidden="true"
+							>
+								<path d="M0 0v14l14-7z" />
+							</svg>
+						</button>
+					</>
+				)}
+			</div>
+
+			{events.length > 1 && (
+				<div
+					class="events-dots"
+					role="tablist"
+					aria-label="Selectează evenimentul"
+					data-events-dots
+				>
+					{events.map((event, i) => (
+						<button
+							type="button"
+							class="events-dot"
+							data-events-dot={i}
+							data-active={i === 0 ? 'true' : 'false'}
+							role="tab"
+							aria-selected={i === 0 ? 'true' : 'false'}
+							aria-label={`Eveniment ${i + 1}: ${event.title}`}
+						/>
+					))}
+				</div>
+			)}
+		</section>
+	)
+}
+
+<style>
+	.events-carousel-section {
+		background: transparent;
+	}
+
+	.events-carousel {
+		position: relative;
+	}
+
+	.events-track {
+		display: flex;
+		gap: 1.25rem;
+		padding-inline: calc(var(--site-inset) + var(--container-pad-sm));
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+	.events-track::-webkit-scrollbar {
+		display: none;
+	}
+
+	@media (min-width: 768px) {
+		.events-track {
+			padding-inline: calc(var(--site-inset) + var(--container-pad-md));
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.events-track {
+			padding-inline: calc(var(--site-inset) + var(--container-pad-lg));
+		}
+	}
+
+	.events-card {
+		position: relative;
+		flex: 0 0 100%;
+		aspect-ratio: 4 / 3;
+		scroll-snap-align: start;
+		overflow: hidden;
+		text-decoration: none;
+		color: #fff;
+		isolation: isolate;
+	}
+
+	@media (min-width: 900px) {
+		.events-card {
+			flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+			aspect-ratio: 1 / 1;
+		}
+	}
+
+	.events-card-img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.5s ease;
+	}
+
+	.events-card:hover .events-card-img,
+	.events-card:focus-visible .events-card-img {
+		transform: scale(1.04);
+	}
+
+	.events-card-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.15) 0%,
+			rgba(0, 0, 0, 0.25) 40%,
+			rgba(0, 0, 0, 0.6) 100%
+		);
+		z-index: 1;
+	}
+
+	.events-card-title {
+		position: absolute;
+		top: 3rem;
+		left: 2.5rem;
+		right: 2.5rem;
+		z-index: 2;
+		font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+		font-weight: 600;
+		color: #fff;
+		max-width: 14ch;
+	}
+
+	.events-card-cta {
+		position: absolute;
+		bottom: 1.5rem;
+		left: 2.5rem;
+		z-index: 2;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: #fff;
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.events-arrow {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 44px;
+		height: 44px;
+		border-radius: 999px;
+		display: grid;
+		place-items: center;
+		background: rgba(255, 255, 255, 0.85);
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		color: #000;
+		cursor: pointer;
+		transition:
+			background-color 0.2s ease,
+			transform 0.2s ease;
+		z-index: 3;
+	}
+
+	.events-arrow:hover {
+		background: rgba(255, 255, 255, 1);
+	}
+
+	.events-arrow--prev {
+		left: 0.5rem;
+	}
+
+	.events-arrow--next {
+		right: 0.5rem;
+	}
+
+	@media (min-width: 1280px) {
+		.events-arrow--prev {
+			left: 1.5rem;
+		}
+		.events-arrow--next {
+			right: 1.5rem;
+		}
+	}
+
+	.events-dots {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-top: 2rem;
+	}
+
+	.events-dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 999px;
+		border: 0;
+		background: rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+		padding: 0;
+		transition: background-color 0.2s ease;
+	}
+
+	.events-dot[data-active='true'] {
+		background: rgba(0, 0, 0, 0.75);
+	}
+</style>
+
+<script>
+	function initEventsCarousels() {
+		const carousels = document.querySelectorAll<HTMLElement>(
+			'[data-events-carousel]',
+		);
+
+		for (const carousel of carousels) {
+			if (carousel.dataset.eventsCarouselReady === 'true') continue;
+			carousel.dataset.eventsCarouselReady = 'true';
+
+			const track = carousel.querySelector<HTMLElement>('[data-events-track]');
+			const cards = Array.from(
+				carousel.querySelectorAll<HTMLElement>('[data-card-index]'),
+			);
+			const prev = carousel.querySelector<HTMLButtonElement>(
+				'[data-events-prev]',
+			);
+			const next = carousel.querySelector<HTMLButtonElement>(
+				'[data-events-next]',
+			);
+			const section = carousel.closest('section');
+			const dots = section
+				? Array.from(
+						section.querySelectorAll<HTMLButtonElement>('[data-events-dot]'),
+					)
+				: [];
+
+			if (!track || cards.length === 0) continue;
+
+			function scrollToCard(index: number) {
+				const target = cards[index];
+				if (!target || !track) return;
+				const offset = target.offsetLeft - track.offsetLeft;
+				track.scrollTo({ left: offset, behavior: 'smooth' });
+			}
+
+			function getCurrentIndex() {
+				if (!track) return 0;
+				const scrollLeft = track.scrollLeft;
+				let closest = 0;
+				let minDist = Infinity;
+				cards.forEach((card, i) => {
+					const dist = Math.abs(card.offsetLeft - track.offsetLeft - scrollLeft);
+					if (dist < minDist) {
+						minDist = dist;
+						closest = i;
+					}
+				});
+				return closest;
+			}
+
+			function syncDots() {
+				const i = getCurrentIndex();
+				dots.forEach((dot, di) => {
+					const active = di === i;
+					dot.dataset.active = active ? 'true' : 'false';
+					dot.setAttribute('aria-selected', active ? 'true' : 'false');
+				});
+			}
+
+			prev?.addEventListener('click', () => {
+				scrollToCard(Math.max(0, getCurrentIndex() - 1));
+			});
+			next?.addEventListener('click', () => {
+				scrollToCard(Math.min(cards.length - 1, getCurrentIndex() + 1));
+			});
+			dots.forEach((dot, i) =>
+				dot.addEventListener('click', () => scrollToCard(i)),
+			);
+
+			let scrollTimeout: number | undefined;
+			track.addEventListener('scroll', () => {
+				if (scrollTimeout) window.clearTimeout(scrollTimeout);
+				scrollTimeout = window.setTimeout(syncDots, 80);
+			});
+
+			syncDots();
+		}
+	}
+
+	initEventsCarousels();
+	document.addEventListener('astro:page-load', initEventsCarousels);
+</script>

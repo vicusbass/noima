@@ -1,6 +1,16 @@
 import type { SchemaTypeDefinition } from 'sanity';
+import { cafeneaPage } from './documents/cafenea-page';
 import { event } from './documents/event';
 import { homePage } from './documents/home-page';
 import { hero } from './objects/hero';
+import { locationGallery } from './objects/location-gallery';
+import { menuItem } from './objects/menu-item';
 
-export const schemaTypes: SchemaTypeDefinition[] = [hero, homePage, event];
+export const schemaTypes: SchemaTypeDefinition[] = [
+	hero,
+	locationGallery,
+	menuItem,
+	homePage,
+	cafeneaPage,
+	event,
+];
