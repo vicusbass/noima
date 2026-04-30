@@ -5,6 +5,7 @@ import EventsCarousel from '../components/cafenea/EventsCarousel.astro';
 import LocationSection from '../components/cafenea/LocationSection.astro';
 import MenuSection from '../components/cafenea/MenuSection.astro';
 import Layout from '../layouts/Layout.astro';
+import { contactInfo } from '../lib/contact';
 import { loadQuery } from '../sanity/lib/load-query';
 
 const today = new Date().toISOString().slice(0, 10);
@@ -59,11 +60,52 @@ const { data: cafeneaPage } = await loadQuery<{
 		bottomRight?: GalleryImage;
 	};
 } | null>({ query: CAFENEA_QUERY });
+
+const cafeneaSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'CafeOrCoffeeShop',
+	name: 'Cafenea Noima',
+	url: new URL('/cafenea', Astro.site ?? Astro.url).href,
+	image: new URL('/og.png', Astro.site ?? Astro.url).href,
+	telephone: contactInfo.phone,
+	email: contactInfo.email,
+	priceRange: '$$',
+	servesCuisine: ['Cafea de specialitate', 'Mic dejun', 'Brunch'],
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: contactInfo.address.street,
+		addressLocality: contactInfo.address.city,
+		postalCode: contactInfo.address.postalCode,
+		addressCountry: 'RO',
+	},
+	openingHoursSpecification: [
+		{
+			'@type': 'OpeningHoursSpecification',
+			dayOfWeek: [
+				'Monday',
+				'Tuesday',
+				'Wednesday',
+				'Thursday',
+				'Friday',
+				'Saturday',
+			],
+			opens: '07:30',
+			closes: '19:00',
+		},
+		{
+			'@type': 'OpeningHoursSpecification',
+			dayOfWeek: 'Sunday',
+			opens: '09:00',
+			closes: '15:00',
+		},
+	],
+};
 ---
 
 <Layout
-	title="Cafenea — Noima"
-	description="Cafeneaua Noima — locul unde cafeaua de specialitate prinde viață."
+	title="Cafenea de specialitate în Cluj — Noima"
+	description="Cafeneaua Noima pe Strada Bobâlnei 18, Cluj-Napoca. Cafea de specialitate, espresso, filtru și meniu zilnic. Deschis luni–sâmbătă 7:30–19:00, duminică 9:00–15:00."
+	jsonLd={cafeneaSchema}
 >
 	<div class="cafenea-page">
 		<CafeneaHero />
