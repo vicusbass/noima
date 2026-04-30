@@ -1,0 +1,187 @@
+---
+import { Image } from "astro:assets";
+import CoffeeShop from "../assets/main/coffee-shop.png";
+import Team from "../assets/main/team.png";
+import Button from "../components/Button.astro";
+import Layout from "../layouts/Layout.astro";
+
+const values = [
+  {
+    key: "cafea-buna",
+    title: "cafea bună",
+    body: "Prăjim cafea de specialitate cu grijă pentru gust, echilibru și consistență. Alegem doar ce are sens să ajungă în ceașcă.",
+  },
+  {
+    key: "ospitalitate-reala",
+    title: "ospitalitate reală",
+    body: 'Te întâmpinăm firesc, îți recomandăm pe gust și îți răspundem simplu, fără să te facem să te simți „mai puțin inițiat".',
+  },
+  {
+    key: "conexiuni-reale",
+    title: "conexiuni reale",
+    body: "Noima e gândită ca un loc în care oamenii revin. Pentru cafea, dar și pentru atmosfera care îi face să se simtă bine.",
+  },
+];
+
+const sectionHeading =
+  "display-lower text-[clamp(2.375rem,5vw,6rem)] leading-[1.05] text-center text-black [&>span]:block";
+const bodyText =
+  "text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8]";
+---
+
+<Layout title="Despre noi — Noima">
+  <section class="pt-30 pb-16 md:pb-24">
+    <div
+      class="container-x flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-16"
+    >
+      <h1
+        class="display text-[clamp(4.5rem,22vw,14rem)] text-cream leading-[0.88]"
+      >
+        <span>despre</span>
+        <span>noi</span>
+      </h1>
+      <p
+        class="max-w-sm text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8] md:pb-4"
+      >
+        După 18 ani pe piața cafelei, am deschis o prăjitorie cu cafenea. unde
+        ducem până la capăt experiența ospitalității.
+      </p>
+    </div>
+  </section>
+  <section class="bg-cream py-16 md:py-24">
+    <h2
+      class="display-lower text-[clamp(1.75rem,5vw,3rem)] text-center text-black mb-12 md:text-[clamp(2.5rem,4.5vw,4rem)] md:mb-20 [&>span]:block px-5 md:px-0"
+    >
+      <span>un loc în care nu trebuie</span>
+      <span>să demonstrezi nimic</span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-center">
+      <div class="overflow-hidden">
+        <Image
+          src={CoffeeShop}
+          alt="Interior cafenea Noima"
+          widths={[480, 768, 1200, 1600]}
+          sizes="(min-width: 900px) 50vw, 100vw"
+          quality={85}
+          format="webp"
+          class="block w-full h-auto object-cover"
+        />
+      </div>
+
+      <div class="flex flex-col gap-5 px-5 md:px-16 lg:px-24">
+        <p class={bodyText}>La Noima, cafeaua bună vine firesc.</p>
+        <p class={bodyText}>
+          Am construit un loc cald, prietenos și relaxat, în care poți să bei o
+          cafea foarte bună fără să simți că trebuie să știi tot despre ea. Asta
+          înseamnă, pentru noi, cafea cu sens.
+        </p>
+        <Button href="#valori" variant="dark" class="self-start mt-6 md:mt-8">
+          AFLĂ MAI MULTE
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <section id="valori" class="py-16 bg-cream md:py-24">
+    <div class="container-x">
+      <h2 class={`${sectionHeading} mb-12 md:mb-20`}>
+        <span>ce contează</span>
+        <span>pentru noi</span>
+      </h2>
+
+      <ul
+        class="grid grid-cols-1 gap-6 list-none p-0 m-0 md:grid-cols-3 md:gap-8"
+      >
+        {
+          values.map((value) => (
+            <li class="flex flex-col items-start gap-4 bg-surface rounded-2xl p-6 md:p-8">
+              <div
+                class="relative w-12 h-12 rounded-full bg-tan/25"
+                aria-hidden="true"
+              >
+                <span class="absolute inset-0 flex items-center justify-center text-[0.625rem] font-bold tracking-[0.16em] text-mute">
+                  ICON
+                </span>
+              </div>
+              <h3 class="display-lower text-[clamp(1.5rem,3vw,2.25rem)] text-black">
+                {value.title}
+              </h3>
+              <p
+                class={`${bodyText} max-w-[36ch] md:text-base md:leading-[1.8]`}
+              >
+                {value.body}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="py-16 bg-cream md:py-24">
+    <div class="container-x">
+      <h2 class={`${sectionHeading} mb-8 md:mb-12`}>
+        <span>echipa</span>
+        <span>Noima</span>
+      </h2>
+
+      <div class="flex justify-center">
+        <Image
+          src={Team}
+          alt="Echipa Noima"
+          widths={[480, 768, 1200, 1600, 2000]}
+          sizes="(min-width: 900px) 1200px, 100vw"
+          quality={90}
+          format="webp"
+          class="block w-full max-w-275 h-auto"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24">
+    <h2 class={`${sectionHeading} mb-12 md:mb-20`}>
+      <span>promisiunea</span>
+      <span>noastră</span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-center">
+      <div class="overflow-hidden">
+        <Image
+          src={CoffeeShop}
+          alt="Interior cafenea Noima"
+          widths={[480, 768, 1200, 1600]}
+          sizes="(min-width: 900px) 50vw, 100vw"
+          quality={85}
+          format="webp"
+          class="block w-full h-auto object-cover"
+        />
+      </div>
+
+      <div class="flex flex-col gap-5 px-5 md:px-16 lg:px-24">
+        <p class={bodyText}>Vom păstra lucrurile simple și bune.</p>
+        <p class={bodyText}>
+          Vom avea mereu cafea bună, cu sens. Vom rămâne un loc în care oamenii
+          se simt respectați și bineveniți.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pt-16 pb-24 md:pt-24 md:pb-32">
+    <div class="container-x">
+      <h2 class={`${sectionHeading} mb-6 md:mb-8`}>
+        <span>te așteptăm</span>
+        <span>la noima</span>
+      </h2>
+
+      <p class={`${bodyText} text-center max-w-xl mx-auto mb-8 md:mb-12`}>
+        Pentru o cafea bună, o conversație, o pauză sau doar pentru câteva
+        minute care au sens.
+      </p>
+
+      <Button href="/" variant="dark" class="mx-auto">FĂ-NE O VIZITĂ</Button>
+    </div>
+  </section>
+</Layout>
