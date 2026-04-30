@@ -1,10 +1,15 @@
 ---
 import { Image } from 'astro:assets';
 import HeroStain from '../../assets/contact/hero.png';
-import MapImage from '../../assets/contact/map.png';
 import { contactInfo } from '../../lib/contact';
 
 const { address } = contactInfo;
+
+const mapQuery = encodeURIComponent(
+	`${address.street}, ${address.city}, ${address.postalCode}`,
+);
+const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 ---
 
 <section class="contact-hero">
@@ -27,15 +32,21 @@ const { address } = contactInfo;
 			<h2 class="section-heading contact-aside-heading">unde ne găsești</h2>
 
 			<div class="contact-map">
-				<Image
-					src={MapImage}
-					alt="Hartă cu locația prăjitoriei Noima în Cluj-Napoca"
-					widths={[480, 720, 960, 1352]}
-					sizes="(min-width: 900px) 50vw, 100vw"
-					quality={85}
-					format="webp"
-					class="contact-map-img"
-				/>
+				<iframe
+					class="contact-map-frame"
+					src={mapEmbedUrl}
+					title={`Hartă cu locația prăjitoriei Noima — ${address.street}, ${address.city}`}
+					loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"
+					allowfullscreen></iframe>
+				<a
+					class="contact-map-link"
+					href={mapLinkUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Deschide în Google Maps →
+				</a>
 			</div>
 
 			<address class="contact-address">
@@ -84,12 +95,33 @@ const { address } = contactInfo;
 	.contact-map {
 		width: 100%;
 		overflow: hidden;
+		border: 1px solid var(--color-line-soft);
+		background: var(--color-cream);
 	}
 
-	.contact-map-img {
+	.contact-map-frame {
 		display: block;
 		width: 100%;
+		aspect-ratio: 4 / 3;
 		height: auto;
+		border: 0;
+	}
+
+	.contact-map-link {
+		display: block;
+		padding: 0.6rem 0.9rem;
+		font-size: 0.8125rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-ink);
+		text-decoration: none;
+		border-top: 1px solid var(--color-line-soft);
+		text-align: right;
+	}
+
+	.contact-map-link:hover,
+	.contact-map-link:focus-visible {
+		text-decoration: underline;
 	}
 
 	.contact-address {
