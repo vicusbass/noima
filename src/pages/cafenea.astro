@@ -77,5 +77,11 @@ const { data: cafeneaPage } = await loadQuery<{
 <style>
 	.cafenea-page {
 		background: var(--color-cream);
+		/* The contact splash uses 130vw + negative margins to bleed past the viewport edge.
+		   Clip horizontally so the document never becomes wider than the viewport — otherwise
+		   the fixed header (sized via 100% - site-inset) gets pushed off the right side on
+		   mobile, and sticky elements behave unpredictably. `clip` (vs `hidden`) doesn't
+		   create a scroll container, so it doesn't break sticky in descendants. */
+		overflow-x: clip;
 	}
 </style>
