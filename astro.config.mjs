@@ -1,4 +1,3 @@
-import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 import sanity from '@sanity/astro';
@@ -32,7 +31,6 @@ export default defineConfig({
 			useCdn: false,
 			apiVersion: '2026-02-16',
 		}),
-		react(),
 		sitemap({
 			i18n: {
 				defaultLocale: 'ro',
