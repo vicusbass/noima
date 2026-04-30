@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @theme {
 	--font-sans: var(--font-google-sans), ui-sans-serif, system-ui, sans-serif;
@@ -42,7 +43,7 @@ html {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
-	scroll-behavior: smooth;
+	scroll-padding-top: var(--header-height);
 }
 
 body {

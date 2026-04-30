@@ -41,6 +41,9 @@ importers:
       astro-portabletext:
         specifier: ^0.13.0
         version: 0.13.0(astro@6.1.9(@types/node@25.2.3)(@vercel/functions@3.4.4)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3))
+      lenis:
+        specifier: ^1.3.23
+        version: 1.3.23(react@19.2.4)
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -4152,6 +4155,20 @@ packages:
   lefthook@2.1.1:
     resolution: {integrity: sha512-Tl9h9c+sG3ShzTHKuR3LAIblnnh+Mgxnm2Ul7yu9cu260Z27LEbO3V6Zw4YZFP59/2rlD42pt/llYsQCkkCFzw==}
     hasBin: true
+
+  lenis@1.3.23:
+    resolution: {integrity: sha512-YxYq3TJqj9sJNv0V9SkyQHejt14xwyIwgDaaMK89Uf9SxQfIszu+gTQSSphh6BWlLTNVKvvXAGkg+Zf+oFIevg==}
+    peerDependencies:
+      '@nuxt/kit': '>=3.0.0'
+      react: '>=17.0.0'
+      vue: '>=3.0.0'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      react:
+        optional: true
+      vue:
+        optional: true
 
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -10785,6 +10802,10 @@ snapshots:
       lefthook-openbsd-x64: 2.1.1
       lefthook-windows-arm64: 2.1.1
       lefthook-windows-x64: 2.1.1
+
+  lenis@1.3.23(react@19.2.4):
+    optionalDependencies:
+      react: 19.2.4
 
   leven@3.1.0: {}
 
