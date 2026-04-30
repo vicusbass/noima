@@ -40,7 +40,7 @@ const {
       </div>
 
       <div class="why-copy">
-        {paragraphs.map((p) => <p>{p}</p>)}
+        {paragraphs.map((p) => <p class="body-copy">{p}</p>)}
         <Button href={ctaHref} variant="dark" class="why-cta">{ctaLabel}</Button
         >
       </div>
@@ -79,12 +79,6 @@ const {
   .why-copy {
     display: flex;
     flex-direction: column;
-  }
-
-  .why-copy p {
-    font-size: 0.875rem;
-    line-height: 1.7;
-    color: #000;
   }
 
   .why-copy p + p {
@@ -141,8 +135,6 @@ const {
     }
 
     .why-copy p {
-      font-size: 1.125rem;
-      line-height: 1.8;
       max-width: 50ch;
     }
 

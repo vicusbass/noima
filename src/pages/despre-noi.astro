@@ -22,11 +22,6 @@ const values = [
 		body: 'Noima e gândită ca un loc în care oamenii revin. Pentru cafea, dar și pentru atmosfera care îi face să se simtă bine.',
 	},
 ];
-
-const sectionHeading =
-	'display-lower text-[clamp(2.375rem,5vw,6rem)] leading-[1.05] text-center text-black [&>span]:block';
-const bodyText =
-	'text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8]';
 ---
 
 <Layout title="Despre noi — Noima">
@@ -40,18 +35,14 @@ const bodyText =
         <span>despre</span>
         <span>noi</span>
       </h1>
-      <p
-        class="max-w-sm text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8] md:pb-4"
-      >
+      <p class="body-copy max-w-sm md:pb-4">
         După 18 ani pe piața cafelei, am deschis o prăjitorie cu cafenea. unde
         ducem până la capăt experiența ospitalității.
       </p>
     </div>
   </section>
   <section class="bg-cream py-16 md:py-24">
-    <h2
-      class="display-lower text-[clamp(1.75rem,5vw,3rem)] text-center text-black mb-12 md:text-[clamp(2.5rem,4.5vw,4rem)] md:mb-20 [&>span]:block px-5 md:px-0"
-    >
+    <h2 class="section-heading mb-12 md:mb-20 px-5 md:px-0">
       <span>un loc în care nu trebuie</span>
       <span>să demonstrezi nimic</span>
     </h2>
@@ -70,8 +61,8 @@ const bodyText =
       </div>
 
       <div class="flex flex-col gap-5 px-5 md:px-16 lg:px-24">
-        <p class={bodyText}>La Noima, cafeaua bună vine firesc.</p>
-        <p class={bodyText}>
+        <p class="body-copy">La Noima, cafeaua bună vine firesc.</p>
+        <p class="body-copy">
           Am construit un loc cald, prietenos și relaxat, în care poți să bei o
           cafea foarte bună fără să simți că trebuie să știi tot despre ea. Asta
           înseamnă, pentru noi, cafea cu sens.
@@ -85,7 +76,7 @@ const bodyText =
 
   <section id="valori" class="py-16 bg-cream md:py-24">
     <div class="container-x">
-      <h2 class={`${sectionHeading} mb-12 md:mb-20`}>
+      <h2 class="section-heading mb-12 md:mb-20">
         <span>ce contează</span>
         <span>pentru noi</span>
       </h2>
@@ -104,12 +95,10 @@ const bodyText =
                   ICON
                 </span>
               </div>
-              <h3 class="display-lower text-[clamp(1.5rem,3vw,2.25rem)] text-black">
+              <h3 class="text-[clamp(1.5rem,3vw,2.25rem)] font-bold tracking-[-0.015em] leading-[1.1] text-black">
                 {value.title}
               </h3>
-              <p
-                class={`${bodyText} max-w-[36ch] md:text-base md:leading-[1.8]`}
-              >
+              <p class="body-copy max-w-[36ch]">
                 {value.body}
               </p>
             </li>
@@ -121,7 +110,7 @@ const bodyText =
 
   <section class="py-16 bg-cream md:py-24">
     <div class="container-x">
-      <h2 class={`${sectionHeading} mb-8 md:mb-12`}>
+      <h2 class="section-heading mb-8 md:mb-12">
         <span>echipa</span>
         <span>Noima</span>
       </h2>
@@ -141,7 +130,7 @@ const bodyText =
   </section>
 
   <section class="py-16 md:py-24">
-    <h2 class={`${sectionHeading} mb-12 md:mb-20`}>
+    <h2 class="section-heading mb-12 md:mb-20">
       <span>promisiunea</span>
       <span>noastră</span>
     </h2>
@@ -160,8 +149,8 @@ const bodyText =
       </div>
 
       <div class="flex flex-col gap-5 px-5 md:px-16 lg:px-24">
-        <p class={bodyText}>Vom păstra lucrurile simple și bune.</p>
-        <p class={bodyText}>
+        <p class="body-copy">Vom păstra lucrurile simple și bune.</p>
+        <p class="body-copy">
           Vom avea mereu cafea bună, cu sens. Vom rămâne un loc în care oamenii
           se simt respectați și bineveniți.
         </p>
@@ -171,12 +160,12 @@ const bodyText =
 
   <section class="pt-16 pb-24 md:pt-24 md:pb-32">
     <div class="container-x">
-      <h2 class={`${sectionHeading} mb-6 md:mb-8`}>
+      <h2 class="section-heading mb-6 md:mb-8">
         <span>te așteptăm</span>
         <span>la noima</span>
       </h2>
 
-      <p class={`${bodyText} text-center max-w-xl mx-auto mb-8 md:mb-12`}>
+      <p class="body-copy text-center max-w-xl mx-auto mb-8 md:mb-12">
         Pentru o cafea bună, o conversație, o pauză sau doar pentru câteva
         minute care au sens.
       </p>
