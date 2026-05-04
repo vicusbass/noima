@@ -8,17 +8,17 @@ import Layout from '../layouts/Layout.astro';
 const values = [
 	{
 		key: 'cafea-buna',
-		title: 'cafea bună',
+		title: ['cafea', 'bună'],
 		body: 'Prăjim cafea de specialitate cu grijă pentru gust, echilibru și consistență. Alegem doar ce are sens să ajungă în ceașcă.',
 	},
 	{
 		key: 'ospitalitate-reala',
-		title: 'ospitalitate reală',
+		title: ['ospitalitate', 'reală'],
 		body: 'Te întâmpinăm firesc, îți recomandăm pe gust și îți răspundem simplu, fără să te facem să te simți „mai puțin inițiat".',
 	},
 	{
 		key: 'conexiuni-reale',
-		title: 'conexiuni reale',
+		title: ['conexiuni', 'reale'],
 		body: 'Noima e gândită ca un loc în care oamenii revin. Pentru cafea, dar și pentru atmosfera care îi face să se simtă bine.',
 	},
 ];
@@ -93,17 +93,62 @@ const bodyText =
       >
         {
           values.map((value) => (
-            <li class="flex flex-col items-start gap-4 bg-surface rounded-2xl p-6 md:p-8">
-              <div
-                class="relative w-12 h-12 rounded-full bg-tan/25"
-                aria-hidden="true"
-              >
-                <span class="absolute inset-0 flex items-center justify-center text-[0.625rem] font-bold tracking-[0.16em] text-mute">
-                  ICON
-                </span>
+            <li class="flex flex-col items-start gap-12 bg-surface p-8 md:gap-20 md:p-12 lg:p-16">
+              <div class="text-[#8b6f47]" aria-hidden="true">
+                {value.key === "cafea-buna" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class="w-12 h-12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M10 2v2" />
+                    <path d="M14 2v2" />
+                    <path d="M6 2v2" />
+                    <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+                  </svg>
+                )}
+                {value.key === "ospitalitate-reala" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class="w-12 h-12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" />
+                    <path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                    <path d="m2 15 6 6" />
+                    <path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" />
+                  </svg>
+                )}
+                {value.key === "conexiuni-reale" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class="w-12 h-12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    <path d="M14.8 7.5a1.84 1.84 0 0 0-2.6 0l-.2.3-.3-.3a1.84 1.84 0 1 0-2.4 2.8L12 13l2.8-2.7c.8-.8.8-2 0-2.8" />
+                  </svg>
+                )}
               </div>
-              <h3 class="display-lower text-[clamp(1.5rem,3vw,2.25rem)] text-black">
-                {value.title}
+              <h3 class="display-lower text-[clamp(1.375rem,2.75vw,2rem)] font-semibold text-black leading-[1.05]">
+                {value.title.map((line) => (
+                  <span class="block">{line}</span>
+                ))}
               </h3>
               <p
                 class={`${bodyText} max-w-[36ch] md:text-base md:leading-[1.8]`}
