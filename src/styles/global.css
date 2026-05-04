@@ -70,6 +70,23 @@ body {
 	color: #000;
 }
 
+.section-heading > span {
+	display: block;
+}
+
+.body-copy {
+	font-size: 0.875rem;
+	line-height: 1.7;
+	color: #000;
+}
+
+@media (min-width: 900px) {
+	.body-copy {
+		font-size: 1.125rem;
+		line-height: 1.8;
+	}
+}
+
 .eyebrow {
 	font-size: 0.8125rem;
 	font-weight: 500;

@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const lastUpdated = '4 mai 2026';
+---
+
+<Layout
+  title="Politica de Cookie-uri — Noima"
+  description="Cum folosește Noima cookie-urile și ce date colectăm prin Google Analytics."
+>
+  <article class="container-x py-24 md:py-32 max-w-3xl">
+    <p class="eyebrow text-mute mb-6">Ultima actualizare: {lastUpdated}</p>
+    <h1 class="section-heading text-left mb-10">Politica de cookie-uri</h1>
+
+    <div
+      class="prose-content space-y-6 text-[1rem] md:text-[1.0625rem] leading-[1.75]"
+    >
+      <p>
+        Această pagină explică ce cookie-uri folosim pe <strong>noima.ro</strong
+        > și de ce. Folosim cookie-uri doar dacă îți dai acordul prin bannerul afișat
+        la prima vizită.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Ce sunt cookie-urile</h2>
+      <p>
+        Cookie-urile sunt fișiere mici stocate de browser pe dispozitivul tău
+        atunci când vizitezi un site. Ne ajută să înțelegem cum este folosit
+        site-ul, fără a te identifica personal.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Ce cookie-uri folosim</h2>
+      <p>
+        Folosim <strong>Google Analytics 4</strong> pentru a măsura traficul pe site
+        (câte vizite, ce pagini sunt cele mai citite, de unde vin utilizatorii). Adresa
+        IP este anonimizată înainte de a fi trimisă la Google, iar datele sunt agregate.
+      </p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>
+          <strong>_ga, _ga_*</strong> — identifică sesiunea și utilizatorul în mod
+          anonim. Durată: până la 2 ani.
+        </li>
+        <li>
+          <strong>noima:consent</strong> — păstrează alegerea ta privind cookie-urile
+          (acceptat / refuzat). Stocat local în browser.
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold pt-6">Consimțământul tău</h2>
+      <p>
+        Cookie-urile de analiză rulează doar dacă apeși <em>„Accept toate"</em> în
+        bannerul afișat la prima vizită. Dacă alegi <em>„Doar necesare"</em>,
+        Google Analytics nu colectează nicio dată despre tine.
+      </p>
+      <p>
+        Îți poți schimba alegerea oricând din pagina
+        <a href="/setari-cookies" class="underline">setări cookie-uri</a> sau ștergând
+        datele site-ului din browser.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Furnizori terți</h2>
+      <p>
+        Datele agregate de analiză sunt prelucrate de
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline">Google Ireland Limited</a
+        >, în calitate de procesator. Nu folosim cookie-uri de publicitate sau
+        remarketing.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Contact</h2>
+      <p>
+        Pentru întrebări despre prelucrarea datelor, scrie-ne la
+        <a href="mailto:hello@prajitorianoima.ro" class="underline"
+          >hello@prajitorianoima.ro</a
+        >.
+      </p>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .prose-content :global(a) {
+    color: var(--color-ink);
+  }
+  .prose-content :global(a:hover) {
+    color: var(--color-tan);
+  }
+</style>

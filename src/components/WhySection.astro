@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Bird from '../assets/main/bird.png';
+import BirdNoBeak from '../assets/main/bird-no-beak.png';
 import Button from './Button.astro';
 
 interface Props {
@@ -31,16 +32,23 @@ const {
     <div class="why-panel">
       <div class="why-illu" aria-hidden="true">
         <Image
+          src={BirdNoBeak}
+          alt=""
+          widths={[480, 800, 1200, 1600, 2000]}
+          sizes="(min-width: 900px) 50vw, 100vw"
+          class="bird-img bird-img-base"
+        />
+        <Image
           src={Bird}
           alt=""
           widths={[480, 800, 1200, 1600, 2000]}
           sizes="(min-width: 900px) 50vw, 100vw"
-          class="bird-img"
+          class="bird-img bird-img-beak"
         />
       </div>
 
       <div class="why-copy">
-        {paragraphs.map((p) => <p>{p}</p>)}
+        {paragraphs.map((p) => <p class="body-copy">{p}</p>)}
         <Button href={ctaHref} variant="dark" class="why-cta">{ctaLabel}</Button
         >
       </div>
@@ -63,7 +71,8 @@ const {
   .why-illu {
     width: 100vw;
     margin-inline: calc(50% - 50vw);
-    overflow: hidden;
+    overflow: clip;
+    display: grid;
   }
 
   .bird-img {
@@ -74,17 +83,41 @@ const {
     margin-block: -60vw -50vw;
     margin-inline: -25%;
     mix-blend-mode: multiply;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  @supports (animation-timeline: view()) {
+    .bird-img-beak {
+      opacity: 0;
+      animation: bird-beak-fade-in linear both;
+      animation-timeline: view();
+      animation-range: entry 50% cover 50%;
+    }
+
+    @media (min-width: 900px) {
+      .bird-img-beak {
+        animation-range: entry 0% entry 80%;
+      }
+    }
+  }
+
+  @keyframes bird-beak-fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bird-img-beak {
+      opacity: 1;
+      animation: none;
+    }
   }
 
   .why-copy {
     display: flex;
     flex-direction: column;
-  }
-
-  .why-copy p {
-    font-size: 0.875rem;
-    line-height: 1.7;
-    color: #000;
   }
 
   .why-copy p + p {
@@ -115,7 +148,7 @@ const {
       left: -10%;
       width: 70%;
       margin-inline: 0;
-      overflow: hidden;
+      overflow: clip;
     }
 
     .bird-img {
@@ -141,8 +174,6 @@ const {
     }
 
     .why-copy p {
-      font-size: 1.125rem;
-      line-height: 1.8;
       max-width: 50ch;
     }
 

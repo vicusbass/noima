@@ -1,0 +1,140 @@
+---
+---
+
+<noima-cookie-banner data-hidden role="dialog" aria-live="polite" aria-label="Cookie-uri">
+  <div class="banner">
+    <p>
+      Acest site folosește cookies. Utilizarea acestuia presupune că ești de acord
+      cu termenii și condițiile specificate în
+      <a href="/politica-cookies">Politica Cookies</a>.
+    </p>
+    <div class="actions">
+      <button type="button" data-action="reject">Doar necesare</button>
+      <button type="button" data-action="accept" class="primary">Accept</button>
+    </div>
+  </div>
+</noima-cookie-banner>
+
+<style>
+  noima-cookie-banner {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 100;
+    padding: 1rem;
+    pointer-events: none;
+  }
+  noima-cookie-banner[data-hidden] {
+    display: none;
+  }
+  .banner {
+    pointer-events: auto;
+    max-width: 38rem;
+    margin: 0 auto;
+    background: var(--color-ink);
+    color: #fff;
+    border-radius: 0.875rem;
+    padding: 1.25rem 1.5rem 1.4rem;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+  }
+  .banner h2 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    color: var(--color-tan);
+  }
+  .banner p {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .banner a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .banner a:hover {
+    color: var(--color-tan);
+  }
+  .actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .actions button {
+    flex: 1 1 9rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: transparent;
+    color: #fff;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .actions button:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .actions .primary {
+    background: #fff;
+    color: var(--color-ink);
+    border-color: #fff;
+  }
+  .actions .primary:hover {
+    background: var(--color-tan);
+    border-color: var(--color-tan);
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = 'noima:consent';
+
+  class NoimaCookieBanner extends HTMLElement {
+    connectedCallback() {
+      if (this.read() === null) this.show();
+
+      this.querySelectorAll<HTMLButtonElement>('button[data-action]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const consent = btn.dataset.action === 'accept' ? 'granted' : 'denied';
+          this.write(consent);
+          window.dispatchEvent(
+            new CustomEvent('noima:consent-update', { detail: consent }),
+          );
+          this.hide();
+        });
+      });
+
+      window.addEventListener('noima:open-cookie-banner', () => this.show());
+    }
+
+    read(): string | null {
+      try {
+        return localStorage.getItem(STORAGE_KEY);
+      } catch {
+        return null;
+      }
+    }
+
+    write(value: 'granted' | 'denied') {
+      try {
+        localStorage.setItem(STORAGE_KEY, value);
+      } catch {}
+    }
+
+    show() {
+      this.removeAttribute('data-hidden');
+    }
+    hide() {
+      this.setAttribute('data-hidden', '');
+    }
+  }
+
+  if (!customElements.get('noima-cookie-banner')) {
+    customElements.define('noima-cookie-banner', NoimaCookieBanner);
+  }
+</script>

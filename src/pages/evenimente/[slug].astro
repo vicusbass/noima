@@ -3,6 +3,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 import { PortableText } from 'astro-portabletext';
 import Button from '../../components/Button.astro';
 import Layout from '../../layouts/Layout.astro';
+import { contactInfo } from '../../lib/contact';
 import { urlFor } from '../../sanity/lib/image';
 import { loadQuery } from '../../sanity/lib/load-query';
 
@@ -15,6 +16,7 @@ type EventDoc = {
 		alt?: string;
 	};
 	description?: PortableTextBlock[];
+	summary?: string;
 };
 
 export async function getStaticPaths() {
@@ -33,7 +35,8 @@ const { data: event } = await loadQuery<EventDoc | null>({
 		slug,
 		date,
 		image { asset, alt },
-		description
+		description,
+		"summary": pt::text(description)
 	}`,
 	params: { slug },
 });
@@ -64,9 +67,47 @@ const imageSrcSet = eventImage
 			', ',
 		)
 	: undefined;
+
+const truncate = (s: string, n: number) =>
+	s.length <= n ? s : `${s.slice(0, n - 1).trimEnd()}…`;
+
+const eventDescription = event.summary
+	? truncate(event.summary, 160)
+	: `${event.title} — eveniment la Cafeneaua Noima, Cluj-Napoca, pe ${formattedDate}.`;
+
+const eventSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Event',
+	name: event.title,
+	startDate: event.date,
+	eventStatus: 'https://schema.org/EventScheduled',
+	eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+	description: event.summary ?? eventDescription,
+	image: imageSrc ? new URL(imageSrc, Astro.site ?? Astro.url).href : undefined,
+	location: {
+		'@type': 'Place',
+		name: 'Cafenea Noima',
+		address: {
+			'@type': 'PostalAddress',
+			streetAddress: contactInfo.address.street,
+			addressLocality: contactInfo.address.city,
+			postalCode: contactInfo.address.postalCode,
+			addressCountry: 'RO',
+		},
+	},
+	organizer: {
+		'@type': 'Organization',
+		name: 'Noima',
+		url: new URL('/', Astro.site ?? Astro.url).href,
+	},
+};
 ---
 
-<Layout title={`${event.title} — Noima`}>
+<Layout
+	title={`${event.title} — Noima Cluj`}
+	description={eventDescription}
+	jsonLd={eventSchema}
+>
 	<article class="event">
 		<div class="container-x event-inner">
 			<div class="event-grid">

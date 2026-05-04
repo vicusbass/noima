@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { contactInfo, operatorInfo } from '../lib/contact';
+
+const lastUpdated = '4 mai 2026';
+---
+
+<Layout
+  title="Politica de Confidențialitate — Noima"
+  description="Cum prelucrează Noima datele personale ale vizitatorilor și utilizatorilor formularului de contact."
+>
+  <article class="container-x py-24 md:py-32 max-w-3xl">
+    <p class="eyebrow text-mute mb-6">Ultima actualizare: {lastUpdated}</p>
+    <h1 class="section-heading text-left mb-10">
+      Politica de confidențialitate
+    </h1>
+
+    <div
+      class="prose-content space-y-6 text-[1rem] md:text-[1.0625rem] leading-[1.75]"
+    >
+      <p>
+        Această politică explică cum colectăm și prelucrăm datele tale personale
+        atunci când vizitezi <strong>prajitorianoima.ro</strong> sau ne contactezi.
+        Respectăm Regulamentul (UE) 2016/679 (GDPR) și legislația națională în
+        vigoare.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Cine suntem</h2>
+      <p>
+        Operatorul site-ului <strong>prajitorianoima.ro</strong> și al brand-ului
+        <strong>Noima</strong> este:
+      </p>
+      <ul class="list-none pl-0 space-y-1">
+        <li><strong>{operatorInfo.legalName}</strong></li>
+        <li>CUI: {operatorInfo.cui}</li>
+        <li>Nr. Reg. Com.: {operatorInfo.regCom}</li>
+        <li>
+          Sediu social: {operatorInfo.address.street}, {operatorInfo.address.city},
+          jud. {operatorInfo.address.county}, {operatorInfo.address.postalCode},
+          România
+        </li>
+        <li>
+          Punct de lucru (cafenea): {contactInfo.address.street}, {contactInfo.address.city},
+          {contactInfo.address.postalCode}
+        </li>
+      </ul>
+      <p>
+        Ne poți contacta la <a
+          href={`mailto:${contactInfo.email}`}
+          class="underline">{contactInfo.email}</a
+        > sau <a href={contactInfo.phoneHref} class="underline"
+          >{contactInfo.phone}</a
+        >.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Ce date colectăm</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>
+          <strong>Date din formularul de contact</strong> — nume, adresă de
+          email și conținutul mesajului. Le folosim doar pentru a-ți răspunde.
+        </li>
+        <li>
+          <strong>Date de analiză agregată</strong> — prin Google Analytics 4,
+          dacă alegi „Accept" în bannerul de cookie-uri. Adresa IP este
+          anonimizată. Vezi
+          <a href="/politica-cookies" class="underline">Politica de Cookies</a>
+          pentru detalii.
+        </li>
+        <li>
+          <strong>Jurnale tehnice</strong> — serverul nostru de hosting (Vercel)
+          păstrează jurnale standard cu adresa IP, user agent și timestamp,
+          pentru securitate și prevenția abuzurilor.
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold pt-6">De ce le colectăm (temei legal)</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>
+          <strong>Consimțământ</strong> (art. 6(1)(a) GDPR) — pentru
+          cookie-urile de analiză.
+        </li>
+        <li>
+          <strong>Interes legitim</strong> (art. 6(1)(f) GDPR) — pentru a
+          răspunde la mesajele primite prin formularul de contact și pentru
+          securitatea site-ului.
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold pt-6">Cât timp păstrăm datele</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>
+          <strong>Mesaje de contact</strong> — maximum 24 de luni, după care le
+          ștergem.
+        </li>
+        <li>
+          <strong>Date de analiză</strong> — până la 14 luni în Google
+          Analytics, conform setării de retenție GA4.
+        </li>
+        <li>
+          <strong>Jurnale tehnice</strong> — păstrate de Vercel conform
+          politicii lor (uzual 30 de zile).
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold pt-6">Cu cine partajăm datele</h2>
+      <p>
+        Nu vindem și nu închiriem date personale. Folosim furnizori de servicii
+        care prelucrează date strict pentru a ne ajuta să operăm site-ul:
+      </p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>
+          <strong>Vercel Inc.</strong> — hosting site (SUA, cu măsuri standard
+          GDPR / DPF).
+        </li>
+        <li>
+          <strong>Resend</strong> — livrarea emailurilor trimise prin
+          formularul de contact.
+        </li>
+        <li>
+          <strong>Google Ireland Limited</strong> — Google Analytics 4 (doar
+          dacă ai dat acordul).
+        </li>
+        <li>
+          <strong>Sanity</strong> — sistem de management al conținutului
+          (doar conținutul site-ului, nu date despre vizitatori).
+        </li>
+        <li>
+          <strong>Mux</strong> — găzduire video. Pe site-ul nostru, Mux este
+          configurat fără cookie-uri și fără telemetrie.
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold pt-6">Drepturile tale</h2>
+      <p>Conform GDPR, ai dreptul:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>să accesezi datele pe care le avem despre tine;</li>
+        <li>să soliciți rectificarea sau ștergerea lor;</li>
+        <li>să restricționezi sau să te opui prelucrării;</li>
+        <li>la portabilitatea datelor;</li>
+        <li>să-ți retragi consimțământul oricând, fără efect retroactiv;</li>
+        <li>
+          să faci o plângere la <strong>ANSPDCP</strong> (
+          <a
+            href="https://www.dataprotection.ro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">www.dataprotection.ro</a
+          >).
+        </li>
+      </ul>
+      <p>
+        Pentru orice solicitare, scrie-ne la
+        <a href={`mailto:${contactInfo.email}`} class="underline"
+          >{contactInfo.email}</a
+        >. Răspundem în maximum 30 de zile.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Modificări</h2>
+      <p>
+        Putem actualiza această politică pe măsură ce site-ul evoluează. Data
+        ultimei actualizări este afișată în partea de sus a paginii.
+      </p>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .prose-content :global(a) {
+    color: var(--color-ink);
+  }
+  .prose-content :global(a:hover) {
+    color: var(--color-tan);
+  }
+</style>
