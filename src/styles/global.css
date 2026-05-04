@@ -44,6 +44,7 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
 	scroll-padding-top: var(--header-height);
+	scroll-behavior: smooth;
 }
 
 body {
