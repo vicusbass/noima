@@ -80,7 +80,7 @@ body {
 	color: #000;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
 	.body-copy {
 		font-size: 1.125rem;
 		line-height: 1.8;

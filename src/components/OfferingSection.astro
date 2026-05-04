@@ -17,106 +17,39 @@ const {
 } = Astro.props;
 ---
 
-<section id="offering" class="offering-section py-16 md:py-24">
-  <div class="container-x">
-    <h2 class="section-heading offering-heading">
-      <span>{headingTop}</span>
-      <span>{headingBottom}</span>
-    </h2>
-  </div>
+<section id="offering" class="py-16 md:py-24">
+	<div class="container-x">
+		<h2 class="section-heading mb-6 md:mb-16">
+			<span>{headingTop}</span>
+			<span>{headingBottom}</span>
+		</h2>
+	</div>
 
-  <div class="container-x offering-panel-wrap">
-    <div class="offering-panel">
-      <p class="body-copy offering-text offering-text--left">{leftText}</p>
+	<div class="container-x">
+		<div
+			class="flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-12 md:bg-[#f8f5ed] md:min-h-[420px] md:px-20 md:py-16"
+		>
+			<p
+				class="body-copy max-w-[50ch] text-center md:flex-1 md:max-w-[32ch] md:text-right"
+			>
+				{leftText}
+			</p>
 
-      <div class="offering-illu">
-        <Image
-          src={NoimaSquare}
-          alt=""
-          widths={[240, 360, 480, 720]}
-          sizes="(min-width: 900px) 320px, 60vw"
-          class="square-img"
-        />
-      </div>
+			<div class="flex items-center justify-center md:flex-none">
+				<Image
+					src={NoimaSquare}
+					alt=""
+					widths={[240, 360, 480, 720]}
+					sizes="(min-width: 768px) 320px, 60vw"
+					class="block h-auto w-[60vw] max-w-[320px] md:w-[320px] md:max-w-none"
+				/>
+			</div>
 
-      <p class="body-copy offering-text offering-text--right">{rightText}</p>
-    </div>
-  </div>
+			<p
+				class="body-copy max-w-[50ch] text-center md:flex-1 md:max-w-[32ch] md:text-left"
+			>
+				{rightText}
+			</p>
+		</div>
+	</div>
 </section>
-
-<style>
-  .offering-heading {
-    margin-bottom: 1.5rem;
-  }
-
-  .offering-heading span {
-    display: block;
-  }
-
-  .offering-heading span + span {
-    margin-top: 0;
-  }
-
-  .offering-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .offering-illu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .square-img {
-    display: block;
-    width: 60vw;
-    max-width: 320px;
-    height: auto;
-  }
-
-  .offering-text {
-    max-width: 50ch;
-    text-align: center;
-  }
-
-  @media (min-width: 900px) {
-    .offering-heading {
-      margin-bottom: 4rem;
-    }
-
-    .offering-panel {
-      background: #f8f5ed;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 3rem;
-      padding: 4rem 5rem;
-      min-height: 420px;
-    }
-
-    .offering-illu {
-      flex: 0 0 auto;
-    }
-
-    .square-img {
-      width: 320px;
-      max-width: none;
-    }
-
-    .offering-text {
-      flex: 1 1 0;
-      max-width: 32ch;
-    }
-
-    .offering-text--left {
-      text-align: right;
-    }
-
-    .offering-text--right {
-      text-align: left;
-    }
-  }
-</style>

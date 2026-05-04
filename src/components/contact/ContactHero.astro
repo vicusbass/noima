@@ -12,35 +12,43 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 ---
 
-<section class="contact-hero">
-	<div class="container-x contact-hero-inner">
-		<div class="contact-title-wrap">
+<section
+	class="bg-surface pt-[calc(var(--header-height)+2.5rem)] pb-12 md:pt-[calc(var(--header-height)+4rem)] md:pb-20"
+>
+	<div
+		class="container-x grid grid-cols-1 items-start gap-10 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-16"
+	>
+		<div class="flex justify-start">
 			<h1 class="sr-only">Contact</h1>
 			<Image
 				src={HeroStain}
 				alt=""
 				widths={[600, 900, 1200, 1801]}
-				sizes="(min-width: 900px) 55vw, 100vw"
+				sizes="(min-width: 768px) 55vw, 100vw"
 				quality={90}
 				format="webp"
-				class="contact-title-img"
+				class="block h-auto w-full max-w-[36rem] md:max-w-full"
 				aria-hidden="true"
 			/>
 		</div>
 
-		<div class="contact-hero-aside">
-			<h2 class="section-heading contact-aside-heading">unde ne găsești</h2>
+		<div>
+			<h2
+				class="section-heading mb-5 text-left text-[clamp(1.6rem,4vw,2.5rem)] md:mb-7 md:text-[clamp(2rem,3vw,3rem)]"
+			>
+				unde ne găsești
+			</h2>
 
-			<div class="contact-map">
+			<div class="w-full overflow-hidden border border-line-soft bg-cream">
 				<iframe
-					class="contact-map-frame"
+					class="block aspect-4/3 h-auto w-full border-0"
 					src={mapEmbedUrl}
 					title={`Hartă cu locația prăjitoriei Noima — ${address.street}, ${address.city}`}
 					loading="lazy"
 					referrerpolicy="no-referrer-when-downgrade"
 					allowfullscreen></iframe>
 				<a
-					class="contact-map-link"
+					class="block border-t border-line-soft px-3.5 py-2.5 text-right text-[0.8125rem] uppercase tracking-[0.04em] text-ink no-underline hover:underline focus-visible:underline"
 					href={mapLinkUrl}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -49,9 +57,11 @@ const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`
 				</a>
 			</div>
 
-			<address class="contact-address">
-				<p class="contact-address-label">Adresa:</p>
-				<p class="contact-address-lines">
+			<address
+				class="mt-5 grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 text-[0.9375rem] not-italic text-ink md:mt-6 md:text-base md:justify-between"
+			>
+				<p class="font-bold uppercase tracking-[0.06em]">Adresa:</p>
+				<p class="flex flex-col gap-1 md:text-right">
 					<span>{address.street}</span>
 					<span>{address.city}, {address.postalCode}</span>
 				</p>
@@ -59,123 +69,3 @@ const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`
 		</div>
 	</div>
 </section>
-
-<style>
-	.contact-hero {
-		background: var(--color-surface);
-		padding-top: calc(var(--header-height) + 2.5rem);
-		padding-bottom: 3rem;
-	}
-
-	.contact-hero-inner {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2.5rem;
-		align-items: start;
-	}
-
-	.contact-title-wrap {
-		display: flex;
-		justify-content: flex-start;
-	}
-
-	.contact-title-img {
-		display: block;
-		width: 100%;
-		height: auto;
-		max-width: 36rem;
-	}
-
-	.contact-aside-heading {
-		text-align: left;
-		font-size: clamp(1.6rem, 4vw, 2.5rem);
-		margin-bottom: 1.25rem;
-	}
-
-	.contact-map {
-		width: 100%;
-		overflow: hidden;
-		border: 1px solid var(--color-line-soft);
-		background: var(--color-cream);
-	}
-
-	.contact-map-frame {
-		display: block;
-		width: 100%;
-		aspect-ratio: 4 / 3;
-		height: auto;
-		border: 0;
-	}
-
-	.contact-map-link {
-		display: block;
-		padding: 0.6rem 0.9rem;
-		font-size: 0.8125rem;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-		color: var(--color-ink);
-		text-decoration: none;
-		border-top: 1px solid var(--color-line-soft);
-		text-align: right;
-	}
-
-	.contact-map-link:hover,
-	.contact-map-link:focus-visible {
-		text-decoration: underline;
-	}
-
-	.contact-address {
-		font-style: normal;
-		margin-top: 1.25rem;
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 1rem 2rem;
-		font-size: 0.9375rem;
-		color: var(--color-ink);
-	}
-
-	.contact-address-label {
-		font-weight: 700;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-	}
-
-	.contact-address-lines {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	@media (min-width: 900px) {
-		.contact-hero {
-			padding-top: calc(var(--header-height) + 4rem);
-			padding-bottom: 5rem;
-		}
-
-		.contact-hero-inner {
-			grid-template-columns: 1.1fr 1fr;
-			gap: 4rem;
-			align-items: center;
-		}
-
-		.contact-title-img {
-			max-width: 100%;
-		}
-
-		.contact-aside-heading {
-			font-size: clamp(2rem, 3vw, 3rem);
-			margin-bottom: 1.75rem;
-		}
-
-		.contact-address {
-			font-size: 1rem;
-			margin-top: 1.5rem;
-			grid-template-columns: auto 1fr;
-			justify-content: space-between;
-		}
-
-		.contact-address-lines {
-			text-align: right;
-		}
-	}
-</style>

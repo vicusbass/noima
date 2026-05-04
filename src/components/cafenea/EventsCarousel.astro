@@ -22,21 +22,20 @@ const { heading = 'evenimente', events } = Astro.props;
 
 {
 	events.length > 0 && (
-		<section class="events-carousel-section py-16 md:py-24">
+		<section class="py-16 md:py-24">
 			<div class="container-x">
 				<h2 class="section-heading mb-10 md:mb-14">{heading}</h2>
 			</div>
 
-			<div
-				class="events-carousel"
-				data-events-carousel
-				data-count={events.length}
-			>
-				<div class="events-track" data-events-track>
+			<div class="relative" data-events-carousel data-count={events.length}>
+				<div
+					class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden px-[calc(var(--site-inset)+var(--container-pad-sm))] md:px-[calc(var(--site-inset)+var(--container-pad-md))] xl:px-[calc(var(--site-inset)+var(--container-pad-lg))]"
+					data-events-track
+				>
 					{events.map((event, i) => (
 						<a
 							href={`/evenimente/${event.slug}`}
-							class="events-card"
+							class="group relative flex-[0_0_100%] snap-start overflow-hidden no-underline text-white isolate aspect-4/3 md:aspect-square md:flex-[0_0_calc((100%-2*1.25rem)/3)]"
 							data-card-index={i}
 						>
 							<img
@@ -48,16 +47,21 @@ const { heading = 'evenimente', events } = Astro.props;
 									.url()}
 								alt={event.image.alt || ''}
 								loading={i < 3 ? 'eager' : 'lazy'}
-								class="events-card-img"
+								class="absolute inset-0 block h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
 							/>
-							<div class="events-card-overlay" aria-hidden="true" />
+							<div
+								class="absolute inset-0 z-1 [background:linear-gradient(to_bottom,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.25)_40%,rgba(0,0,0,0.6)_100%)]"
+								aria-hidden="true"
+							/>
 							<h3
-								class="display events-card-title"
+								class="display absolute top-12 left-10 right-10 z-2 text-[clamp(1.5rem,2.4vw,2.25rem)] font-semibold text-white max-w-[14ch]"
 								transition:name={`event-title-${event.slug}`}
 							>
 								{event.title}
 							</h3>
-							<span class="events-card-cta">VEZI EVENIMENTUL</span>
+							<span class="absolute bottom-6 left-10 z-2 text-[0.8125rem] font-bold uppercase tracking-[0.12em] text-white underline underline-offset-4">
+								VEZI EVENIMENTUL
+							</span>
 						</a>
 					))}
 				</div>
@@ -66,7 +70,7 @@ const { heading = 'evenimente', events } = Astro.props;
 					<>
 						<button
 							type="button"
-							class="events-arrow events-arrow--prev"
+							class="absolute top-1/2 left-2 z-3 grid h-11 w-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-black/8 bg-white/85 text-black transition-colors hover:bg-white xl:left-6"
 							data-events-prev
 							aria-label="Evenimentul anterior"
 						>
@@ -82,7 +86,7 @@ const { heading = 'evenimente', events } = Astro.props;
 						</button>
 						<button
 							type="button"
-							class="events-arrow events-arrow--next"
+							class="absolute top-1/2 right-2 z-3 grid h-11 w-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-black/8 bg-white/85 text-black transition-colors hover:bg-white xl:right-6"
 							data-events-next
 							aria-label="Evenimentul următor"
 						>
@@ -102,7 +106,7 @@ const { heading = 'evenimente', events } = Astro.props;
 
 			{events.length > 1 && (
 				<div
-					class="events-dots"
+					class="mt-8 flex justify-center gap-2"
 					role="tablist"
 					aria-label="Selectează evenimentul"
 					data-events-dots
@@ -110,7 +114,7 @@ const { heading = 'evenimente', events } = Astro.props;
 					{events.map((event, i) => (
 						<button
 							type="button"
-							class="events-dot"
+							class="h-2.5 w-2.5 cursor-pointer rounded-full border-0 bg-black/20 p-0 transition-colors data-[active=true]:bg-black/75"
 							data-events-dot={i}
 							data-active={i === 0 ? 'true' : 'false'}
 							role="tab"
@@ -123,175 +127,6 @@ const { heading = 'evenimente', events } = Astro.props;
 		</section>
 	)
 }
-
-<style>
-	.events-carousel-section {
-		background: transparent;
-	}
-
-	.events-carousel {
-		position: relative;
-	}
-
-	.events-track {
-		display: flex;
-		gap: 1.25rem;
-		padding-inline: calc(var(--site-inset) + var(--container-pad-sm));
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		scroll-behavior: smooth;
-		-webkit-overflow-scrolling: touch;
-		scrollbar-width: none;
-	}
-	.events-track::-webkit-scrollbar {
-		display: none;
-	}
-
-	@media (min-width: 768px) {
-		.events-track {
-			padding-inline: calc(var(--site-inset) + var(--container-pad-md));
-		}
-	}
-
-	@media (min-width: 1280px) {
-		.events-track {
-			padding-inline: calc(var(--site-inset) + var(--container-pad-lg));
-		}
-	}
-
-	.events-card {
-		position: relative;
-		flex: 0 0 100%;
-		aspect-ratio: 4 / 3;
-		scroll-snap-align: start;
-		overflow: hidden;
-		text-decoration: none;
-		color: #fff;
-		isolation: isolate;
-	}
-
-	@media (min-width: 900px) {
-		.events-card {
-			flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
-			aspect-ratio: 1 / 1;
-		}
-	}
-
-	.events-card-img {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-		transition: transform 0.5s ease;
-	}
-
-	.events-card:hover .events-card-img,
-	.events-card:focus-visible .events-card-img {
-		transform: scale(1.04);
-	}
-
-	.events-card-overlay {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0.15) 0%,
-			rgba(0, 0, 0, 0.25) 40%,
-			rgba(0, 0, 0, 0.6) 100%
-		);
-		z-index: 1;
-	}
-
-	.events-card-title {
-		position: absolute;
-		top: 3rem;
-		left: 2.5rem;
-		right: 2.5rem;
-		z-index: 2;
-		font-size: clamp(1.5rem, 2.4vw, 2.25rem);
-		font-weight: 600;
-		color: #fff;
-		max-width: 14ch;
-	}
-
-	.events-card-cta {
-		position: absolute;
-		bottom: 1.5rem;
-		left: 2.5rem;
-		z-index: 2;
-		font-size: 0.8125rem;
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: #fff;
-		text-decoration: underline;
-		text-underline-offset: 4px;
-	}
-
-	.events-arrow {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 44px;
-		height: 44px;
-		border-radius: 999px;
-		display: grid;
-		place-items: center;
-		background: rgba(255, 255, 255, 0.85);
-		border: 1px solid rgba(0, 0, 0, 0.08);
-		color: #000;
-		cursor: pointer;
-		transition:
-			background-color 0.2s ease,
-			transform 0.2s ease;
-		z-index: 3;
-	}
-
-	.events-arrow:hover {
-		background: rgba(255, 255, 255, 1);
-	}
-
-	.events-arrow--prev {
-		left: 0.5rem;
-	}
-
-	.events-arrow--next {
-		right: 0.5rem;
-	}
-
-	@media (min-width: 1280px) {
-		.events-arrow--prev {
-			left: 1.5rem;
-		}
-		.events-arrow--next {
-			right: 1.5rem;
-		}
-	}
-
-	.events-dots {
-		display: flex;
-		justify-content: center;
-		gap: 0.5rem;
-		margin-top: 2rem;
-	}
-
-	.events-dot {
-		width: 10px;
-		height: 10px;
-		border-radius: 999px;
-		border: 0;
-		background: rgba(0, 0, 0, 0.2);
-		cursor: pointer;
-		padding: 0;
-		transition: background-color 0.2s ease;
-	}
-
-	.events-dot[data-active='true'] {
-		background: rgba(0, 0, 0, 0.75);
-	}
-</style>
 
 <script>
 	function initEventsCarousels() {

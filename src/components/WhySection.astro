@@ -23,33 +23,36 @@ const {
 } = Astro.props;
 ---
 
-<section id="manifesto" class="why-section py-16 md:py-24">
+<section id="manifesto" class="py-16 md:py-24">
   <div class="container-x">
-    <h2 class="section-heading why-heading">{heading}</h2>
+    <h2 class="section-heading mb-6 md:mb-24">{heading}</h2>
   </div>
 
-  <div class="container-x why-panel-wrap">
-    <div class="why-panel">
-      <div class="why-illu" aria-hidden="true">
+  <div class="container-x">
+    <div class="why-panel relative flex flex-col gap-2 md:block md:h-[560px] md:overflow-visible md:bg-cream">
+      <div
+        class="grid w-screen mx-[calc(50%-50vw)] overflow-clip md:absolute md:-top-40 md:bottom-0 md:-left-[10%] md:mx-0 md:w-[70%]"
+        aria-hidden="true"
+      >
         <Image
           src={BirdNoBeak}
           alt=""
           widths={[480, 800, 1200, 1600, 2000]}
-          sizes="(min-width: 900px) 50vw, 100vw"
-          class="bird-img bird-img-base"
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="block w-[150%] max-w-none h-auto -mt-[60vw] -mb-[50vw] -mx-[25%] mix-blend-multiply col-start-1 row-start-1 md:absolute md:top-[48%] md:-left-[2.5%] md:m-0 md:h-auto md:w-[95%] md:max-w-none md:-translate-y-1/2"
         />
         <Image
           src={Bird}
           alt=""
           widths={[480, 800, 1200, 1600, 2000]}
-          sizes="(min-width: 900px) 50vw, 100vw"
-          class="bird-img bird-img-beak"
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="bird-img-beak block w-[150%] max-w-none h-auto -mt-[60vw] -mb-[50vw] -mx-[25%] mix-blend-multiply col-start-1 row-start-1 md:absolute md:top-[48%] md:-left-[2.5%] md:m-0 md:h-auto md:w-[95%] md:max-w-none md:-translate-y-1/2"
         />
       </div>
 
-      <div class="why-copy">
+      <div class="flex flex-col [&_p+p]:mt-6 md:absolute md:inset-y-0 md:right-0 md:w-[45%] md:justify-center md:pr-20 md:[&_p]:max-w-[50ch] md:[&_p+p]:mt-[3.3rem]">
         {paragraphs.map((p) => <p class="body-copy">{p}</p>)}
-        <Button href={ctaHref} variant="dark" class="why-cta">{ctaLabel}</Button
+        <Button href={ctaHref} variant="dark" class="self-start mt-8 md:mt-12">{ctaLabel}</Button
         >
       </div>
     </div>
@@ -57,36 +60,6 @@ const {
 </section>
 
 <style>
-  .why-heading {
-    margin-bottom: 1.5rem;
-  }
-
-  .why-panel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .why-illu {
-    width: 100vw;
-    margin-inline: calc(50% - 50vw);
-    overflow: clip;
-    display: grid;
-  }
-
-  .bird-img {
-    display: block;
-    width: 150%;
-    max-width: none;
-    height: auto;
-    margin-block: -60vw -50vw;
-    margin-inline: -25%;
-    mix-blend-mode: multiply;
-    grid-column: 1;
-    grid-row: 1;
-  }
-
   @supports (animation-timeline: view()) {
     .bird-img-beak {
       opacity: 0;
@@ -95,7 +68,7 @@ const {
       animation-range: entry 50% cover 50%;
     }
 
-    @media (min-width: 900px) {
+    @media (min-width: 768px) {
       .bird-img-beak {
         animation-range: entry 0% entry 80%;
       }
@@ -112,77 +85,6 @@ const {
     .bird-img-beak {
       opacity: 1;
       animation: none;
-    }
-  }
-
-  .why-copy {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .why-copy p + p {
-    margin-top: 1.5rem;
-  }
-
-  .why-cta {
-    align-self: flex-start;
-    margin-top: 2rem;
-  }
-
-  @media (min-width: 900px) {
-    .why-heading {
-      margin-bottom: 6rem;
-    }
-
-    .why-panel {
-      background: #f8f5ed;
-      height: 560px;
-      overflow: visible;
-      display: block;
-    }
-
-    .why-illu {
-      position: absolute;
-      top: -160px;
-      bottom: 0;
-      left: -10%;
-      width: 70%;
-      margin-inline: 0;
-      overflow: clip;
-    }
-
-    .bird-img {
-      position: absolute;
-      top: 48%;
-      left: -2.5%;
-      width: 95%;
-      height: auto;
-      max-width: none;
-      margin-block: 0;
-      margin-inline: 0;
-      transform: translateY(-50%);
-    }
-
-    .why-copy {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 45%;
-      padding-right: 5rem;
-      justify-content: center;
-    }
-
-    .why-copy p {
-      max-width: 50ch;
-    }
-
-    .why-copy p + p {
-      margin-top: 3.3rem;
-    }
-
-    .why-cta {
-      margin-top: 3rem;
     }
   }
 </style>

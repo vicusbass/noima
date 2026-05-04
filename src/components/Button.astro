@@ -18,7 +18,7 @@ const {
 
 {
 	href ? (
-		<a href={href} class:list={['btn', `btn-${variant}`, className]} {...rest}>
+		<a href={href} class:list={['btn flex w-full md:inline-flex md:w-auto md:min-w-56', `btn-${variant}`, className]} {...rest}>
 			<span class="btn-label"><slot /></span>
 			<svg
 				class="btn-icon"
@@ -32,7 +32,7 @@ const {
 			</svg>
 		</a>
 	) : (
-		<button type={type} class:list={['btn', `btn-${variant}`, className]} {...rest}>
+		<button type={type} class:list={['btn flex w-full md:inline-flex md:w-auto md:min-w-56', `btn-${variant}`, className]} {...rest}>
 			<span class="btn-label"><slot /></span>
 			<svg
 				class="btn-icon"
@@ -50,8 +50,6 @@ const {
 
 <style>
 	.btn {
-		display: flex;
-		width: 100%;
 		align-items: center;
 		justify-content: space-between;
 		gap: 2rem;
@@ -67,14 +65,6 @@ const {
 			background-color 0.25s ease,
 			color 0.25s ease,
 			border-color 0.25s ease;
-	}
-
-	@media (min-width: 900px) {
-		.btn {
-			display: inline-flex;
-			width: auto;
-			min-width: 14rem;
-		}
 	}
 
 	.btn-label,
