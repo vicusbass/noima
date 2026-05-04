@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { contactInfo } from '../lib/contact';
+import { contactInfo, operatorInfo } from '../lib/contact';
 
 const lastUpdated = '4 mai 2026';
 ---
@@ -27,13 +27,30 @@ const lastUpdated = '4 mai 2026';
 
       <h2 class="text-xl font-bold pt-6">Cine suntem</h2>
       <p>
-        Operatorul site-ului este <strong>Noima</strong> — prăjitorie de cafea
-        de specialitate cu sediul în {contactInfo.address.street},
-        {contactInfo.address.city}, {contactInfo.address.postalCode}, România.
+        Operatorul site-ului <strong>prajitorianoima.ro</strong> și al brand-ului
+        <strong>Noima</strong> este:
+      </p>
+      <ul class="list-none pl-0 space-y-1">
+        <li><strong>{operatorInfo.legalName}</strong></li>
+        <li>CUI: {operatorInfo.cui}</li>
+        <li>Nr. Reg. Com.: {operatorInfo.regCom}</li>
+        <li>
+          Sediu social: {operatorInfo.address.street}, {operatorInfo.address.city},
+          jud. {operatorInfo.address.county}, {operatorInfo.address.postalCode},
+          România
+        </li>
+        <li>
+          Punct de lucru (cafenea): {contactInfo.address.street}, {contactInfo.address.city},
+          {contactInfo.address.postalCode}
+        </li>
+      </ul>
+      <p>
         Ne poți contacta la <a
           href={`mailto:${contactInfo.email}`}
           class="underline">{contactInfo.email}</a
-        > sau <a href={contactInfo.phoneHref} class="underline">{contactInfo.phone}</a>.
+        > sau <a href={contactInfo.phoneHref} class="underline"
+          >{contactInfo.phone}</a
+        >.
       </p>
 
       <h2 class="text-xl font-bold pt-6">Ce date colectăm</h2>
