@@ -4,4 +4,7 @@ pre-commit:
       glob: "*.{js,ts,jsx,tsx,mjs,cjs,json,css}"
       exclude:
         - "noima-coffee-theme/**"
+        - ".claude/**"
+        - ".agents/**"
+        - "skills.lock"
       run: pnpm biome check --fix {staged_files} && git add {staged_files}
