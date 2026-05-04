@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { contactInfo } from '../lib/contact';
+
+const lastUpdated = '4 mai 2026';
+---
+
+<Layout
+  title="Termeni și Condiții — Noima"
+  description="Termenii și condițiile de utilizare a site-ului prajitorianoima.ro."
+>
+  <article class="container-x py-24 md:py-32 max-w-3xl">
+    <p class="eyebrow text-mute mb-6">Ultima actualizare: {lastUpdated}</p>
+    <h1 class="section-heading text-left mb-10">Termeni și condiții</h1>
+
+    <div
+      class="prose-content space-y-6 text-[1rem] md:text-[1.0625rem] leading-[1.75]"
+    >
+      <p>
+        Bun venit pe <strong>prajitorianoima.ro</strong>. Folosirea acestui site
+        înseamnă că ești de acord cu termenii de mai jos. Te rugăm să-i
+        citești înainte de a continua.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Despre site</h2>
+      <p>
+        Site-ul este operat de <strong>Noima</strong>, prăjitorie de cafea de
+        specialitate din {contactInfo.address.city}. Are rol de prezentare:
+        povestea noastră, cafenea, evenimente, produse pe care le prăjim. Nu
+        procesăm comenzi sau plăți direct prin acest site.
+      </p>
+      <p>
+        Achizițiile de cafea se fac printr-un magazin online separat, care are
+        propriii termeni și condiții, afișați pe acel site la momentul cumpărării.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Proprietate intelectuală</h2>
+      <p>
+        Conținutul site-ului — texte, fotografii, video, grafică, logo-uri și
+        marca <strong>Noima</strong> — aparține Noima sau partenerilor noștri și
+        este protejat de legislația privind drepturile de autor și mărcile
+        înregistrate.
+      </p>
+      <p>
+        Poți vizualiza și partaja link-uri către paginile noastre în mod liber.
+        Reproducerea, copierea sau folosirea comercială a conținutului fără
+        acordul nostru scris nu este permisă.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Utilizare corectă</h2>
+      <p>Te rugăm să nu folosești site-ul pentru:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>activități ilegale sau frauduloase;</li>
+        <li>
+          a încerca accesarea neautorizată a serverelor, conturilor sau a unor
+          zone restricționate;
+        </li>
+        <li>
+          a transmite mesaje automate, spam sau conținut care încalcă drepturile
+          altor persoane.
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold pt-6">Acuratețea conținutului</h2>
+      <p>
+        Facem eforturi rezonabile ca informațiile despre cafele, evenimente și
+        cafenea să fie corecte și actualizate. Pot apărea totuși erori sau
+        modificări (program, stocuri, prețuri) — informațiile pot fi schimbate
+        fără notificare prealabilă.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Limitarea răspunderii</h2>
+      <p>
+        În măsura permisă de lege, Noima nu răspunde pentru daune indirecte
+        rezultate din utilizarea sau imposibilitatea utilizării acestui site, a
+        link-urilor externe sau a serviciilor terțe (Google Analytics, Vercel,
+        Mux, Sanity, Resend) integrate pe site.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Link-uri externe</h2>
+      <p>
+        Site-ul poate conține link-uri către pagini gestionate de terțe părți
+        (de exemplu rețele sociale sau magazinul nostru online). Nu controlăm
+        acele site-uri și nu răspundem pentru conținutul sau politicile lor.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Confidențialitate și cookies</h2>
+      <p>
+        Modul în care prelucrăm date personale este descris în
+        <a href="/politica-de-confidentialitate" class="underline"
+          >Politica de Confidențialitate</a
+        > și
+        <a href="/politica-cookies" class="underline">Politica de Cookies</a>.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Modificări ale termenilor</h2>
+      <p>
+        Putem actualiza acești termeni periodic. Data ultimei actualizări este
+        afișată în partea de sus a paginii. Continuarea utilizării site-ului
+        după modificări înseamnă că ești de acord cu noua versiune.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Lege aplicabilă</h2>
+      <p>
+        Acești termeni sunt guvernați de legea română. Eventualele dispute se
+        soluționează amiabil sau, în lipsa unei înțelegeri, de instanțele
+        competente din Cluj-Napoca.
+      </p>
+
+      <h2 class="text-xl font-bold pt-6">Contact</h2>
+      <p>
+        Pentru întrebări despre acești termeni, scrie-ne la
+        <a href={`mailto:${contactInfo.email}`} class="underline"
+          >{contactInfo.email}</a
+        >.
+      </p>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .prose-content :global(a) {
+    color: var(--color-ink);
+  }
+  .prose-content :global(a:hover) {
+    color: var(--color-tan);
+  }
+</style>
