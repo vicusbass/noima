@@ -31,12 +31,7 @@ export default defineConfig({
 			useCdn: false,
 			apiVersion: '2026-02-16',
 		}),
-		sitemap({
-			i18n: {
-				defaultLocale: 'ro',
-				locales: { ro: 'ro-RO' },
-			},
-		}),
+		sitemap(),
 	],
 	vite: {
 		plugins: [
