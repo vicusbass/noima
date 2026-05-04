@@ -1,32 +1,32 @@
 ---
-import { Image } from "astro:assets";
-import CoffeeShop from "../assets/main/coffee-shop.png";
-import Team from "../assets/main/team.png";
-import Button from "../components/Button.astro";
-import Layout from "../layouts/Layout.astro";
+import { Image } from 'astro:assets';
+import CoffeeShop from '../assets/main/coffee-shop.png';
+import Team from '../assets/main/team.png';
+import Button from '../components/Button.astro';
+import Layout from '../layouts/Layout.astro';
 
 const values = [
-  {
-    key: "cafea-buna",
-    title: "cafea bună",
-    body: "Prăjim cafea de specialitate cu grijă pentru gust, echilibru și consistență. Alegem doar ce are sens să ajungă în ceașcă.",
-  },
-  {
-    key: "ospitalitate-reala",
-    title: "ospitalitate reală",
-    body: 'Te întâmpinăm firesc, îți recomandăm pe gust și îți răspundem simplu, fără să te facem să te simți „mai puțin inițiat".',
-  },
-  {
-    key: "conexiuni-reale",
-    title: "conexiuni reale",
-    body: "Noima e gândită ca un loc în care oamenii revin. Pentru cafea, dar și pentru atmosfera care îi face să se simtă bine.",
-  },
+	{
+		key: 'cafea-buna',
+		title: 'cafea bună',
+		body: 'Prăjim cafea de specialitate cu grijă pentru gust, echilibru și consistență. Alegem doar ce are sens să ajungă în ceașcă.',
+	},
+	{
+		key: 'ospitalitate-reala',
+		title: 'ospitalitate reală',
+		body: 'Te întâmpinăm firesc, îți recomandăm pe gust și îți răspundem simplu, fără să te facem să te simți „mai puțin inițiat".',
+	},
+	{
+		key: 'conexiuni-reale',
+		title: 'conexiuni reale',
+		body: 'Noima e gândită ca un loc în care oamenii revin. Pentru cafea, dar și pentru atmosfera care îi face să se simtă bine.',
+	},
 ];
 
 const sectionHeading =
-  "display-lower text-[clamp(2.375rem,5vw,6rem)] leading-[1.05] text-center text-black [&>span]:block";
+	'display-lower text-[clamp(2.375rem,5vw,6rem)] leading-[1.05] text-center text-black [&>span]:block';
 const bodyText =
-  "text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8]";
+	'text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8]';
 ---
 
 <Layout title="Despre noi — Noima">

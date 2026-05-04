@@ -1,15 +1,15 @@
 ---
-import { contactInfo } from "../../lib/contact";
+import { contactInfo } from '../../lib/contact';
 
 interface Props {
-  showContactInfo?: boolean;
+	showContactInfo?: boolean;
 }
 
 const { showContactInfo = true } = Astro.props;
 const { email, phone, phoneHref, hours } = contactInfo;
 
 const fieldInput =
-  "w-full py-[0.95rem] px-4 bg-surface border border-line-soft rounded-none text-ink text-[0.9375rem] transition-colors duration-200 placeholder:text-mute-soft placeholder:opacity-100 focus:outline-none focus:border-ink [&:user-invalid]:border-[#b14b4b]";
+	'w-full py-[0.95rem] px-4 bg-surface border border-line-soft rounded-none text-ink text-[0.9375rem] transition-colors duration-200 placeholder:text-mute-soft placeholder:opacity-100 focus:outline-none focus:border-ink [&:user-invalid]:border-[#b14b4b]';
 const fieldTextarea = `${fieldInput} resize-y min-h-32 leading-normal`;
 ---
 

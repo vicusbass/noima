@@ -1,41 +1,41 @@
 {
-  "version": 1,
-  "skills": {
-    "astro": {
-      "source": "astrolicious/agent-skills",
-      "sourceType": "github",
-      "skillPath": "skills/astro/SKILL.md",
-      "computedHash": "ebefe26b231d32379c14e41a46c2de7b4b0184543bedab7febdabe4fb21fba4e"
-    },
-    "frontend-design": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "skillPath": "skills/frontend-design/SKILL.md",
-      "computedHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67"
-    },
-    "pdf": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "skillPath": "skills/pdf/SKILL.md",
-      "computedHash": "cfbc539377088ca7e44a813b30c306327385bbd973cd7a721e1743f60837dd62"
-    },
-    "tailwind-css-patterns": {
-      "source": "giuseppe-trisciuoglio/developer-kit",
-      "sourceType": "github",
-      "skillPath": "plugins/developer-kit-typescript/skills/tailwind-css-patterns/SKILL.md",
-      "computedHash": "6092620c3af955a46ea2b94ca8a40197ac8392e6bbdc8c7515659328b186c770"
-    },
-    "tailwind-design-system": {
-      "source": "wshobson/agents",
-      "sourceType": "github",
-      "skillPath": "plugins/frontend-mobile-development/skills/tailwind-design-system/SKILL.md",
-      "computedHash": "988d80e52c67c3692d43cc963b6a048a239895e88b272b061de55370d0f8efc3"
-    },
-    "web-design-guidelines": {
-      "source": "vercel-labs/agent-skills",
-      "sourceType": "github",
-      "skillPath": "skills/web-design-guidelines/SKILL.md",
-      "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
-    }
-  }
+	"version": 1,
+	"skills": {
+		"astro": {
+			"source": "astrolicious/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/astro/SKILL.md",
+			"computedHash": "ebefe26b231d32379c14e41a46c2de7b4b0184543bedab7febdabe4fb21fba4e"
+		},
+		"frontend-design": {
+			"source": "anthropics/skills",
+			"sourceType": "github",
+			"skillPath": "skills/frontend-design/SKILL.md",
+			"computedHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67"
+		},
+		"pdf": {
+			"source": "anthropics/skills",
+			"sourceType": "github",
+			"skillPath": "skills/pdf/SKILL.md",
+			"computedHash": "cfbc539377088ca7e44a813b30c306327385bbd973cd7a721e1743f60837dd62"
+		},
+		"tailwind-css-patterns": {
+			"source": "giuseppe-trisciuoglio/developer-kit",
+			"sourceType": "github",
+			"skillPath": "plugins/developer-kit-typescript/skills/tailwind-css-patterns/SKILL.md",
+			"computedHash": "6092620c3af955a46ea2b94ca8a40197ac8392e6bbdc8c7515659328b186c770"
+		},
+		"tailwind-design-system": {
+			"source": "wshobson/agents",
+			"sourceType": "github",
+			"skillPath": "plugins/frontend-mobile-development/skills/tailwind-design-system/SKILL.md",
+			"computedHash": "988d80e52c67c3692d43cc963b6a048a239895e88b272b061de55370d0f8efc3"
+		},
+		"web-design-guidelines": {
+			"source": "vercel-labs/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/web-design-guidelines/SKILL.md",
+			"computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+		}
+	}
 }

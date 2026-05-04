@@ -7,7 +7,14 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!.vercel", "!noima-coffee-theme"]
+		"includes": [
+			"**",
+			"!.vercel",
+			"!noima-coffee-theme",
+			"!.claude",
+			"!.agents",
+			"!skills.lock"
+		]
 	},
 	"formatter": {
 		"enabled": true,
