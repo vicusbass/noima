@@ -26,10 +26,12 @@ const enabled = import.meta.env.PROD;
 					wait_for_update: 500,
 				});
 
-				// Apply previously stored choice on subsequent visits.
+				// Track current consent state. `null` = no choice yet,
+				// `'granted'`/`'denied'` = explicit user choice.
+				var currentConsent = null;
 				try {
-					var stored = localStorage.getItem('noima:consent');
-					if (stored === 'granted') {
+					currentConsent = localStorage.getItem('noima:consent');
+					if (currentConsent === 'granted') {
 						window.gtag('consent', 'update', { analytics_storage: 'granted' });
 					}
 				} catch (err) {}
@@ -43,6 +45,9 @@ const enabled = import.meta.env.PROD;
 				});
 
 				function sendPageView() {
+					// Explicit denial: don't ping at all. Pre-consent (null) still
+					// fires the Consent Mode v2 cookieless ping for modeled measurement.
+					if (currentConsent === 'denied') return;
 					if (typeof window.gtag !== 'function') return;
 					window.gtag('event', 'page_view', {
 						page_title: document.title,
@@ -55,6 +60,7 @@ const enabled = import.meta.env.PROD;
 				document.addEventListener('astro:page-load', sendPageView);
 
 				window.addEventListener('noima:consent-update', function (e) {
+					currentConsent = e.detail;
 					var granted = e.detail === 'granted';
 					window.gtag('consent', 'update', {
 						analytics_storage: granted ? 'granted' : 'denied',

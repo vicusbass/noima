@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { contactInfo } from '../lib/contact';
+import { contactInfo, operatorInfo } from '../lib/contact';
 
 const lastUpdated = '4 mai 2026';
 ---
@@ -24,14 +24,33 @@ const lastUpdated = '4 mai 2026';
 
       <h2 class="text-xl font-bold pt-6">Despre site</h2>
       <p>
-        Site-ul este operat de <strong>Noima</strong>, prăjitorie de cafea de
-        specialitate din {contactInfo.address.city}. Are rol de prezentare:
-        povestea noastră, cafenea, evenimente, produse pe care le prăjim. Nu
-        procesăm comenzi sau plăți direct prin acest site.
+        Site-ul <strong>prajitorianoima.ro</strong> este operat de:
+      </p>
+      <ul class="list-none pl-0 space-y-1">
+        <li><strong>{operatorInfo.legalName}</strong></li>
+        <li>CUI: {operatorInfo.cui}</li>
+        <li>Nr. Reg. Com.: {operatorInfo.regCom}</li>
+        <li>
+          Sediu social: {operatorInfo.address.street}, {operatorInfo.address.city},
+          jud. {operatorInfo.address.county}, {operatorInfo.address.postalCode}
+        </li>
+        <li>
+          Punct de lucru (cafenea): {contactInfo.address.street}, {contactInfo.address.city}
+        </li>
+      </ul>
+      <p>
+        Sub brandul <strong>Noima</strong>, prăjim cafea de specialitate în {contactInfo.address.city}.
+        Pe acest site găsești povestea noastră, informații despre cafenea,
+        evenimente și o selecție de produse din portofoliul nostru.
       </p>
       <p>
-        Achizițiile de cafea se fac printr-un magazin online separat, care are
-        propriii termeni și condiții, afișați pe acel site la momentul cumpărării.
+        Pentru achiziții online folosim platforma <strong>Shopify</strong>.
+        Produsele afișate pe paginile noastre — inclusiv în secțiunea
+        <em>Shop</em> și pe pagina principală — provin din magazinul nostru
+        Shopify, prin Shopify Storefront API. Comanda, plata și procesarea
+        efectivă a comenzii (împreună cu termeni specifici privind livrarea,
+        retururile și politica de plată) se desfășoară prin infrastructura
+        Shopify, conform termenilor afișați în coș și la checkout.
       </p>
 
       <h2 class="text-xl font-bold pt-6">Proprietate intelectuală</h2>
