@@ -1,6 +1,8 @@
 ---
 import { Font } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
+import CookieBanner from '../components/CookieBanner.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { contactInfo } from '../lib/contact';
@@ -84,6 +86,7 @@ const schemas = [
 			))
 		}
 		<ClientRouter />
+		<GoogleAnalytics />
 	</head>
 	<body class="min-h-screen flex flex-col">
 		<SiteHeader />
@@ -91,6 +94,7 @@ const schemas = [
 			<slot />
 		</main>
 		<SiteFooter />
+		<CookieBanner />
 		<script>
 			import Lenis from 'lenis';
 
