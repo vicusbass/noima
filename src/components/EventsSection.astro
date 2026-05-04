@@ -37,12 +37,12 @@ function truncate(text: string | undefined, max = 200) {
 	events.length > 0 && (
 		<section id="evenimente" class="events-section py-16 md:py-24">
 			<div class="container-x">
-				<h2 class="section-heading events-heading">{heading}</h2>
+				<h2 class="section-heading mb-8">{heading}</h2>
 			</div>
 
 			<div class="container-x events-panel-wrap">
 				<div
-					class="events-panel"
+					class="events-panel min-h-[480px] p-6 md:min-h-[620px] md:px-20 md:py-16"
 					data-events-carousel
 					data-count={events.length}
 				>
@@ -59,7 +59,7 @@ function truncate(text: string | undefined, max = 200) {
 						<div class="events-bg-overlay" />
 					</div>
 
-					<a href={calendarHref} class="events-calendar-btn">
+					<a href={calendarHref} class="events-calendar-btn top-6 md:top-12">
 						<svg
 							width="18"
 							height="18"
@@ -80,7 +80,7 @@ function truncate(text: string | undefined, max = 200) {
 					<div class="events-slides">
 						{events.map((event, i) => (
 							<article
-								class="events-slide"
+								class="events-slide gap-5 md:gap-6"
 								data-slide-index={i}
 								data-active={i === 0 ? 'true' : 'false'}
 								aria-hidden={i === 0 ? 'false' : 'true'}
@@ -92,7 +92,7 @@ function truncate(text: string | undefined, max = 200) {
 								{event.title}
 							</h3>
 								{event.summary && (
-									<p class="events-slide-text">
+									<p class="events-slide-text text-[0.9375rem] md:text-base">
 										{truncate(event.summary, 220)}
 									</p>
 								)}
@@ -111,7 +111,7 @@ function truncate(text: string | undefined, max = 200) {
 						<>
 							<button
 								type="button"
-								class="events-arrow events-arrow--prev"
+								class="events-arrow left-4 md:left-6"
 								data-events-prev
 								aria-label="Evenimentul anterior"
 							>
@@ -127,7 +127,7 @@ function truncate(text: string | undefined, max = 200) {
 							</button>
 							<button
 								type="button"
-								class="events-arrow events-arrow--next"
+								class="events-arrow right-4 md:right-6"
 								data-events-next
 								aria-label="Evenimentul următor"
 							>
@@ -143,7 +143,7 @@ function truncate(text: string | undefined, max = 200) {
 							</button>
 
 							<div
-								class="events-dots"
+								class="events-dots bottom-4 md:bottom-6"
 								role="tablist"
 								aria-label="Selectează evenimentul"
 							>
@@ -168,19 +168,13 @@ function truncate(text: string | undefined, max = 200) {
 }
 
 <style>
-	.events-heading {
-		margin-bottom: 2rem;
-	}
-
 	.events-panel {
 		position: relative;
 		overflow: hidden;
 		border-radius: 4px;
-		min-height: 480px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
-		padding: 1.5rem;
 		color: #fff;
 		isolation: isolate;
 	}
@@ -211,7 +205,6 @@ function truncate(text: string | undefined, max = 200) {
 
 	.events-calendar-btn {
 		position: absolute;
-		top: 1.5rem;
 		left: 50%;
 		transform: translateX(-50%);
 		display: inline-flex;
@@ -245,7 +238,6 @@ function truncate(text: string | undefined, max = 200) {
 		grid-area: 1 / 1;
 		display: flex;
 		flex-direction: column;
-		gap: 1.25rem;
 		max-width: 36rem;
 		opacity: 0;
 		transform: translateY(8px);
@@ -268,7 +260,6 @@ function truncate(text: string | undefined, max = 200) {
 	}
 
 	.events-slide-text {
-		font-size: 0.9375rem;
 		line-height: 1.6;
 		color: rgba(255, 255, 255, 0.92);
 		max-width: 36ch;
@@ -302,17 +293,8 @@ function truncate(text: string | undefined, max = 200) {
 		background: rgba(255, 255, 255, 0.32);
 	}
 
-	.events-arrow--prev {
-		left: 1rem;
-	}
-
-	.events-arrow--next {
-		right: 1rem;
-	}
-
 	.events-dots {
 		position: absolute;
-		bottom: 1rem;
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
@@ -335,36 +317,6 @@ function truncate(text: string | undefined, max = 200) {
 		background: #fff;
 	}
 
-	@media (min-width: 768px) {
-		.events-panel {
-			min-height: 620px;
-			padding: 4rem 5rem;
-		}
-
-		.events-calendar-btn {
-			top: 3rem;
-		}
-
-		.events-slide {
-			gap: 1.5rem;
-		}
-
-		.events-slide-text {
-			font-size: 1rem;
-		}
-
-		.events-arrow--prev {
-			left: 1.5rem;
-		}
-
-		.events-arrow--next {
-			right: 1.5rem;
-		}
-
-		.events-dots {
-			bottom: 1.5rem;
-		}
-	}
 </style>
 
 <script>

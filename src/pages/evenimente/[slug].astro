@@ -108,10 +108,12 @@ const eventSchema = {
 	description={eventDescription}
 	jsonLd={eventSchema}
 >
-	<article class="event">
-		<div class="container-x event-inner">
-			<div class="event-grid">
-				<div class="event-media">
+	<article class="bg-cream pt-(--header-height)">
+		<div class="container-x pt-14 pb-16 md:pt-28 md:pb-24">
+			<div
+				class="grid grid-cols-1 gap-8 md:grid-cols-[7fr_13fr] md:items-center md:gap-28"
+			>
+				<div class="mx-0 w-full max-w-[22rem] md:w-auto md:max-w-none">
 					{
 						imageSrc ? (
 							<img
@@ -124,30 +126,32 @@ const eventSchema = {
 								loading="eager"
 								decoding="async"
 								fetchpriority="high"
-								class="event-image"
+								class="block aspect-square h-auto w-full object-cover"
 							/>
 						) : (
-							<div class="event-image event-image--placeholder grain" />
+							<div class="event-image-placeholder grain block aspect-square h-auto w-full" />
 						)
 					}
 				</div>
 
-				<div class="event-body">
-					<p class="event-date">{formattedDate}</p>
+				<div class="flex flex-col gap-6 md:gap-8">
+					<p class="text-[0.9375rem] tracking-[0.02em] text-tan">
+						{formattedDate}
+					</p>
 					<h1
-						class="display event-title"
+						class="display text-[clamp(2.25rem,3.4375vw,4.125rem)] text-ink max-w-[16ch]"
 						transition:name={`event-title-${slug}`}
 					>
 						{event.title}
 					</h1>
 					{
 						event.description && (
-							<div class="event-description">
+							<div class="event-description text-base leading-[1.7] text-ink flex flex-col gap-5 md:text-[1.0625rem] md:max-w-[48ch]">
 								<PortableText value={event.description} />
 							</div>
 						)
 					}
-					<Button href="#rezerva" variant="dark" class="event-cta">
+					<Button href="#rezerva" variant="dark" class="self-start mt-4">
 						REZERVĂ UN LOC
 					</Button>
 				</div>
@@ -157,66 +161,9 @@ const eventSchema = {
 </Layout>
 
 <style>
-	.event {
-		background: var(--color-cream);
-		padding-top: var(--header-height);
-	}
-
-	.event-inner {
-		padding-block: 3.5rem 4rem;
-	}
-
-	.event-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
-	}
-
-	.event-media {
-		max-width: 22rem;
-		margin-inline: 0;
-		width: 100%;
-	}
-
-	.event-image {
-		display: block;
-		width: 100%;
-		height: auto;
-		aspect-ratio: 1 / 1;
-		object-fit: cover;
-	}
-
-	.event-image--placeholder {
+	.event-image-placeholder {
 		background: linear-gradient(135deg, #2a241f, #15110d);
 		position: relative;
-	}
-
-	.event-body {
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-		padding-inline: 0;
-	}
-
-	.event-date {
-		font-size: 0.9375rem;
-		color: var(--color-tan);
-		letter-spacing: 0.02em;
-	}
-
-	.event-title {
-		font-size: clamp(2.25rem, 3.4375vw, 4.125rem);
-		color: var(--color-ink);
-		max-width: 16ch;
-	}
-
-	.event-description {
-		font-size: 1rem;
-		line-height: 1.7;
-		color: var(--color-ink);
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
 	}
 
 	.event-description :global(p) {
@@ -241,46 +188,5 @@ const eventSchema = {
 	.event-description :global(ol) {
 		padding-left: 1.25rem;
 		margin: 0;
-	}
-
-	.event-cta {
-		align-self: flex-start;
-		margin-top: 1rem;
-	}
-
-	@media (min-width: 768px) {
-		.event-inner {
-			padding-block: 7rem 6rem;
-		}
-
-		.event-grid {
-			grid-template-columns: 7fr 13fr;
-			gap: 7rem;
-			align-items: center;
-		}
-
-		.event-media {
-			max-width: none;
-			margin-inline: 0;
-			width: auto;
-		}
-
-		.event-image {
-			aspect-ratio: 1 / 1;
-		}
-
-		.event-body {
-			gap: 2rem;
-		}
-
-		.event-description {
-			font-size: 1.0625rem;
-			line-height: 1.7;
-			max-width: 48ch;
-		}
-
-		.event-cta {
-			margin-top: 1rem;
-		}
 	}
 </style>

@@ -85,14 +85,14 @@ function buildSanityUrl(img: SanityImage, shape: Shape) {
 
 {
 	allSlotsFilled && (
-		<section class="location-section py-16 md:py-24">
+		<section class="py-16 md:py-24">
 			<div class="container-x">
 				<h2 class="section-heading mb-10 md:mb-14">locație</h2>
 
-				<div class="location-grid">
+				<div class="grid grid-cols-1 gap-3 md:grid-cols-12 md:gap-4">
 					{slots.map((slot) => (
 						<div
-							class="location-cell"
+							class="relative overflow-hidden data-[shape=square]:aspect-square data-[shape=wide]:aspect-2/1 md:data-[shape=wide]:aspect-auto md:[grid-area:var(--ga)]"
 							data-shape={slot.shape}
 							style={`--ga: ${slot.gridArea};`}
 						>
@@ -100,7 +100,7 @@ function buildSanityUrl(img: SanityImage, shape: Shape) {
 								src={buildSanityUrl(slot.sanity, slot.shape)}
 								alt={slot.sanity?.alt || ''}
 								loading="lazy"
-								class="location-img"
+								class="absolute inset-0 block h-full w-full object-cover"
 							/>
 						</div>
 					))}
@@ -109,53 +109,3 @@ function buildSanityUrl(img: SanityImage, shape: Shape) {
 		</section>
 	)
 }
-
-<style>
-	.location-section {
-		background: transparent;
-	}
-
-	.location-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 0.75rem;
-	}
-
-	.location-cell {
-		position: relative;
-		overflow: hidden;
-	}
-
-	.location-cell[data-shape='square'] {
-		aspect-ratio: 1 / 1;
-	}
-
-	.location-cell[data-shape='wide'] {
-		aspect-ratio: 2 / 1;
-	}
-
-	@media (min-width: 768px) {
-		.location-grid {
-			grid-template-columns: repeat(12, 1fr);
-			gap: 1rem;
-		}
-
-		.location-cell {
-			grid-area: var(--ga);
-		}
-
-		/* Squares drive row height via aspect-ratio; wides stretch to match. */
-		.location-cell[data-shape='wide'] {
-			aspect-ratio: auto;
-		}
-	}
-
-	.location-img {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-	}
-</style>
