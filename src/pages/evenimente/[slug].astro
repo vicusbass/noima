@@ -117,7 +117,7 @@ const eventSchema = {
 							<img
 								src={imageSrc}
 								srcset={imageSrcSet}
-								sizes="(min-width: 900px) 35vw, min(22rem, 90vw)"
+								sizes="(min-width: 768px) 35vw, min(22rem, 90vw)"
 								alt={event.image?.alt || event.title}
 								width="1600"
 								height="1600"
@@ -248,7 +248,7 @@ const eventSchema = {
 		margin-top: 1rem;
 	}
 
-	@media (min-width: 900px) {
+	@media (min-width: 768px) {
 		.event-inner {
 			padding-block: 7rem 6rem;
 		}

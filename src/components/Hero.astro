@@ -84,13 +84,13 @@ const hasMedia = hasImage || hasVideo;
 	</div>
 
 	<div class="container-x hero-inner relative pt-[calc(var(--header-height)+2rem)] pb-16 md:pb-24">
-		<div class="hero-grid">
+		<div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr] md:gap-16">
 			<h1 class="display hero-title">
 				<span>{headingFirstWord}</span>
 				{headingRest && <span>{headingRest}</span>}
 			</h1>
 
-			<div class="hero-meta">
+			<div class="flex flex-col-reverse items-start gap-6 md:flex-col md:items-end md:gap-8 md:text-right">
 				<Button href="#manifesto">DESCOPERĂ</Button>
 
 				<p class="hero-sub">
@@ -130,20 +130,6 @@ const hasMedia = hasImage || hasVideo;
 		display: block;
 	}
 
-	.hero-grid {
-		display: grid;
-		gap: 2rem;
-		grid-template-columns: 1fr;
-		align-items: end;
-	}
-
-	@media (min-width: 900px) {
-		.hero-grid {
-			grid-template-columns: 1.3fr 1fr;
-			gap: 4rem;
-		}
-	}
-
 	.hero-title {
 		font-size: clamp(2.25rem, 6vw, 4.5rem);
 		line-height: 0.92;
@@ -152,22 +138,6 @@ const hasMedia = hasImage || hasVideo;
 	}
 	.hero-title span {
 		display: block;
-	}
-
-	.hero-meta {
-		display: flex;
-		flex-direction: column-reverse;
-		align-items: flex-start;
-		gap: 1.5rem;
-	}
-
-	@media (min-width: 900px) {
-		.hero-meta {
-			flex-direction: column;
-			align-items: flex-end;
-			text-align: right;
-			gap: 2rem;
-		}
 	}
 
 	.hero-sub {

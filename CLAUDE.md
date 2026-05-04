@@ -65,6 +65,10 @@ Studio deps (`sanity`, `@sanity/icons`, `sanity-plugin-mux-input`, `styled-compo
 - `PUBLIC_` prefixed env vars are client-accessible; unprefixed are server-only
 - Schema titles and descriptions must be in Romanian
 
+## Styling
+
+See `AGENTS.md` for shared styling conventions (Tailwind breakpoints, when to use utilities vs `<style>` blocks, image `sizes` attribute).
+
 ## Browser tooling
 
 When using the Playwright MCP (`browser_take_screenshot`, `browser_snapshot`, etc.), always pass `filename: ".screenshots/<name>.<ext>"` so artifacts land in the gitignored `.screenshots/` folder instead of polluting the project root.

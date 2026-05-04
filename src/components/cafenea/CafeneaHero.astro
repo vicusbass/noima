@@ -23,13 +23,13 @@ import HeroImage from '../../assets/cafenea/hero.png';
 	<div
 		class="container-x hero-inner relative pt-[calc(var(--header-height)+2rem)] pb-16 md:pb-24"
 	>
-		<div class="hero-grid">
+		<div class="grid items-end gap-8 text-center md:grid-cols-[1.3fr_1fr] md:gap-16 md:text-left">
 			<h1 class="display hero-title">
 				<span>CAFENEAUA</span>
 			</h1>
 
-			<div class="hero-meta">
-				<p class="hero-sub">
+			<div class="flex flex-col-reverse items-center gap-6 md:flex-col md:items-end md:gap-8 md:text-right">
+				<p class="hero-sub mx-auto md:mx-0">
 					Cum e cafeaua făcută de oameni care trăiesc de 18 ani din cafea?
 				</p>
 			</div>
@@ -44,22 +44,6 @@ import HeroImage from '../../assets/cafenea/hero.png';
 		align-items: flex-end;
 	}
 
-	.hero-grid {
-		display: grid;
-		gap: 2rem;
-		grid-template-columns: 1fr;
-		align-items: end;
-		text-align: center;
-	}
-
-	@media (min-width: 900px) {
-		.hero-grid {
-			grid-template-columns: 1.3fr 1fr;
-			gap: 4rem;
-			text-align: left;
-		}
-	}
-
 	.hero-title {
 		font-size: clamp(2.25rem, 6vw, 4.5rem);
 		line-height: 0.92;
@@ -70,33 +54,10 @@ import HeroImage from '../../assets/cafenea/hero.png';
 		display: block;
 	}
 
-	.hero-meta {
-		display: flex;
-		flex-direction: column-reverse;
-		align-items: center;
-		gap: 1.5rem;
-	}
-
-	@media (min-width: 900px) {
-		.hero-meta {
-			flex-direction: column;
-			align-items: flex-end;
-			text-align: right;
-			gap: 2rem;
-		}
-	}
-
 	.hero-sub {
 		font-size: clamp(1rem, 1.5vw, 1.25rem);
 		max-width: 28ch;
 		line-height: 1.45;
 		color: rgba(255, 255, 255, 0.92);
-		margin-inline: auto;
-	}
-
-	@media (min-width: 900px) {
-		.hero-sub {
-			margin-inline: 0;
-		}
 	}
 </style>
