@@ -6,7 +6,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // These are public (non-secret) values, safe to hardcode.
 // Astro doesn't load .env for process.env in config files.
-const PROJECT_ID = '4c9x2l5r';
+const PROJECT_ID = 'cnyyihx7';
 const DATASET = 'production';
 
 export default defineConfig({
