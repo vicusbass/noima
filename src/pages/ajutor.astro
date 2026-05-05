@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import soonImage from '../assets/soon.png';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	title="Ajutor — În curând | Noima"
+	description="Secțiunea de ajutor și suport Noima va fi disponibilă în curând."
+>
+	<section
+		class="flex min-h-[calc(100vh-var(--header-height))] items-center justify-center px-6 py-16"
+	>
+		<Image
+			src={soonImage}
+			alt="În curând"
+			widths={[640, 960, 1280, 1920]}
+			sizes="(min-width: 1024px) 960px, 90vw"
+			class="h-auto w-full max-w-4xl"
+			loading="eager"
+		/>
+	</section>
+</Layout>
