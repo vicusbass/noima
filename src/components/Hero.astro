@@ -1,61 +1,25 @@
 ---
 import { MuxPlayer } from '@mux/mux-player-astro';
-import { urlFor } from '../sanity/lib/image';
 import Button from './Button.astro';
 
 interface Props {
 	hero: {
-		heading?: string;
-		subheading?: string;
-		mediaType?: 'image' | 'video';
-		image?: {
-			asset: { _ref: string };
-			alt?: string;
-		};
 		video?: {
 			playbackId?: string;
 		};
 	};
 }
 
-const FALLBACK_HERO_PLAYBACK_ID =
-	'WliuGL1fX9wFEzidHUzxqbzRCW9YgHlJW02YMCkfrhjA';
-
 const { hero } = Astro.props;
-const { heading, subheading, mediaType, image, video } = hero;
-
-const headingText = heading || 'PRĂJITORIE ȘI CAFEA CU SENS';
-const [headingFirstWord, ...headingRestWords] = headingText.split(' ');
-const headingRest = headingRestWords.join(' ');
-
-const hasImage = mediaType === 'image' && image?.asset;
-const heroPlaybackId =
-	mediaType === 'video' && video?.playbackId
-		? video.playbackId
-		: !hasImage
-			? FALLBACK_HERO_PLAYBACK_ID
-			: undefined;
+const heroPlaybackId = hero.video?.playbackId;
 const hasVideo = Boolean(heroPlaybackId);
-const hasMedia = hasImage || hasVideo;
 ---
 
 <section class="hero relative isolate overflow-hidden text-white">
 	<!-- Media layer -->
 	<div class="absolute inset-0 -z-10">
 		{
-			hasImage && (
-				<img
-					src={urlFor(image!).width(2400).height(1400).url()}
-					alt={image!.alt || ''}
-					width="2400"
-					height="1400"
-					class="h-full w-full object-cover"
-				/>
-			)
-		}
-
-		{
-			hasVideo && (
+			hasVideo ? (
 				<MuxPlayer
 					playbackId={heroPlaybackId}
 					muted
@@ -68,11 +32,7 @@ const hasMedia = hasImage || hasVideo;
 					class="hero-video h-full w-full"
 					style="--controls: none; --media-object-fit: cover;"
 				/>
-			)
-		}
-
-		{
-			!hasMedia && (
+			) : (
 				<div class="relative h-full w-full grain placeholder-media">
 					<span class="asset-placeholder-chip">VIDEO PLACEHOLDER</span>
 				</div>
@@ -83,24 +43,8 @@ const hasMedia = hasImage || hasVideo;
 		<div class="absolute inset-0 bg-linear-to-b from-black/45 via-black/15 to-black/55"></div>
 	</div>
 
-	<div class="container-x hero-inner relative pt-[calc(var(--header-height)+2rem)] pb-16 md:pb-24">
-		<div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr] md:gap-16">
-			<h1 class="display hero-title">
-				<span>{headingFirstWord}</span>
-				{headingRest && <span>{headingRest}</span>}
-			</h1>
-
-			<div class="flex flex-col-reverse items-start gap-6 md:flex-col md:items-end md:gap-8 md:text-right">
-				<Button href="#manifesto">DESCOPERĂ</Button>
-
-				<p class="hero-sub">
-					{
-						subheading ||
-							'Cum e cafeaua făcută de oameni care trăiesc de 18 ani din cafea?'
-					}
-				</p>
-			</div>
-		</div>
+	<div class="container-x hero-inner relative flex justify-end pt-[calc(var(--header-height)+2rem)] pb-16 md:pb-24">
+		<Button href="#manifesto">DESCOPERĂ</Button>
 	</div>
 </section>
 
@@ -129,23 +73,4 @@ const hasMedia = hasImage || hasVideo;
 	.hero-video {
 		display: block;
 	}
-
-	.hero-title {
-		font-size: clamp(2.25rem, 6vw, 4.5rem);
-		line-height: 0.92;
-		color: #fff;
-		text-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
-	}
-	.hero-title span {
-		display: block;
-	}
-
-	.hero-sub {
-		font-size: clamp(1rem, 1.5vw, 1.25rem);
-		max-width: 28ch;
-		line-height: 1.45;
-		color: rgba(255, 255, 255, 0.92);
-	}
-
 </style>
-

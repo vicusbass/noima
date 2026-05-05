@@ -8,21 +8,12 @@ export const homePage = defineType({
 	icon: HomeIcon,
 	fields: [
 		defineField({
-			name: 'title',
-			title: 'Titlu',
-			type: 'string',
-			description: 'Titlu intern pentru referință în Studio',
-			validation: (rule) => rule.required(),
-		}),
-		defineField({
 			name: 'hero',
 			title: 'Secțiunea Hero',
 			type: 'hero',
 		}),
 	],
 	preview: {
-		select: {
-			title: 'title',
-		},
+		prepare: () => ({ title: 'Pagina principală' }),
 	},
 });

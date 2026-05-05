@@ -153,6 +153,9 @@ vite.config.ts.timestamp-*
 studio/schema.json
 studio/sanity.types.ts
 
+# Sanity dataset exports (may contain secrets like Mux API keys)
+studio/*.tar.gz
+
 design
 
 # Local screenshots & browser-tool artifacts (design refs, debugging)

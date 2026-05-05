@@ -9,15 +9,7 @@ import Layout from '../layouts/Layout.astro';
 import { loadQuery } from '../sanity/lib/load-query';
 
 const HOME_QUERY = `*[_type == "homePage" && _id == "homePage"][0]{
-	title,
 	hero {
-		heading,
-		subheading,
-		mediaType,
-		image {
-			asset,
-			alt
-		},
 		video {
 			"playbackId": asset->playbackId
 		}
@@ -25,12 +17,7 @@ const HOME_QUERY = `*[_type == "homePage" && _id == "homePage"][0]{
 }`;
 
 const { data: homePage } = await loadQuery<{
-	title: string;
 	hero: {
-		heading?: string;
-		subheading?: string;
-		mediaType?: 'image' | 'video';
-		image?: { asset: { _ref: string }; alt?: string };
 		video?: { playbackId?: string };
 	};
 }>({ query: HOME_QUERY });
@@ -59,9 +46,7 @@ const { data: events } = await loadQuery<
 ---
 
 <Layout
-	title={
-		homePage?.title ?? 'Noima — Prăjitorie de cafea de specialitate în Cluj'
-	}
+	title="Noima — Prăjitorie de cafea de specialitate în Cluj"
 	description="Cafea de specialitate prăjită în Cluj-Napoca. Single origin și blend-uri locale, prăjite proaspăt de oameni care trăiesc din cafea de 18 ani. Magazin online și cafenea pe Strada Bobâlnei 18."
 >
 	<Hero hero={homePage?.hero ?? {}} />

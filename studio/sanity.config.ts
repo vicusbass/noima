@@ -4,7 +4,7 @@ import { muxInput } from 'sanity-plugin-mux-input';
 import { schemaTypes } from './schemaTypes';
 
 export default defineConfig({
-	projectId: '4c9x2l5r',
+	projectId: 'cnyyihx7',
 	dataset: 'production',
 	plugins: [
 		structureTool({
