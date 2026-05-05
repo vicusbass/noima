@@ -31,7 +31,12 @@ export default defineConfig({
 			useCdn: false,
 			apiVersion: '2026-02-16',
 		}),
-		sitemap(),
+		sitemap({
+			filter: (page) => {
+				const path = new URL(page).pathname.replace(/\/$/, '');
+				return !['/shop', '/faq', '/ajutor'].includes(path);
+			},
+		}),
 	],
 	vite: {
 		plugins: [
