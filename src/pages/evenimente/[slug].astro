@@ -135,11 +135,11 @@ const eventSchema = {
 				</div>
 
 				<div class="flex flex-col gap-6 md:gap-8">
-					<p class="text-[0.9375rem] tracking-[0.02em] text-tan">
+					<p class="text-[1.0625rem] md:text-[1.125rem] font-medium tracking-[0.02em] text-coffee">
 						{formattedDate}
 					</p>
 					<h1
-						class="display text-[clamp(2.25rem,3.4375vw,4.125rem)] text-ink max-w-[16ch]"
+						class="display text-[clamp(2.25rem,3.4375vw,4.125rem)] leading-[1.05]! text-ink max-w-[16ch]"
 						transition:name={`event-title-${slug}`}
 					>
 						{event.title}
@@ -151,7 +151,7 @@ const eventSchema = {
 							</div>
 						)
 					}
-					<Button href="#rezerva" variant="dark" class="self-start mt-4">
+					<Button href="/contact#formular" variant="dark" class="self-start mt-4">
 						REZERVĂ UN LOC
 					</Button>
 				</div>

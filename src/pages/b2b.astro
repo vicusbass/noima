@@ -1,36 +1,37 @@
 ---
 import { Image } from 'astro:assets';
-import heroDecor from '../assets/main/noima-square.png';
+import coffeeShopImg from '../assets/b2b/1.jpeg';
+import officeImg from '../assets/b2b/2.jpeg';
+import equipmentImg from '../assets/b2b/3.jpeg';
+import BirouIcon from '../assets/b2b/birou.svg';
+import EchipamentIcon from '../assets/b2b/echipament.svg';
+import heroDecor from '../assets/b2b/hero.png';
+import HomeIcon from '../assets/b2b/home.svg';
 import Button from '../components/Button.astro';
 import ContactForm from '../components/contact/ContactForm.astro';
 import Layout from '../layouts/Layout.astro';
-
-const coffeeShopImg =
-	'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&h=900&fit=crop&q=80';
-const officeImg =
-	'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=900&fit=crop&q=80';
-const equipmentImg =
-	'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=1200&h=900&fit=crop&q=80';
 ---
 
 <Layout title="Parteneriate cu Sens — Prăjitoria Noima, Cluj">
   <!-- Hero -->
-  <section class="bg-cream">
+  <section class="relative">
     <div
-      class="container-x pt-[calc(var(--header-height)+2rem)] pb-10 md:pt-[calc(var(--header-height)+4rem)] md:pb-16"
+      class="container-x pt-[calc(var(--header-height)+2.5rem)] pb-10 md:pt-[calc(var(--header-height)+4rem)] md:pb-6 lg:pt-[calc(var(--header-height)+5rem)]"
     >
       <div
-        class="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 md:gap-12 items-center"
+        class="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-8 md:gap-12 items-center"
       >
-        <div class="max-w-55 md:max-w-85">
+        <div
+          class="flex justify-center md:block md:self-start md:relative md:h-72 lg:h-80"
+        >
           <Image
             src={heroDecor}
             alt=""
-            widths={[400, 700]}
-            sizes="(min-width: 768px) 340px, 220px"
+            widths={[300, 500, 800]}
+            sizes="(min-width: 1024px) 380px, (min-width: 768px) 320px, 260px"
             quality={90}
             format="webp"
-            class="w-full h-auto"
+            class="w-auto h-auto max-w-[260px] md:max-w-none md:absolute md:top-[-60px] md:left-0 md:z-50 lg:top-[-80px] md:h-[500px] lg:h-[580px] pointer-events-none"
             aria-hidden="true"
           />
         </div>
@@ -53,95 +54,41 @@ const equipmentImg =
   </section>
 
   <!-- Navigation pills -->
-  <nav class="py-6 md:py-8">
+  <nav class="bg-cream py-8 md:py-14">
     <div class="container-x flex flex-wrap justify-center gap-3">
       <a href="#cafenele" class="b2b-pill">
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M17 8h1a4 4 0 0 1 0 8h-1"></path>
-          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
-          <line x1="6" x2="6" y1="2" y2="4"></line>
-          <line x1="10" x2="10" y1="2" y2="4"></line>
-          <line x1="14" x2="14" y1="2" y2="4"></line>
-        </svg>
+        <HomeIcon width={18} height={18} />
         Cafea pentru Cafenele
       </a>
       <a href="#birouri" class="b2b-pill">
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="m9 11 3 3L22 4"></path>
-          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-          ></path>
-        </svg>
+        <BirouIcon width={18} height={18} />
         Cafea pentru Birouri
       </a>
       <a href="#echipamente" class="b2b-pill">
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <rect width="7" height="7" x="3" y="3" rx="1"></rect>
-          <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-          <rect width="7" height="7" x="14" y="14" rx="1"></rect>
-          <rect width="7" height="7" x="3" y="14" rx="1"></rect>
-        </svg>
+        <EchipamentIcon width={18} height={18} />
         Echipamente
       </a>
     </div>
   </nav>
 
   <!-- Section: Cafea pentru Cafenele -->
-  <section id="cafenele" class="grid grid-cols-1 md:grid-cols-2">
+  <section id="cafenele" class="bg-cream grid grid-cols-1 md:grid-cols-2">
     <div class="aspect-4/3 md:aspect-auto md:min-h-130">
-      <img
+      <Image
         src={coffeeShopImg}
         alt="Interior cafenea cu atmosferă caldă"
-        class="w-full h-full object-cover"
+        widths={[480, 768, 1200, 1600]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        quality={80}
+        format="webp"
         loading="lazy"
+        class="w-full h-full object-cover"
       />
     </div>
     <div
       class="flex flex-col justify-center px-6 py-10 md:px-12 md:py-16 lg:px-20"
     >
-      <svg
-        class="mb-4 text-ink"
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M17 8h1a4 4 0 0 1 0 8h-1"></path>
-        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
-        <line x1="6" x2="6" y1="2" y2="4"></line>
-        <line x1="10" x2="10" y1="2" y2="4"></line>
-        <line x1="14" x2="14" y1="2" y2="4"></line>
-      </svg>
+      <HomeIcon class="mb-4" width={32} height={32} />
       <h2 class="b2b-heading">
         cafea<br />pentru<br /><span class="text-tan">cafenele</span>
       </h2>
@@ -154,33 +101,23 @@ const equipmentImg =
   </section>
 
   <!-- Section: Cafea pentru Birouri -->
-  <section id="birouri" class="grid grid-cols-1 md:grid-cols-2">
+  <section id="birouri" class="bg-cream grid grid-cols-1 md:grid-cols-2">
     <div class="aspect-4/3 md:aspect-auto md:min-h-130 md:order-last">
-      <img
+      <Image
         src={officeImg}
         alt="Birou modern cu spațiu luminos"
-        class="w-full h-full object-cover"
+        widths={[480, 768, 1200, 1600]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        quality={80}
+        format="webp"
         loading="lazy"
+        class="w-full h-full object-cover"
       />
     </div>
     <div
       class="flex flex-col justify-center px-6 py-10 md:px-12 md:py-16 lg:px-20 md:order-first"
     >
-      <svg
-        class="mb-4 text-ink"
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="m9 11 3 3L22 4"></path>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-        ></path>
-      </svg>
+      <BirouIcon class="mb-4" width={32} height={32} />
       <h2 class="b2b-heading">
         cafea<br />pentru<br /><span class="text-tan">birouri</span>
       </h2>
@@ -192,34 +129,23 @@ const equipmentImg =
   </section>
 
   <!-- Section: Echipamente pentru Parteneri -->
-  <section id="echipamente" class="grid grid-cols-1 md:grid-cols-2">
+  <section id="echipamente" class="bg-cream grid grid-cols-1 md:grid-cols-2">
     <div class="aspect-4/3 md:aspect-auto md:min-h-130">
-      <img
+      <Image
         src={equipmentImg}
         alt="Echipament barista — râșniță și espressor"
-        class="w-full h-full object-cover"
+        widths={[480, 768, 1200, 1600]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        quality={80}
+        format="webp"
         loading="lazy"
+        class="w-full h-full object-cover"
       />
     </div>
     <div
       class="flex flex-col justify-center px-6 py-10 md:px-12 md:py-16 lg:px-20"
     >
-      <svg
-        class="mb-4 text-ink"
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <rect width="7" height="7" x="3" y="3" rx="1"></rect>
-        <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-        <rect width="7" height="7" x="14" y="14" rx="1"></rect>
-        <rect width="7" height="7" x="3" y="14" rx="1"></rect>
-      </svg>
+      <EchipamentIcon class="mb-4" width={32} height={32} />
       <h2 class="b2b-heading">
         echipamente<br />pentru<br /><span class="text-tan">parteneri</span>
       </h2>
@@ -243,9 +169,8 @@ const equipmentImg =
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.65rem 1.25rem;
+    padding: 0.85rem 1.5rem;
     border: 1px solid var(--color-line-soft);
-    border-radius: 999px;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.06em;

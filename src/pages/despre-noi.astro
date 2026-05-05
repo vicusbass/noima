@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import HeroDespreNoi from '../assets/despre-noi/hero.png';
 import CoffeeShop from '../assets/main/coffee-shop.png';
 import Team from '../assets/main/team.png';
 import Button from '../components/Button.astro';
@@ -28,15 +29,20 @@ const bodyText =
 ---
 
 <Layout title="Despre noi — Prăjitorie și cafenea Noima, Cluj">
-  <section class="pt-30 pb-16 md:pb-24">
+  <section class="pt-44 pb-16 md:pt-56 md:pb-24">
     <div
       class="container-x flex flex-col xl:flex-row xl:items-end xl:justify-between gap-8 xl:gap-16"
     >
-      <h1
-        class="display text-[clamp(4.5rem,22vw,14rem)] text-cream leading-[0.88]"
-      >
-        <span>despre</span>
-        <span>noi</span>
+      <h1 class="m-0">
+        <Image
+          src={HeroDespreNoi}
+          alt="Despre noi"
+          widths={[480, 768, 1200, 1600]}
+          sizes="(min-width: 1280px) 60vw, 100vw"
+          quality={90}
+          format="webp"
+          class="block w-full h-auto"
+        />
       </h1>
       <p
         class="max-w-sm text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8] xl:pb-4"
