@@ -29,9 +29,9 @@ const bodyText =
 ---
 
 <Layout title="Despre noi — Prăjitorie și cafenea Noima, Cluj">
-  <section class="pt-44 pb-16 md:pt-56 md:pb-24">
+  <section class="pt-44 pb-16 md:pt-56 md:pb-0">
     <div
-      class="container-x flex flex-col xl:flex-row xl:items-end xl:justify-between gap-8 xl:gap-16"
+      class="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-8 xl:gap-16 px-5 md:px-8 xl:px-15"
     >
       <h1 class="m-0">
         <Image
@@ -44,10 +44,8 @@ const bodyText =
           class="block w-full h-auto"
         />
       </h1>
-      <p
-        class="max-w-sm text-[0.9375rem] leading-[1.7] text-black md:text-[1.0625rem] md:leading-[1.8] xl:pb-4"
-      >
-        După 18 ani pe piața cafelei, am deschis o prăjitorie cu cafenea. unde
+      <p class="max-w-sm text-black text-xl md:pb-4 text-justify">
+        După 18 ani pe piața cafelei, am deschis o prăjitorie cu cafenea unde
         ducem până la capăt experiența ospitalității.
       </p>
     </div>
@@ -99,7 +97,7 @@ const bodyText =
       >
         {
           values.map((value) => (
-            <li class="flex flex-col items-start gap-12 bg-surface p-8 md:gap-20 md:p-12 lg:p-16">
+            <li class="flex flex-col items-start gap-12 bg-surface p-8 md:gap-20 md:p-8">
               <div class="text-[#8b6f47]" aria-hidden="true">
                 {value.key === "cafea-buna" && (
                   <svg
@@ -170,9 +168,10 @@ const bodyText =
 
   <section class="py-16 bg-cream md:py-24">
     <div class="container-x">
-      <h2 class="section-heading mb-8 md:mb-12">
-        <span>echipa</span>
-        <span>Noima</span>
+      <h2
+        class="text-surface text-[12vw] font-bold text-center tracking-tighter"
+      >
+        ECHIPA NOIMA
       </h2>
 
       <div class="flex justify-center">
@@ -221,7 +220,7 @@ const bodyText =
   </section>
 
   <section class="pt-16 pb-24 md:pt-24 md:pb-32">
-    <div class="container-x">
+    <div class="container-x flex flex-col items-center">
       <h2 class="section-heading mb-6 md:mb-8">
         <span>te așteptăm</span>
         <span>la noima</span>
