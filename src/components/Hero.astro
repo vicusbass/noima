@@ -29,6 +29,7 @@ const hasVideo = Boolean(heroPlaybackId);
 					nohotkeys
 					disableCookies
 					disableTracking
+					thumbnailTime={0}
 					class="hero-video h-full w-full"
 					style="--controls: none; --media-object-fit: cover;"
 				/>
@@ -47,6 +48,18 @@ const hasVideo = Boolean(heroPlaybackId);
 		<Button href="#manifesto">DESCOPERĂ</Button>
 	</div>
 </section>
+
+{
+	hasVideo && (
+		<script>
+			const player = document.querySelector('.hero-video');
+			if (player) {
+				const reveal = () => player.classList.add('is-playing');
+				player.addEventListener('playing', reveal, { once: true });
+			}
+		</script>
+	)
+}
 
 <style>
 	.hero {
@@ -72,5 +85,11 @@ const hasVideo = Boolean(heroPlaybackId);
 
 	.hero-video {
 		display: block;
+		opacity: 0;
+		transition: opacity 700ms ease-out;
+	}
+
+	.hero-video.is-playing {
+		opacity: 1;
 	}
 </style>
