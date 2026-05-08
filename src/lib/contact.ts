@@ -3,7 +3,7 @@ export const contactInfo = {
 	phone: '+40743595002',
 	phoneHref: 'tel:+40743595002',
 	address: {
-		street: 'Strada Bobâlnei, 18',
+		street: 'Strada Bobâlnei, 58',
 		city: 'Cluj-Napoca',
 		postalCode: '400628',
 	},

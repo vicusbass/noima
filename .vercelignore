@@ -1,0 +1,11 @@
+docs/
+noima-coffee-theme/
+design/
+.screenshots/
+.playwright-mcp/
+.agents/
+.claude/
+.vscode/
+TODO.md
+AGENTS.md
+README.md
