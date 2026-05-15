@@ -13,11 +13,17 @@ interface Props {
 const { hero } = Astro.props;
 const heroPlaybackId = hero.video?.playbackId;
 const hasVideo = Boolean(heroPlaybackId);
+const heroPosterUrl = heroPlaybackId
+	? `https://image.mux.com/${heroPlaybackId}/thumbnail.webp?time=0`
+	: null;
 ---
 
 <section class="hero relative isolate overflow-hidden text-white">
 	<!-- Media layer -->
-	<div class="absolute inset-0 -z-10">
+	<div
+		class="hero-media absolute inset-0 -z-10"
+		style={heroPosterUrl ? `background-image: url('${heroPosterUrl}');` : undefined}
+	>
 		{
 			hasVideo ? (
 				<MuxPlayer
@@ -52,11 +58,18 @@ const hasVideo = Boolean(heroPlaybackId);
 {
 	hasVideo && (
 		<script>
-			const player = document.querySelector('.hero-video');
-			if (player) {
+			function initHeroVideo() {
+				const player = document.querySelector<HTMLMediaElement>('.hero-video');
+				if (!player) return;
 				const reveal = () => player.classList.add('is-playing');
-				player.addEventListener('playing', reveal, { once: true });
+				if (!player.paused) {
+					reveal();
+				} else {
+					player.addEventListener('playing', reveal, { once: true });
+				}
 			}
+			initHeroVideo();
+			document.addEventListener('astro:page-load', initHeroVideo);
 		</script>
 	)
 }
@@ -66,6 +79,12 @@ const hasVideo = Boolean(heroPlaybackId);
 		min-height: min(100svh, 900px);
 		display: flex;
 		align-items: flex-end;
+	}
+
+	.hero-media {
+		background-color: #15110d;
+		background-size: cover;
+		background-position: center;
 	}
 
 	.placeholder-media {
