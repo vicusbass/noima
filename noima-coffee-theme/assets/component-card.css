@@ -319,6 +319,11 @@
 	margin-bottom: 0;
 }
 
+.card__type {
+	margin-top: 0.4rem;
+	opacity: 0.75;
+}
+
 .card__heading:last-child {
 	margin-bottom: 0;
 }
