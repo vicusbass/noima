@@ -45,6 +45,54 @@
             "show_gift_card_recipient": true
           }
         },
+        "text_hm9Jnh": {
+          "type": "text",
+          "name": "Origin",
+          "settings": {
+            "text": "Origine: {{ product.metafields.custom.origin.value }}",
+            "text_style": "body"
+          }
+        },
+        "text_XqXrhb": {
+          "type": "text",
+          "name": "Producător",
+          "settings": {
+            "text": "Producător: {{ product.metafields.custom.producer.value }}",
+            "text_style": "body"
+          }
+        },
+        "text_n3UzWP": {
+          "type": "text",
+          "name": "Altitudine",
+          "settings": {
+            "text": "Altitudine: {{ product.metafields.custom.altitude.value }}",
+            "text_style": "body"
+          }
+        },
+        "text_eDDEhC": {
+          "type": "text",
+          "name": "Procesare",
+          "settings": {
+            "text": "Procesare: {{ product.metafields.custom.processing.value }}",
+            "text_style": "body"
+          }
+        },
+        "text_Xx9tt8": {
+          "type": "text",
+          "name": "Varietate",
+          "settings": {
+            "text": "Varietate: {{ product.metafields.custom.variety.value }}",
+            "text_style": "body"
+          }
+        },
+        "text_nyKjty": {
+          "type": "text",
+          "name": "Degustare",
+          "settings": {
+            "text": "Note de degustare: {{ product.metafields.custom.flavors.value }}",
+            "text_style": "body"
+          }
+        },
         "description": {
           "type": "description",
           "settings": {}
@@ -63,13 +111,19 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "text_hm9Jnh",
+        "text_XqXrhb",
+        "text_n3UzWP",
+        "text_eDDEhC",
+        "text_Xx9tt8",
+        "text_nyKjty",
         "description",
         "share"
       ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-9f406c3e-8b61-43bd-9d80-5742a5384c0a",
-        "media_size": "large",
+        "media_size": "medium",
         "constrain_to_viewport": true,
         "media_fit": "contain",
         "gallery_layout": "stacked",

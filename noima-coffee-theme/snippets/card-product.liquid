@@ -146,7 +146,7 @@
       <div class="card__content">
         <div class="card__information">
           <h3
-            class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
+            class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h3{% endif %}"
             {% if card_product.featured_media or settings.card_style == 'card' %}
               id="title-{{ section_id }}-{{ card_product.id }}"
             {% endif %}
@@ -160,6 +160,10 @@
               {{ card_product.title | escape }}
             </a>
           </h3>
+          {%- assign coffee_category = card_product.metafields.custom.category.value.name -%}
+          {%- if coffee_category != blank -%}
+            <div class="card__type caption-with-letter-spacing">{{ coffee_category | escape }}</div>
+          {%- endif -%}
           <div class="card-information">
             {%- if show_vendor -%}
               <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
@@ -605,7 +609,7 @@
       </div>
       <div class="card__content">
         <div class="card__information">
-          <h3 class="card__heading card__heading--placeholder{% if settings.card_style == 'standard' %} h5{% endif %}">
+          <h3 class="card__heading card__heading--placeholder{% if settings.card_style == 'standard' %} h3{% endif %}">
             <a role="link" aria-disabled="true" class="full-unstyled-link">
               {{ 'onboarding.product_title' | t }}
             </a>

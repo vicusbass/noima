@@ -74,6 +74,26 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
+    {%- liquid
+      if collection
+        assign back_url = collection.url
+        assign back_label = collection.title
+      elsif product.collections.first
+        assign back_url = product.collections.first.url
+        assign back_label = product.collections.first.title
+      else
+        assign back_url = '/collections/all'
+        assign back_label = null
+      endif
+    -%}
+    <a href="{{ back_url }}" class="product__back-link link link--text">
+      <span aria-hidden="true">&larr;</span>
+      {%- if back_label -%}
+        Înapoi la {{ back_label }}
+      {%- else -%}
+        Înapoi
+      {%- endif -%}
+    </a>
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
@@ -90,12 +110,16 @@
               {%- when '@app' -%}
                 {% render block %}
               {%- when 'text' -%}
-                <p
-                  class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                  {{ block.shopify_attributes }}
-                >
-                  {{- block.settings.text -}}
-                </p>
+                {%- capture rendered_text -%}{{ block.settings.text }}{%- endcapture -%}
+                {%- assign value_after_label = rendered_text | split: ':' | last | strip -%}
+                {%- if value_after_label != blank or request.design_mode -%}
+                  <p
+                    class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{- block.settings.text -}}
+                  </p>
+                {%- endif -%}
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
