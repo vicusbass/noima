@@ -2,6 +2,23 @@ product-info {
 	display: block;
 }
 
+.product__back-link {
+	display: inline-block;
+	margin-bottom: 1.5rem;
+	font-size: 1.4rem;
+	color: rgba(var(--color-foreground), 0.75);
+}
+
+.product__back-link:hover {
+	color: rgb(var(--color-foreground));
+}
+
+.product__back-link span[aria-hidden] {
+	display: inline-block;
+	margin-right: 0.4rem;
+	text-decoration: none;
+}
+
 .product {
 	margin: 0;
 }
