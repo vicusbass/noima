@@ -139,9 +139,46 @@
             </div>
           </div>
         {%- else -%}
+          {%- liquid
+            assign coll_category_string = ''
+            for coll_product in collection.products
+              assign coll_cat = coll_product.metafields.custom.categorie.value.name
+              if coll_cat != blank
+                assign coll_category_string = coll_category_string | append: coll_cat | append: '||'
+              endif
+            endfor
+            assign coll_category_list = coll_category_string | split: '||' | uniq
+          -%}
           <div
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
+            {%- if coll_category_list.size > 1 -%}
+              <div
+                class="collection__category-filters"
+                role="group"
+                aria-label="{{ 'sections.featured_collection.filter_by_category' | t }}"
+                data-category-filter-group
+              >
+                <button
+                  type="button"
+                  class="category-pill is-active"
+                  data-category-filter=""
+                  aria-pressed="true"
+                >
+                  {{ 'sections.featured_collection.all_categories' | t }}
+                </button>
+                {%- for cat in coll_category_list -%}
+                  <button
+                    type="button"
+                    class="category-pill"
+                    data-category-filter="{{ cat | escape }}"
+                    aria-pressed="false"
+                  >
+                    {{ cat | escape }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
             <div class="loading-overlay gradient"></div>
             <ul
               id="product-grid"
@@ -158,8 +195,10 @@
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
+                {%- assign coll_item_category = product.metafields.custom.categorie.value.name | default: '' -%}
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  data-category="{{ coll_item_category | escape }}"
                   {% if settings.animations_reveal_on_scroll %}
                     data-cascade
                     style="--animation-order: {{ forloop.index }};"
@@ -194,6 +233,72 @@
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
 </div>
+
+<script>
+  (function () {
+    var grid = document.getElementById('product-grid');
+    if (!grid) return;
+    var group = document.querySelector('[data-category-filter-group]');
+    if (!group) return;
+    var pills = group.querySelectorAll('[data-category-filter]');
+    var items = grid.querySelectorAll('[data-category]');
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var target = pill.getAttribute('data-category-filter') || '';
+        pills.forEach(function (p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        items.forEach(function (item) {
+          var cat = item.getAttribute('data-category') || '';
+          var match = !target || cat === target;
+          item.classList.toggle('is-hidden-by-filter', !match);
+        });
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .collection__category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 0 0 2rem;
+  }
+
+  .category-pill {
+    appearance: none;
+    border: 0.1rem solid rgba(var(--color-foreground), 0.35);
+    background: transparent;
+    color: rgb(var(--color-foreground));
+    border-radius: 999px;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    letter-spacing: 0.03rem;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .category-pill:hover {
+    border-color: rgb(var(--color-foreground));
+  }
+
+  .category-pill.is-active {
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    border-color: rgb(var(--color-button));
+  }
+
+  .grid__item.is-hidden-by-filter {
+    display: none;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
