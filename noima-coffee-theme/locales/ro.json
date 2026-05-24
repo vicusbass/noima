@@ -336,7 +336,9 @@
     },
     "featured_collection": {
       "view_all": "Afișați tot",
-      "view_all_label": "Afișați toate produsele din colecția {{ collection_name }}"
+      "view_all_label": "Afișați toate produsele din colecția {{ collection_name }}",
+      "all_categories": "Toate",
+      "filter_by_category": "Filtrează după categorie"
     },
     "collection_list": {
       "view_all": "Afișați tot"

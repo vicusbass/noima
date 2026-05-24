@@ -84,3 +84,8 @@ When using the Playwright MCP (`browser_take_screenshot`, `browser_snapshot`, et
 | `studio/schemaTypes/index.ts` | Schema type registry |
 | `src/sanity/lib/load-query.ts` | GROQ query wrapper (supports Visual Editing) |
 | `.env.example` | Required environment variables template |
+
+## Shopify
+
+The theme is located at `noima-coffee-theme` folder
+Always use Shopify plugin/skills when updating the Shopify theme

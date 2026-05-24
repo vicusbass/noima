@@ -129,6 +129,12 @@
                     </h2>
                   </a>
                 </div>
+                {%- assign product_coffee_category = product.metafields.custom.categorie.value.name -%}
+                {%- if product_coffee_category != blank -%}
+                  <div class="product__category-pill">
+                    {{ product_coffee_category | escape }}
+                  </div>
+                {%- endif -%}
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',

@@ -38,6 +38,56 @@
   }
 {%- endstyle -%}
 
+{% stylesheet %}
+  .collection__title-link {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .collection__title-link:hover {
+    opacity: 0.7;
+  }
+
+  .collection__category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.6rem;
+  }
+
+  .category-pill {
+    appearance: none;
+    border: 0.1rem solid rgba(var(--color-foreground), 0.35);
+    background: transparent;
+    color: rgb(var(--color-foreground));
+    border-radius: 999px;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    letter-spacing: 0.03rem;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .category-pill:hover {
+    border-color: rgb(var(--color-foreground));
+  }
+
+  .category-pill.is-active {
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    border-color: rgb(var(--color-button));
+  }
+
+  .grid__item.is-hidden-by-filter {
+    display: none;
+  }
+{% endstylesheet %}
+
 {%- liquid
   assign products_to_display = section.settings.collection.all_products_count
 
@@ -62,6 +112,15 @@
   if section.settings.enable_desktop_slider and products_to_display > section.settings.columns_desktop
     assign show_desktop_slider = true
   endif
+
+  assign category_string = ''
+  for fc_product in section.settings.collection.products limit: section.settings.products_to_show
+    assign fc_cat = fc_product.metafields.custom.categorie.value.name
+    if fc_cat != blank
+      assign category_string = category_string | append: fc_cat | append: '||'
+    endif
+  endfor
+  assign category_list = category_string | split: '||' | uniq
 -%}
 
 <div
@@ -75,7 +134,17 @@
     <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% endif %}{% if show_desktop_slider %} collection__title--desktop-slider{% endif %}">
       {%- if section.settings.title != blank -%}
         <h2 class="title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-          {{ section.settings.title }}
+          {%- if section.settings.collection != blank -%}
+            <a
+              href="{{ section.settings.collection.url }}"
+              class="collection__title-link"
+              aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title | escape }}"
+            >
+              {{ section.settings.title }}
+            </a>
+          {%- else -%}
+            {{ section.settings.title }}
+          {%- endif -%}
         </h2>
       {%- endif -%}
       {%- if section.settings.description != blank
@@ -88,6 +157,33 @@
           {%- else -%}
             {{ section.settings.description -}}
           {%- endif %}
+        </div>
+      {%- endif -%}
+      {%- if category_list.size > 1 -%}
+        <div
+          class="collection__category-filters"
+          role="group"
+          aria-label="{{ 'sections.featured_collection.filter_by_category' | t }}"
+          data-category-filter-group
+        >
+          <button
+            type="button"
+            class="category-pill is-active"
+            data-category-filter=""
+            aria-pressed="true"
+          >
+            {{ 'sections.featured_collection.all_categories' | t }}
+          </button>
+          {%- for cat in category_list -%}
+            <button
+              type="button"
+              class="category-pill"
+              data-category-filter="{{ cat | escape }}"
+              aria-pressed="false"
+            >
+              {{ cat | escape }}
+            </button>
+          {%- endfor -%}
         </div>
       {%- endif -%}
     </div>
@@ -109,9 +205,11 @@
               {% if lazy_load == false and forloop.index > max_columns_to_show %}
                 {% assign lazy_load = true %}
               {% endif %}
+              {%- assign item_category = product.metafields.custom.categorie.value.name | default: '' -%}
               <li
                 id="Slide-{{ section.id }}-{{ forloop.index }}"
                 class="grid__item{% if show_mobile_slider or show_desktop_slider %} slider__slide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                data-category="{{ item_category | escape }}"
                 {% if settings.animations_reveal_on_scroll %}
                   data-cascade
                   style="--animation-order: {{ forloop.index }};"
@@ -213,6 +311,34 @@
     {%- endif -%}
   </div>
 </div>
+
+{%- if category_list.size > 1 -%}
+  <script>
+    (function () {
+      var section = document.getElementById('collection-{{ section.id }}');
+      if (!section) return;
+      var group = section.querySelector('[data-category-filter-group]');
+      if (!group) return;
+      var pills = group.querySelectorAll('[data-category-filter]');
+      var items = section.querySelectorAll('[data-category]');
+      pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          var target = pill.getAttribute('data-category-filter') || '';
+          pills.forEach(function (p) {
+            var active = p === pill;
+            p.classList.toggle('is-active', active);
+            p.setAttribute('aria-pressed', active ? 'true' : 'false');
+          });
+          items.forEach(function (item) {
+            var cat = item.getAttribute('data-category') || '';
+            var match = !target || cat === target;
+            item.classList.toggle('is-hidden-by-filter', !match);
+          });
+        });
+      });
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {

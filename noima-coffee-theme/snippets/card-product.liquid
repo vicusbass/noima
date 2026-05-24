@@ -160,7 +160,7 @@
               {{ card_product.title | escape }}
             </a>
           </h3>
-          {%- assign coffee_category = card_product.metafields.custom.category.value.name -%}
+          {%- assign coffee_category = card_product.metafields.custom.categorie.value.name -%}
           {%- if coffee_category != blank -%}
             <div class="card__type caption-with-letter-spacing">{{ coffee_category | escape }}</div>
           {%- endif -%}
