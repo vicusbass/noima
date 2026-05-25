@@ -134,6 +134,18 @@ shopify theme push --path noima-coffee-theme --theme "Noima Coffee" --store noim
 
 Avoid `--live` — it pushes straight to the published theme with no preview. Use the admin's *Publish* button instead.
 
+### Compare local vs. live theme
+
+To verify your local theme matches the live one (no `--dry-run` flag exists), pull the live theme into a temp directory and diff:
+
+```bash
+mkdir -p /tmp/noima-live-theme
+shopify theme pull --path /tmp/noima-live-theme --live --store noima-coffee.myshopify.com
+diff -r noima-coffee-theme /tmp/noima-live-theme
+```
+
+`--live` targets the published theme. Add `-q` to `diff` for a names-only summary, or pipe through `diff -r ... | grep -v '^Only in'` to focus on modified files.
+
 ### Pull theme changes from the store
 
 If a merchant edits sections/settings in the Shopify Theme Editor, pull those JSON updates back to git:
