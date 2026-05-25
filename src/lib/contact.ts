@@ -8,8 +8,9 @@ export const contactInfo = {
 		postalCode: '400628',
 	},
 	hours: [
-		{ days: 'Luni – Sâmbătă', time: '07:30 – 19:00' },
-		{ days: 'Duminică', time: '09:00 – 15:00' },
+		{ days: 'Luni - Vineri', time: '07:30 - 17:30' },
+		{ days: 'Luni - Sâmbătă', time: '07:30 - 15:00' },
+		{ days: 'Duminică', time: '09:00 - 15:00' },
 	],
 } as const;
 
