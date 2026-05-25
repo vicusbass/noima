@@ -22,7 +22,7 @@
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 4,
-        "columns_mobile": "2",
+        "columns_mobile": "1",
         "color_scheme": "scheme-9f406c3e-8b61-43bd-9d80-5742a5384c0a",
         "image_ratio": "adapt",
         "image_shape": "default",
