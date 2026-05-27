@@ -1,7 +1,7 @@
 export const contactInfo = {
 	email: 'hello@prajitorianoima.ro',
-	phone: '+40743595002',
-	phoneHref: 'tel:+40743595002',
+	phone: '+40754557744',
+	phoneHref: 'tel:+40754557744',
 	address: {
 		street: 'Strada Bobâlnei, 58',
 		city: 'Cluj-Napoca',
