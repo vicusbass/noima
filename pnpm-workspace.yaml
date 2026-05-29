@@ -1,3 +1,23 @@
 packages:
   - '.'
   - 'studio'
+
+# Build-script permissions (pnpm 11 replaces onlyBuiltDependencies / ignoredBuiltDependencies).
+# lefthook stays false to match prior behavior (its postinstall hook setup was intentionally skipped).
+allowBuilds:
+  esbuild: true
+  sharp: true
+  lefthook: false
+
+# Suppress missing peer-dependency warnings for Studio-only deps absent from the Astro root.
+# The embedded Studio route is unused (see CLAUDE.md), so these never resolve at the root.
+peerDependencyRules:
+  ignoreMissing:
+    - sanity
+    - styled-components
+    - react-is
+
+# Supply-chain release cooldown (pnpm 11 default). Exempt the astro version we
+# deliberately upgraded to while it is still inside the cooldown window.
+minimumReleaseAgeExclude:
+  - astro@6.4.2

@@ -27,7 +27,7 @@ pnpm format                               # Format all files
 - **Astro v5+** with hybrid output (static-first, SSR opt-in per route)
 - **Tailwind CSS v4** via `@tailwindcss/vite` plugin — styles in `src/styles/global.css`
 - **Sanity** via `@sanity/astro` integration — Studio hosted at `noima.sanity.studio` (not embedded)
-- **Mux** video: `sanity-plugin-mux-input` (Studio), `@mux/mux-player-astro` (frontend)
+- **Mux** video: `sanity-plugin-mux-input` (Studio), `@mux/mux-video` (frontend — lightweight `<mux-video>` element for the background hero, no media-chrome/themes)
 - **Vercel** via `@astrojs/vercel` adapter
 - **Shopify** Storefront API (GraphQL) for featured products on homepage — shop is standalone
 - **Biome** for linting and formatting (replaces ESLint + Prettier)
@@ -49,12 +49,12 @@ This is a pnpm workspace with two packages:
 - `studio/sanity.cli.ts` — Sanity CLI configuration
 - `studio/schemaTypes/` — schema definitions (documents/, objects/)
 
-Studio deps (`sanity`, `@sanity/icons`, `sanity-plugin-mux-input`, `styled-components`, `react-is`) are isolated to `studio/` and never leak into the Astro build. `@sanity/astro` lists these as peer dependencies, but the Astro root uses `pnpm.peerDependencyRules.ignoreMissing` to suppress warnings since the embedded Studio route is not used.
+Studio deps (`sanity`, `@sanity/icons`, `sanity-plugin-mux-input`, `styled-components`, `react-is`) are isolated to `studio/` and never leak into the Astro build. `@sanity/astro` lists these as peer dependencies, but `peerDependencyRules.ignoreMissing` in `pnpm-workspace.yaml` suppresses warnings since the embedded Studio route is not used.
 
 ## pnpm Notes
 
 - Sanity project ID and dataset are hardcoded in `astro.config.mjs`, `studio/sanity.config.ts`, and `studio/sanity.cli.ts` (public, non-secret values)
-- `@sanity/client` and `@mux/mux-player` must be direct dependencies of the Astro root (pnpm strict hoisting)
+- `@sanity/client` and `@mux/mux-video` must be direct dependencies of the Astro root (pnpm strict hoisting)
 
 ## Sanity Conventions
 
