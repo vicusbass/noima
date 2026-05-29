@@ -143,12 +143,19 @@
       }
     },
     "content_for_index": [],
+    "blocks": {
+      "5332588544499791172": {
+        "type": "shopify://apps/hoppy-free-shipping/blocks/shipping_bar/66159626-1fb8-4d18-901f-af7b6a63adaa",
+        "disabled": false,
+        "settings": {}
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
           "background": "#909090",
           "background_gradient": "",
-          "text": "#ffffff",
+          "text": "#2c2c2c",
           "button": "#121212",
           "button_label": "#ffffff",
           "secondary_button_label": "#121212",
@@ -203,7 +210,7 @@
         "settings": {
           "background": "#909090",
           "background_gradient": "",
-          "text": "#ffffff",
+          "text": "#2c2c2c",
           "button": "#ffffff",
           "button_label": "#909090",
           "secondary_button_label": "#ffffff",
@@ -225,7 +232,7 @@
         "settings": {
           "background": "#909090",
           "background_gradient": "",
-          "text": "#ffffff",
+          "text": "#2c2c2c",
           "button": "#121212",
           "button_label": "#ffffff",
           "secondary_button_label": "#121212",
