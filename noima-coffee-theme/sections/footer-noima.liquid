@@ -156,6 +156,32 @@
     color: rgb(var(--color-foreground));
   }
 
+  .footer-noima__anpc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 4rem;
+    padding: 0 3rem;
+  }
+
+  .footer-noima__anpc a {
+    display: inline-block;
+    line-height: 0;
+  }
+
+  .footer-noima__anpc img {
+    display: block;
+    height: 4.2rem;
+    width: auto;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-noima__anpc {
+      justify-content: center;
+    }
+  }
+
   .footer-noima__bottom {
     margin-top: 4rem;
     padding: 2rem 3rem 0;
@@ -288,6 +314,37 @@
         </div>
       {%- endif -%}
     </div>
+  </div>
+
+  <div class="footer-noima__anpc">
+    <a
+      href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&amp;lng=RO"
+      target="_blank"
+      rel="noopener"
+      aria-label="ANPC — Soluționarea online a litigiilor (SOL)"
+    >
+      <img
+        src="{{ 'anpc-sol.png' | asset_url }}"
+        alt="ANPC — Soluționarea online a litigiilor (SOL)"
+        width="500"
+        height="124"
+        loading="lazy"
+      >
+    </a>
+    <a
+      href="https://anpc.ro/ce-este-sal/"
+      target="_blank"
+      rel="noopener"
+      aria-label="ANPC — Soluționarea alternativă a litigiilor (SAL)"
+    >
+      <img
+        src="{{ 'anpc-sal.webp' | asset_url }}"
+        alt="ANPC — Soluționarea alternativă a litigiilor (SAL)"
+        width="500"
+        height="124"
+        loading="lazy"
+      >
+    </a>
   </div>
 
   {%- if section.settings.bottom_text != blank -%}
