@@ -1,5 +1,4 @@
 ---
-import { MuxPlayer } from '@mux/mux-player-astro';
 import Button from './Button.astro';
 
 interface Props {
@@ -14,7 +13,7 @@ const { hero } = Astro.props;
 const heroPlaybackId = hero.video?.playbackId;
 const hasVideo = Boolean(heroPlaybackId);
 const heroPosterUrl = heroPlaybackId
-	? `https://image.mux.com/${heroPlaybackId}/thumbnail.webp?time=0`
+	? `https://image.mux.com/${heroPlaybackId}/thumbnail.webp?width=1920&time=0`
 	: null;
 ---
 
@@ -27,19 +26,18 @@ const heroPosterUrl = heroPlaybackId
 	>
 		{
 			hasVideo ? (
-				<MuxPlayer
-					playbackId={heroPlaybackId}
+				<mux-video
+					playback-id={heroPlaybackId}
 					muted
 					autoplay
 					loop
-					playsInline
-					nohotkeys
-					disableCookies
-					disableTracking
-					thumbnailTime={0}
+					playsinline
+					disable-cookies
+					disable-tracking
+					rendition-order="desc"
 					class="hero-video h-full w-full"
-					style="--controls: none; --media-object-fit: cover;"
-				/>
+					style="--media-object-fit: cover;"
+				></mux-video>
 			) : (
 				<div class="relative h-full w-full grain placeholder-media">
 					<span class="asset-placeholder-chip">VIDEO PLACEHOLDER</span>
@@ -59,6 +57,8 @@ const heroPosterUrl = heroPlaybackId
 {
 	hasVideo && (
 		<script>
+			import '@mux/mux-video';
+
 			function initHeroVideo() {
 				const player = document.querySelector<HTMLMediaElement>('.hero-video');
 				if (!player) return;
