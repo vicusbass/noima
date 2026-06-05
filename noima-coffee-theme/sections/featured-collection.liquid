@@ -39,6 +39,10 @@
 {%- endstyle -%}
 
 {% stylesheet %}
+  .category-anchor {
+    scroll-margin-top: calc(var(--header-height, 8rem) + 2rem);
+  }
+
   .collection__title-link {
     color: inherit;
     text-decoration: none;
@@ -131,7 +135,8 @@
 -%}
 
 <div
-  class="color-{{ section.settings.color_scheme }} isolate gradient"
+  class="color-{{ section.settings.color_scheme }} isolate gradient{% if section.settings.collection != blank %} category-anchor{% endif %}"
+  {%- if section.settings.collection != blank %} id="category-{{ section.settings.collection.handle }}"{% endif -%}
 >
   <div
     class="collection{% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %} section-{{ section.id }}-padding{% if section.settings.full_width %} collection--full-width{% endif %}"
