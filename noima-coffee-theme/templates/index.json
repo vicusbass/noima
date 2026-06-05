@@ -9,6 +9,31 @@
  */
 {
   "sections": {
+    "category_nav": {
+      "type": "category-navigation",
+      "blocks": {
+        "cat_cafea": {
+          "type": "category",
+          "settings": {
+            "collection": "cafea"
+          }
+        },
+        "cat_echipamente": {
+          "type": "category",
+          "settings": {
+            "collection": "echipamente"
+          }
+        }
+      },
+      "block_order": ["cat_cafea", "cat_echipamente"],
+      "settings": {
+        "aria_label": "Categorii",
+        "alignment": "center",
+        "color_scheme": "scheme-9f406c3e-8b61-43bd-9d80-5742a5384c0a",
+        "padding_top": 28,
+        "padding_bottom": 8
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "custom_css": [],
@@ -19,7 +44,7 @@
         "title": "Cafea",
         "heading_size": "h0",
         "description": "",
-        "show_description": true,
+        "show_description": false,
         "description_style": "body",
         "columns_desktop": 4,
         "enable_desktop_slider": false,
@@ -49,7 +74,7 @@
         "title": "Echipamente",
         "heading_size": "h0",
         "description": "",
-        "show_description": true,
+        "show_description": false,
         "description_style": "body",
         "columns_desktop": 4,
         "enable_desktop_slider": false,
@@ -75,6 +100,7 @@
     }
   },
   "order": [
+    "category_nav",
     "featured_collection",
     "featured_collection_ptVjUn",
     "1770983123b93a0c0f"

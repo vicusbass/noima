@@ -1,0 +1,248 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign has_links = false
+  for block in section.blocks
+    if block.settings.collection != blank
+      assign has_links = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_links -%}
+  <div class="color-{{ section.settings.color_scheme }} gradient">
+    <nav
+      class="category-nav page-width section-{{ section.id }}-padding"
+      aria-label="{{ section.settings.aria_label | default: 'Categorii' | escape }}"
+      data-category-nav-id="{{ section.id }}"
+    >
+      <ul class="category-nav__list category-nav__list--{{ section.settings.alignment }}" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign category_collection = block.settings.collection -%}
+          {%- if category_collection != blank -%}
+            <li class="category-nav__item" {{ block.shopify_attributes }}>
+              <a
+                class="category-nav__link"
+                href="#category-{{ category_collection.handle }}"
+                data-category-nav-link="category-{{ category_collection.handle }}"
+              >
+                {{- block.settings.label | default: category_collection.title -}}
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+
+  <script>
+    (function () {
+      var nav = document.querySelector('[data-category-nav-id="{{ section.id }}"]');
+      if (!nav) return;
+
+      var links = nav.querySelectorAll('[data-category-nav-link]');
+      var targets = [];
+      links.forEach(function (link) {
+        var target = document.getElementById(link.getAttribute('data-category-nav-link'));
+        if (target) targets.push({ link: link, target: target });
+      });
+      if (!targets.length || !('IntersectionObserver' in window)) return;
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            targets.forEach(function (item) {
+              var active = item.target === entry.target;
+              item.link.classList.toggle('is-active', active);
+              if (active) {
+                item.link.setAttribute('aria-current', 'true');
+              } else {
+                item.link.removeAttribute('aria-current');
+              }
+            });
+          });
+        },
+        { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+      );
+
+      targets.forEach(function (item) {
+        observer.observe(item.target);
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .category-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem 3.2rem;
+  }
+
+  .category-nav__list--center {
+    justify-content: center;
+  }
+
+  .category-nav__list--left {
+    justify-content: flex-start;
+  }
+
+  .category-nav__list--right {
+    justify-content: flex-end;
+  }
+
+  .category-nav__link {
+    display: inline-block;
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    letter-spacing: 0.12rem;
+    line-height: 1.2;
+    padding-bottom: 0.4rem;
+    border-bottom: 0.1rem solid transparent;
+    transition:
+      border-color 0.15s ease,
+      opacity 0.15s ease;
+  }
+
+  .category-nav__link:hover,
+  .category-nav__link:focus-visible {
+    border-bottom-color: rgb(var(--color-foreground));
+  }
+
+  .category-nav__link.is-active {
+    border-bottom-color: rgb(var(--color-foreground));
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 749px) {
+    .category-nav__list {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 2rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .category-nav__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-nav__item {
+      flex: 0 0 auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Navigare categorii",
+  "tag": "section",
+  "class": "section section--category-nav",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Linkuri text către categorii. Fiecare bloc trimite către secțiunea colecției de pe pagină, cu derulare lină."
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Etichetă accesibilitate",
+      "default": "Categorii"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Aliniere",
+      "options": [
+        { "value": "left", "label": "Stânga" },
+        { "value": "center", "label": "Centru" },
+        { "value": "right", "label": "Dreapta" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Spațiere"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere sus",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere jos",
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categorie",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colecție"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etichetă (opțional)",
+          "info": "Lasă gol pentru a folosi numele colecției."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Navigare categorii",
+      "blocks": [{ "type": "category" }, { "type": "category" }]
+    }
+  ]
+}
+{% endschema %}
