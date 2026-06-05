@@ -1,0 +1,84 @@
+{% doc %}
+  Renders a notice when the cart contains a coffee subscription (a line with an
+  Appstle selling plan whose product is in the Coffee collection) and the
+  combined subscription-coffee value is below the required minimum. Mirrors the
+  cart & checkout validation function so shoppers see the requirement before
+  reaching checkout.
+
+  @example
+  {% render 'cart-subscription-minimum' %}
+{% enddoc %}
+
+{%- liquid
+  assign coffee_collection_id = 661779808589
+  assign minimum_cents = 19000
+  assign subscription_coffee_cents = 0
+  assign has_coffee_subscription = false
+
+  for item in cart.items
+    if item.selling_plan_allocation
+      assign is_coffee = false
+      for collection in item.product.collections
+        if collection.id == coffee_collection_id
+          assign is_coffee = true
+          break
+        endif
+      endfor
+      if is_coffee
+        assign has_coffee_subscription = true
+        assign subscription_coffee_cents = subscription_coffee_cents | plus: item.final_line_price
+      endif
+    endif
+  endfor
+-%}
+
+{%- if has_coffee_subscription and subscription_coffee_cents < minimum_cents -%}
+  {%- liquid
+    assign remaining_money = minimum_cents | minus: subscription_coffee_cents | money
+    assign minimum_money = minimum_cents | money
+    assign progress = subscription_coffee_cents | times: 100 | divided_by: minimum_cents
+  -%}
+  <div class="cart-subscription-minimum" role="status">
+    <p class="cart-subscription-minimum__text">
+      {{- 'sections.cart.subscription_minimum_html' | t: remaining: remaining_money, minimum: minimum_money -}}
+    </p>
+    <div class="cart-subscription-minimum__track" aria-hidden="true">
+      <span
+        class="cart-subscription-minimum__fill"
+        style="--cart-subscription-progress: {{ progress }}%"
+      ></span>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .cart-subscription-minimum {
+    margin: 1.2rem 0;
+    padding: 1.2rem 1.4rem;
+    border: 0.1rem solid rgba(var(--color-foreground), 0.18);
+    border-radius: var(--inputs-radius, 0.4rem);
+    background: rgba(var(--color-foreground), 0.04);
+  }
+
+  .cart-subscription-minimum__text {
+    margin: 0 0 0.9rem;
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+
+  .cart-subscription-minimum__track {
+    height: 0.6rem;
+    border-radius: 0.6rem;
+    background: rgba(var(--color-foreground), 0.12);
+    overflow: hidden;
+  }
+
+  .cart-subscription-minimum__fill {
+    display: block;
+    height: 100%;
+    width: var(--cart-subscription-progress, 0%);
+    background: rgb(var(--color-foreground));
+    border-radius: inherit;
+    transition: width 0.3s ease;
+  }
+{% endstylesheet %}
