@@ -25,11 +25,19 @@
             "collection": "echipamente",
             "label": ""
           }
+        },
+        "cat_noime": {
+          "type": "category",
+          "settings": {
+            "collection": "noime",
+            "label": ""
+          }
         }
       },
       "block_order": [
         "cat_cafea",
-        "cat_echipamente"
+        "cat_echipamente",
+        "cat_noime"
       ],
       "settings": {
         "aria_label": "Categorii",
