@@ -11,7 +11,7 @@
 
 {%- liquid
   assign coffee_collection_id = 661779808589
-  assign minimum_cents = 19000
+  assign minimum_cents = settings.coffee_subscription_minimum | default: 190 | times: 100
   assign subscription_coffee_cents = 0
   assign has_coffee_subscription = false
 
