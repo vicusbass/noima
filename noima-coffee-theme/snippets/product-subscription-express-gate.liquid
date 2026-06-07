@@ -1,0 +1,87 @@
+{% doc %}
+  Hides the accelerated/dynamic checkout buttons ("Buy with Shop", etc.) on a
+  product form whenever a subscription selling plan is selected, so shoppers
+  can't bypass the coffee-subscription minimum (enforced in the cart) via the
+  express checkout. Restores the buttons as soon as a one-time purchase is
+  selected. Scoped to product forms marked with data-coffee-sub-gate.
+
+  @example
+  {% render 'product-subscription-express-gate' %}
+{% enddoc %}
+
+{% javascript %}
+  (function () {
+    if (window.__noimaExpressSubGate) return;
+    window.__noimaExpressSubGate = true;
+
+    var FORM = 'product-form[data-coffee-sub-gate]';
+    var EXPRESS = '.shopify-payment-button';
+
+    function sellingPlanSelected(scope) {
+      var fields = scope.querySelectorAll('[name="selling_plan"]');
+      for (var i = 0; i < fields.length; i++) {
+        var field = fields[i];
+        var isToggle = field.type === 'radio' || field.type === 'checkbox';
+        if (isToggle && !field.checked) continue;
+        if (field.value && field.value !== '0') return true;
+      }
+      return false;
+    }
+
+    function scopeFor(form) {
+      return form.closest('[id^="shopify-section"]') || form.closest('.shopify-section') || form;
+    }
+
+    function gate(form) {
+      if (form.__noimaGated) return;
+      form.__noimaGated = true;
+
+      var scope = scopeFor(form);
+
+      function update() {
+        var express = form.querySelector(EXPRESS);
+        if (!express) return;
+        if (sellingPlanSelected(scope)) {
+          express.setAttribute('hidden', '');
+        } else {
+          express.removeAttribute('hidden');
+        }
+      }
+
+      function deferredUpdate() {
+        update();
+        setTimeout(update, 0);
+        setTimeout(update, 250);
+      }
+
+      scope.addEventListener('change', deferredUpdate);
+      scope.addEventListener('click', deferredUpdate);
+      new MutationObserver(deferredUpdate).observe(scope, { childList: true, subtree: true });
+      deferredUpdate();
+    }
+
+    function init() {
+      document.querySelectorAll(FORM).forEach(gate);
+    }
+
+    var scheduled = false;
+    function schedule() {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(function () {
+        scheduled = false;
+        init();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+    new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true });
+    init();
+  })();
+{% endjavascript %}
+
+{% stylesheet %}
+  .shopify-payment-button[hidden] {
+    display: none !important;
+  }
+{% endstylesheet %}
