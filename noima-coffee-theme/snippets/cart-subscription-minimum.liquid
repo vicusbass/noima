@@ -55,21 +55,28 @@
   .cart-subscription-minimum {
     margin: 1.2rem 0;
     padding: 1.2rem 1.4rem;
-    border: 0.1rem solid rgba(var(--color-foreground), 0.18);
+    border: 0.1rem solid rgb(192, 28, 28);
+    border-left-width: 0.4rem;
     border-radius: var(--inputs-radius, 0.4rem);
-    background: rgba(var(--color-foreground), 0.04);
+    background: rgba(192, 28, 28, 0.08);
   }
 
   .cart-subscription-minimum__text {
     margin: 0 0 0.9rem;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    font-weight: 600;
     line-height: 1.5;
+    color: rgb(192, 28, 28);
+  }
+
+  .cart-subscription-minimum__text strong {
+    font-weight: 700;
   }
 
   .cart-subscription-minimum__track {
-    height: 0.6rem;
-    border-radius: 0.6rem;
-    background: rgba(var(--color-foreground), 0.12);
+    height: 0.7rem;
+    border-radius: 0.7rem;
+    background: rgba(192, 28, 28, 0.18);
     overflow: hidden;
   }
 
@@ -77,7 +84,7 @@
     display: block;
     height: 100%;
     width: var(--cart-subscription-progress, 0%);
-    background: rgb(var(--color-foreground));
+    background: rgb(192, 28, 28);
     border-radius: inherit;
     transition: width 0.3s ease;
   }
