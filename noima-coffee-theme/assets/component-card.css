@@ -334,6 +334,11 @@
 	opacity: 1;
 }
 
+.card__type--decaf {
+	background-color: #6f4e37;
+	color: #ffffff;
+}
+
 .card__heading:last-child {
 	margin-bottom: 0;
 }

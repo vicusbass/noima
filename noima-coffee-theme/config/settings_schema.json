@@ -1451,5 +1451,17 @@
 				"default": "scheme-1"
 			}
 		]
+	},
+	{
+		"name": "Abonament cafea",
+		"settings": [
+			{
+				"type": "number",
+				"id": "coffee_subscription_minimum",
+				"label": "Valoare minimă abonament (RON)",
+				"default": 190,
+				"info": "Valoarea minimă de cafea cu abonament necesară la finalizarea comenzii. Setează 0 pentru a dezactiva."
+			}
+		]
 	}
 ]

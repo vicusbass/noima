@@ -300,6 +300,7 @@
       "remove_title": "Eliminați {{ title }}",
       "note": "Instrucțiuni speciale legate de comandă",
       "checkout": "Finalizați comanda",
+      "subscription_minimum_html": "Mai adaugă <strong>{{ remaining }}</strong> de cafea cu abonament pentru a atinge minimul de {{ minimum }} necesar abonamentului.",
       "empty": "Coșul dvs. este gol",
       "cart_error": "A apărut o eroare în timpul actualizării coșului. Încercați din nou.",
       "cart_quantity_error_html": "Cantitatea maximă pe care o poți adăuga în coș din acest articol: {{ quantity }}.",

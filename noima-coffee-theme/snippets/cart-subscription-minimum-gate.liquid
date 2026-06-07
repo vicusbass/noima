@@ -1,0 +1,78 @@
+{% doc %}
+  Client-side enforcement for the coffee-subscription minimum. While the
+  cart-subscription-minimum notice is present in the DOM (a coffee subscription
+  is below the required value), it disables the checkout buttons, hides express
+  checkout, and blocks checkout clicks/submits. Keyed entirely on the notice's
+  presence, so it stays in sync as the cart re-renders. Render once, globally.
+
+  @example
+  {% render 'cart-subscription-minimum-gate' %}
+{% enddoc %}
+
+{% javascript %}
+  (function () {
+    if (window.__noimaCoffeeSubGate) return;
+    window.__noimaCoffeeSubGate = true;
+
+    var NUDGE = '.cart-subscription-minimum';
+    var CHECKOUT = '#checkout, #CartDrawer-Checkout, button[name="checkout"]';
+    var EXPRESS = '.cart__dynamic-checkout-buttons';
+
+    function isBlocked() {
+      return !!document.querySelector(NUDGE);
+    }
+
+    function apply() {
+      var blocked = isBlocked();
+      document.querySelectorAll(CHECKOUT).forEach(function (button) {
+        button.classList.toggle('is-coffee-blocked', blocked);
+        button.setAttribute('aria-disabled', blocked ? 'true' : 'false');
+      });
+      document.querySelectorAll(EXPRESS).forEach(function (element) {
+        if (blocked) {
+          element.setAttribute('hidden', '');
+        } else {
+          element.removeAttribute('hidden');
+        }
+      });
+    }
+
+    function guard(event) {
+      if (!isBlocked()) return;
+      var target = event.target;
+      if (!target || !target.closest) return;
+      var hitCheckout = target.closest(CHECKOUT);
+      var hitCartForm = event.type === 'submit' && target.closest('#CartDrawer-Form, #cart');
+      if (hitCheckout || hitCartForm) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        var note = document.querySelector(NUDGE);
+        if (note) note.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    document.addEventListener('click', guard, true);
+    document.addEventListener('submit', guard, true);
+    document.addEventListener('DOMContentLoaded', apply);
+    apply();
+
+    var observer = new MutationObserver(function () {
+      apply();
+    });
+    ['CartDrawer', 'main-cart-footer', 'main-cart-items', 'cart-notification'].forEach(function (id) {
+      var element = document.getElementById(id);
+      if (element) {
+        observer.observe(element, { childList: true, subtree: true });
+      }
+    });
+  })();
+{% endjavascript %}
+
+{% stylesheet %}
+  .cart__checkout-button.is-coffee-blocked,
+  button[name="checkout"].is-coffee-blocked {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+{% endstylesheet %}

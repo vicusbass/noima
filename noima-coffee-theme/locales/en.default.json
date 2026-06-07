@@ -300,6 +300,7 @@
       "new_estimated_total": "New estimated total",
       "note": "Order special instructions",
       "checkout": "Check out",
+      "subscription_minimum_html": "Add <strong>{{ remaining }}</strong> more of subscription coffee to reach the {{ minimum }} subscription minimum.",
       "empty": "Your cart is empty",
       "cart_error": "There was an error while updating your cart. Please try again.",
       "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your cart.",
