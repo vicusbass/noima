@@ -22,12 +22,22 @@
       if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
         assign show_dynamic_checkout = true
       endif
+
+      assign coffee_collection_id = 661779808589
+      assign is_coffee_subscription_product = false
+      for collection in product.collections
+        if collection.id == coffee_collection_id
+          assign is_coffee_subscription_product = true
+          break
+        endif
+      endfor
     -%}
 
     <product-form
       class="product-form"
       data-hide-errors="{{ gift_card_recipient_feature_active }}"
       data-section-id="{{ section.id }}"
+      {% if is_coffee_subscription_product %}data-coffee-sub-gate{% endif %}
     >
       <div class="product-form__error-message-wrapper" role="alert" hidden>
         <span class="svg-wrapper">
@@ -99,6 +109,9 @@
         </div>
       {%- endform -%}
     </product-form>
+    {%- if is_coffee_subscription_product -%}
+      {%- render 'product-subscription-express-gate' -%}
+    {%- endif -%}
   {%- else -%}
     <div class="product-form">
       <div class="product-form__buttons form">
