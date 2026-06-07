@@ -34,7 +34,7 @@ export default defineConfig({
 		sitemap({
 			filter: (page) => {
 				const path = new URL(page).pathname.replace(/\/$/, '');
-				return !['/shop', '/faq', '/ajutor'].includes(path);
+				return !['/faq', '/ajutor'].includes(path);
 			},
 		}),
 	],
