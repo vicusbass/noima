@@ -162,7 +162,12 @@
           </h3>
           {%- assign coffee_category = card_product.metafields.custom.categorie.value.name -%}
           {%- if coffee_category != blank -%}
-            <div class="card__type caption-with-letter-spacing">{{ coffee_category | escape }}</div>
+            {%- assign coffee_category_modifier = '' -%}
+            {%- assign coffee_category_downcased = coffee_category | downcase -%}
+            {%- if coffee_category_downcased contains 'decaf' -%}
+              {%- assign coffee_category_modifier = ' card__type--decaf' -%}
+            {%- endif -%}
+            <div class="card__type caption-with-letter-spacing{{ coffee_category_modifier }}">{{ coffee_category | escape }}</div>
           {%- endif -%}
           <div class="card-information">
             {%- if show_vendor -%}

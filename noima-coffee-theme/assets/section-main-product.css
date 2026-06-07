@@ -16,6 +16,11 @@ product-info {
 	text-transform: uppercase;
 }
 
+.product__category-pill--decaf {
+	background-color: #6f4e37;
+	color: #ffffff;
+}
+
 .product__back-link {
 	display: inline-block;
 	margin-bottom: 1.5rem;

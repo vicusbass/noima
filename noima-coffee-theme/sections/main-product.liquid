@@ -131,7 +131,12 @@
                 </div>
                 {%- assign product_coffee_category = product.metafields.custom.categorie.value.name -%}
                 {%- if product_coffee_category != blank -%}
-                  <div class="product__category-pill">
+                  {%- assign product_category_modifier = '' -%}
+                  {%- assign product_category_downcased = product_coffee_category | downcase -%}
+                  {%- if product_category_downcased contains 'decaf' -%}
+                    {%- assign product_category_modifier = ' product__category-pill--decaf' -%}
+                  {%- endif -%}
+                  <div class="product__category-pill{{ product_category_modifier }}">
                     {{ product_coffee_category | escape }}
                   </div>
                 {%- endif -%}
