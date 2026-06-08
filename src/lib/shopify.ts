@@ -2,6 +2,11 @@ const SHOPIFY_STORE_DOMAIN = import.meta.env.SHOPIFY_STORE_DOMAIN;
 const SHOPIFY_STOREFRONT_ACCESS_TOKEN = import.meta.env
 	.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
+// Customer-facing storefront domain. SHOPIFY_STORE_DOMAIN is the *.myshopify.com
+// host used for the Storefront API; public links must use the branded domain so
+// users (and crawlers) stay on shop.prajitorianoima.ro instead of being 301'd.
+const _SHOPIFY_PUBLIC_DOMAIN = 'shop.prajitorianoima.ro';
+
 export interface ShopifyProduct {
 	id: string;
 	title: string;
@@ -72,5 +77,5 @@ export async function getFeaturedProducts(
 }
 
 export function getProductUrl(handle: string): string {
-	return `https://${SHOPIFY_STORE_DOMAIN}/products/${handle}`;
+	return `https://${SHOPIFY_PUBLIC_DOMAIN}/products/${handle}`;
 }
