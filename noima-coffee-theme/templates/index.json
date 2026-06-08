@@ -9,6 +9,15 @@
  */
 {
   "sections": {
+    "shop_hero": {
+      "type": "shop-hero",
+      "settings": {
+        "image_alt": "SHOP",
+        "max_width": 60,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "category_nav": {
       "type": "category-navigation",
       "blocks": {
@@ -16,21 +25,24 @@
           "type": "category",
           "settings": {
             "collection": "cafea",
-            "label": ""
+            "label": "",
+            "icon": "cafea"
           }
         },
         "cat_echipamente": {
           "type": "category",
           "settings": {
             "collection": "echipamente",
-            "label": ""
+            "label": "",
+            "icon": "echipamente"
           }
         },
         "cat_noime": {
           "type": "category",
           "settings": {
             "collection": "noime",
-            "label": ""
+            "label": "",
+            "icon": "noime"
           }
         }
       },
@@ -143,6 +155,7 @@
     }
   },
   "order": [
+    "shop_hero",
     "category_nav",
     "featured_collection",
     "featured_collection_ptVjUn",

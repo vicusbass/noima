@@ -1,0 +1,131 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #shopHero-{{ section.id }} .shop-hero__image {
+    max-width: {{ section.settings.max_width }}rem;
+  }
+
+  .shopify-section-group-header-group {
+    background-color: #fff;
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign hero_alt = section.settings.image_alt | default: 'SHOP' | escape
+-%}
+
+<div id="shopHero-{{ section.id }}" class="shop-hero section-{{ section.id }}-padding">
+  {%- if section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 2491
+      | image_tag:
+        class: 'shop-hero__image',
+        widths: '750, 1100, 1246, 1600, 2000, 2491',
+        sizes: '92vw',
+        loading: 'eager',
+        fetchpriority: 'high',
+        alt: hero_alt
+    }}
+  {%- else -%}
+    <img
+      class="shop-hero__image"
+      src="{{ 'shop-hero.png' | asset_url }}"
+      srcset="{{ 'shop-hero.png' | asset_url }} 1246w, {{ 'shop-hero@2x.png' | asset_url }} 2491w"
+      sizes="92vw"
+      width="1246"
+      height="469"
+      loading="eager"
+      fetchpriority="high"
+      alt="{{ hero_alt }}"
+    >
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .shop-hero {
+    background-color: #fff;
+    text-align: center;
+  }
+
+  .shop-hero__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-inline: auto;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero magazin",
+  "tag": "section",
+  "class": "section section--shop-hero",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Imaginea hero centrată afișată în partea de sus a paginii. Lasă imaginea goală pentru a folosi grafica SHOP implicită."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagine (opțional)"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Text alternativ",
+      "default": "SHOP"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 40,
+      "max": 160,
+      "step": 4,
+      "unit": "rem",
+      "label": "Lățime maximă",
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Spațiere"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere sus",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere jos",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero magazin"
+    }
+  ]
+}
+{% endschema %}

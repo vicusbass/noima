@@ -317,6 +317,7 @@
 .card__heading {
 	margin-top: 0;
 	margin-bottom: 0;
+	font-weight: 600;
 }
 
 .card__type {
@@ -325,12 +326,12 @@
 	margin: 0.6rem auto 0;
 	padding: 0.3rem 0.9rem;
 	border-radius: 999px;
-	background-color: rgb(var(--color-button));
+	background-color: #6f6a64;
 	color: rgb(var(--color-button-text));
 	font-size: 1.1rem;
 	letter-spacing: 0.07rem;
 	line-height: 1.2;
-	text-transform: uppercase;
+	text-transform: lowercase;
 	opacity: 1;
 }
 

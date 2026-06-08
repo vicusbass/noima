@@ -39,7 +39,14 @@
                 href="#category-{{ category_collection.handle }}"
                 data-category-nav-link="category-{{ category_collection.handle }}"
               >
-                {{- block.settings.label | default: category_collection.title -}}
+                {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+                  <span class="category-nav__icon" aria-hidden="true">
+                    {%- render 'category-icon', icon: block.settings.icon -%}
+                  </span>
+                {%- endif -%}
+                <span class="category-nav__label">
+                  {{- block.settings.label | default: category_collection.title -}}
+                </span>
               </a>
             </li>
           {%- endif -%}
@@ -87,18 +94,14 @@
 {%- endif -%}
 
 {% stylesheet %}
-  .category-nav {
-    border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
-  }
-
   .category-nav__list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 1.2rem 3.2rem;
+    align-items: stretch;
+    gap: 2.4rem;
   }
 
   .category-nav__list--center {
@@ -113,47 +116,57 @@
     justify-content: flex-end;
   }
 
+  .category-nav__item {
+    display: flex;
+    flex: 0 1 22rem;
+    max-width: 22rem;
+  }
+
   .category-nav__link {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.6rem 2.4rem;
+    background-color: #fff;
     color: rgb(var(--color-foreground));
     text-decoration: none;
     text-transform: uppercase;
     font-size: 1.4rem;
+    font-weight: 600;
     letter-spacing: 0.12rem;
     line-height: 1.2;
-    padding-bottom: 0.4rem;
-    border-bottom: 0.1rem solid transparent;
     transition:
-      border-color 0.15s ease,
-      opacity 0.15s ease;
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
   }
 
   .category-nav__link:hover,
   .category-nav__link:focus-visible {
-    border-bottom-color: rgb(var(--color-foreground));
+    box-shadow: 0 0.4rem 1.4rem rgba(var(--color-foreground), 0.14);
+    transform: translateY(-0.2rem);
   }
 
   .category-nav__link.is-active {
-    border-bottom-color: rgb(var(--color-foreground));
-    font-weight: 600;
+    box-shadow: inset 0 0 0 0.15rem rgb(var(--color-foreground));
+  }
+
+  .category-nav__icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .category-nav__icon svg {
+    display: block;
+    width: 2rem;
+    height: 2rem;
   }
 
   @media screen and (max-width: 749px) {
-    .category-nav__list {
-      flex-wrap: nowrap;
-      justify-content: safe center;
-      gap: 2rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-
-    .category-nav__list::-webkit-scrollbar {
-      display: none;
-    }
-
     .category-nav__item {
-      flex: 0 0 auto;
+      flex: 1 1 100%;
+      max-width: none;
     }
   }
 
@@ -237,6 +250,18 @@
           "id": "label",
           "label": "Etichetă (opțional)",
           "info": "Lasă gol pentru a folosi numele colecției."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Pictogramă",
+          "options": [
+            { "value": "none", "label": "Fără" },
+            { "value": "cafea", "label": "Boabe de cafea" },
+            { "value": "echipamente", "label": "Espressor moka (echipamente)" },
+            { "value": "noime", "label": "Tricou (noime)" }
+          ],
+          "default": "none"
         }
       ]
     }
