@@ -7,6 +7,9 @@ interface Props {
 	headingBottom?: string;
 	leftText?: string;
 	rightText?: string;
+	offering?: {
+		video?: { playbackId?: string };
+	};
 }
 
 const {
@@ -14,7 +17,14 @@ const {
 	headingBottom = 'la noima',
 	leftText = 'La noi(ma) găsești cafea de specialitate, din loturi limitate, aleasă cu grijă și prăjită local, după gustul tău.',
 	rightText = 'La noima, fiecare barista știe totul despre cafeaua pe care ți-o pregătește și e gata să-ți spună și ție povestea.',
+	offering,
 } = Astro.props;
+
+const offeringPlaybackId = offering?.video?.playbackId;
+const hasVideo = Boolean(offeringPlaybackId);
+const offeringPosterUrl = offeringPlaybackId
+	? `https://image.mux.com/${offeringPlaybackId}/thumbnail.webp?width=720&time=0`
+	: null;
 ---
 
 <section id="offering" class="py-16 md:py-24">
@@ -36,13 +46,35 @@ const {
 			</p>
 
 			<div class="flex items-center justify-center md:flex-none">
-				<Image
-					src={NoimaSquare}
-					alt=""
-					widths={[240, 360, 480, 720]}
-					sizes="(min-width: 768px) 320px, 60vw"
-					class="block h-auto w-[60vw] max-w-[320px] md:w-[320px] md:max-w-none"
-				/>
+				{
+					hasVideo ? (
+						<div
+							class="offering-media relative aspect-square w-[60vw] max-w-[320px] overflow-hidden md:w-[320px] md:max-w-none"
+							style={offeringPosterUrl ? `background-image: url('${offeringPosterUrl}');` : undefined}
+						>
+							<mux-video
+								playback-id={offeringPlaybackId}
+								muted
+								autoplay
+								loop
+								playsinline
+								disable-cookies
+								disable-tracking
+								rendition-order="desc"
+								class="offering-video h-full w-full"
+								style="--media-object-fit: cover;"
+							/>
+						</div>
+					) : (
+						<Image
+							src={NoimaSquare}
+							alt=""
+							widths={[240, 360, 480, 720]}
+							sizes="(min-width: 768px) 320px, 60vw"
+							class="block h-auto w-[60vw] max-w-[320px] md:w-[320px] md:max-w-none"
+						/>
+					)
+				}
 			</div>
 
 			<p
@@ -53,3 +85,42 @@ const {
 		</div>
 	</div>
 </section>
+
+{
+	hasVideo && (
+		<script>
+			import '@mux/mux-video';
+
+			function initOfferingVideo() {
+				const player = document.querySelector<HTMLMediaElement>('.offering-video');
+				if (!player) return;
+				const reveal = () => player.classList.add('is-playing');
+				if (!player.paused) {
+					reveal();
+				} else {
+					player.addEventListener('playing', reveal, { once: true });
+				}
+			}
+			initOfferingVideo();
+			document.addEventListener('astro:page-load', initOfferingVideo);
+		</script>
+	)
+}
+
+<style>
+	.offering-media {
+		background-color: #f8f5ed;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.offering-video {
+		display: block;
+		opacity: 0;
+		transition: opacity 700ms ease-out;
+	}
+
+	.offering-video.is-playing {
+		opacity: 1;
+	}
+</style>

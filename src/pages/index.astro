@@ -13,11 +13,19 @@ const HOME_QUERY = `*[_type == "homePage" && _id == "homePage"][0]{
 		video {
 			"playbackId": asset->playbackId
 		}
+	},
+	offering {
+		video {
+			"playbackId": asset->playbackId
+		}
 	}
 }`;
 
 const { data: homePage } = await loadQuery<{
 	hero: {
+		video?: { playbackId?: string };
+	};
+	offering?: {
 		video?: { playbackId?: string };
 	};
 }>({ query: HOME_QUERY });
@@ -52,6 +60,6 @@ const { data: events } = await loadQuery<
 	<Hero hero={homePage?.hero ?? {}} />
 	<WhySection />
 	{/* <FeaturedProducts products={products} /> */}
-	<OfferingSection />
+	<OfferingSection offering={homePage?.offering} />
 	<EventsSection events={events ?? []} />
 </Layout>
