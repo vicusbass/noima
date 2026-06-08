@@ -1,8 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import HeroDespreNoi from '../assets/despre-noi/hero.png';
+import CoffeeShop from '../assets/despre-noi/noima-shop.jpg';
+import CoffeeShop2 from '../assets/despre-noi/noima-shop2.jpg';
 import Team from '../assets/despre-noi/team.jpg';
-import CoffeeShop from '../assets/main/coffee-shop.png';
 import Button from '../components/Button.astro';
 import Layout from '../layouts/Layout.astro';
 
@@ -202,7 +203,7 @@ const bodyText =
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-center">
       <div class="overflow-hidden">
         <Image
-          src={CoffeeShop}
+          src={CoffeeShop2}
           alt="Interior cafenea Noima"
           widths={[480, 768, 1200, 1600]}
           sizes="(min-width: 768px) 50vw, 100vw"

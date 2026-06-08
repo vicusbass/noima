@@ -12,6 +12,11 @@ export const homePage = defineType({
 			title: 'Secțiunea Hero',
 			type: 'hero',
 		}),
+		defineField({
+			name: 'offering',
+			title: 'Secțiunea „Ce primește omul”',
+			type: 'offering',
+		}),
 	],
 	preview: {
 		prepare: () => ({ title: 'Pagina principală' }),
