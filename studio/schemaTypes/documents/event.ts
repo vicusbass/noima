@@ -60,6 +60,18 @@ export const event = defineType({
 			],
 			validation: (rule) => rule.required(),
 		}),
+		defineField({
+			name: 'buttonUrl',
+			title: 'Link buton „REZERVĂ UN LOC”',
+			description:
+				'Opțional. Dacă este completat, butonul deschide acest link într-o filă nouă (ex. formular Google, link mailto:, tel:). Dacă este gol, butonul trimite către pagina de contact.',
+			type: 'url',
+			validation: (rule) =>
+				rule.uri({
+					scheme: ['http', 'https', 'mailto', 'tel'],
+					allowRelative: true,
+				}),
+		}),
 	],
 	preview: {
 		select: {

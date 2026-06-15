@@ -17,6 +17,7 @@ type EventDoc = {
 	};
 	description?: PortableTextBlock[];
 	summary?: string;
+	buttonUrl?: string;
 };
 
 export async function getStaticPaths() {
@@ -36,6 +37,7 @@ const { data: event } = await loadQuery<EventDoc | null>({
 		date,
 		image { asset, alt },
 		description,
+		buttonUrl,
 		"summary": pt::text(description)
 	}`,
 	params: { slug },
@@ -74,6 +76,11 @@ const truncate = (s: string, n: number) =>
 const eventDescription = event.summary
 	? truncate(event.summary, 160)
 	: `${event.title} — eveniment la Cafeneaua Noima, Cluj-Napoca, pe ${formattedDate}.`;
+
+const DEFAULT_BUTTON_HREF = '/contact#formular';
+const configuredButtonUrl = event.buttonUrl?.trim();
+const buttonHref = configuredButtonUrl || DEFAULT_BUTTON_HREF;
+const buttonOpensNewTab = Boolean(configuredButtonUrl);
 
 const eventSchema = {
 	'@context': 'https://schema.org',
@@ -151,7 +158,13 @@ const eventSchema = {
 							</div>
 						)
 					}
-					<Button href="/contact#formular" variant="dark" class="self-start mt-4">
+					<Button
+						href={buttonHref}
+						variant="dark"
+						class="self-start mt-4"
+						target={buttonOpensNewTab ? '_blank' : undefined}
+						rel={buttonOpensNewTab ? 'noopener noreferrer' : undefined}
+					>
 						REZERVĂ UN LOC
 					</Button>
 				</div>
