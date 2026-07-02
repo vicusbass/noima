@@ -81,6 +81,14 @@ function buildSanityUrl(img: SanityImage, shape: Shape) {
 		.auto('format')
 		.url();
 }
+
+function buildFullUrl(img: SanityImage) {
+	return urlFor(img as never)
+		.width(2400)
+		.fit('max')
+		.auto('format')
+		.url();
+}
 ---
 
 {
@@ -89,23 +97,212 @@ function buildSanityUrl(img: SanityImage, shape: Shape) {
 			<div class="container-x">
 				<h2 class="section-heading mb-10 md:mb-14">locație</h2>
 
-				<div class="grid grid-cols-1 gap-3 md:grid-cols-12 md:gap-4">
-					{slots.map((slot) => (
-						<div
-							class="relative overflow-hidden data-[shape=square]:aspect-square data-[shape=wide]:aspect-2/1 md:data-[shape=wide]:aspect-auto md:[grid-area:var(--ga)]"
-							data-shape={slot.shape}
-							style={`--ga: ${slot.gridArea};`}
+				<noima-location-lightbox class="block">
+					<div class="grid grid-cols-1 gap-3 md:grid-cols-12 md:gap-4">
+						{slots.map((slot, i) => (
+							<button
+								type="button"
+								data-lightbox-item
+								data-index={i}
+								data-full={buildFullUrl(slot.sanity)}
+								data-alt={slot.sanity?.alt || ''}
+								data-shape={slot.shape}
+								style={`--ga: ${slot.gridArea};`}
+								aria-label={`Deschide imaginea ${i + 1} pe ecran complet`}
+								class="group relative m-0 block cursor-zoom-in appearance-none overflow-hidden border-0 bg-transparent p-0 data-[shape=square]:aspect-square data-[shape=wide]:aspect-2/1 md:data-[shape=wide]:aspect-auto md:[grid-area:var(--ga)]"
+							>
+								<img
+									src={buildSanityUrl(slot.sanity, slot.shape)}
+									alt={slot.sanity?.alt || ''}
+									loading="lazy"
+									class="absolute inset-0 block h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+								/>
+							</button>
+						))}
+					</div>
+
+					<div
+						data-lightbox-viewer
+						role="dialog"
+						aria-modal="true"
+						aria-label="Galerie imagini"
+						tabindex="-1"
+						hidden
+						class="group/viewer fixed inset-0 z-100 items-center justify-center bg-black/70 backdrop-blur-md focus:outline-none"
+					>
+						<img
+							data-lightbox-image
+							alt=""
+							class="max-h-dvh max-w-[100vw] object-contain select-none"
+							draggable="false"
+						/>
+
+						<button
+							type="button"
+							data-lightbox-prev
+							aria-label="Imaginea anterioară"
+							class="group/edge absolute top-0 left-0 hidden h-full w-1/4 items-center justify-start pl-6 md:flex"
 						>
-							<img
-								src={buildSanityUrl(slot.sanity, slot.shape)}
-								alt={slot.sanity?.alt || ''}
-								loading="lazy"
-								class="absolute inset-0 block h-full w-full object-cover"
+							<span
+								aria-hidden="true"
+								class="pointer-events-none absolute inset-0 bg-linear-to-r from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover/edge:opacity-100"
 							/>
-						</div>
-					))}
-				</div>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="36"
+								height="36"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="white"
+								stroke-width="1.25"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="relative opacity-0 transition-opacity duration-300 group-hover/viewer:opacity-10 group-hover/edge:opacity-100"
+							>
+								<path d="M15 18l-6-6 6-6" />
+							</svg>
+						</button>
+
+						<button
+							type="button"
+							data-lightbox-next
+							aria-label="Imaginea următoare"
+							class="group/edge absolute top-0 right-0 hidden h-full w-1/4 items-center justify-end pr-6 md:flex"
+						>
+							<span
+								aria-hidden="true"
+								class="pointer-events-none absolute inset-0 bg-linear-to-l from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover/edge:opacity-100"
+							/>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="36"
+								height="36"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="white"
+								stroke-width="1.25"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="relative opacity-0 transition-opacity duration-300 group-hover/viewer:opacity-10 group-hover/edge:opacity-100"
+							>
+								<path d="M9 6l6 6-6 6" />
+							</svg>
+						</button>
+					</div>
+				</noima-location-lightbox>
 			</div>
 		</section>
 	)
 }
+
+<style>
+	[data-lightbox-viewer]:not([hidden]) {
+		display: flex;
+	}
+</style>
+
+<script>
+	class NoimaLocationLightbox extends HTMLElement {
+		connectedCallback() {
+			const items = Array.from(
+				this.querySelectorAll<HTMLButtonElement>('[data-lightbox-item]'),
+			);
+			const viewer = this.querySelector<HTMLElement>('[data-lightbox-viewer]');
+			const image = this.querySelector<HTMLImageElement>('[data-lightbox-image]');
+			const prev = this.querySelector<HTMLButtonElement>('[data-lightbox-prev]');
+			const next = this.querySelector<HTMLButtonElement>('[data-lightbox-next]');
+			if (!viewer || !image || items.length === 0) return;
+
+			let currentIndex = 0;
+			let lastTrigger: HTMLElement | null = null;
+
+			const show = (i: number) => {
+				currentIndex = (i + items.length) % items.length;
+				const btn = items[currentIndex];
+				image.src = btn.dataset.full || '';
+				image.alt = btn.dataset.alt || '';
+			};
+
+			const open = (i: number, trigger: HTMLElement) => {
+				lastTrigger = trigger;
+				show(i);
+				viewer.hidden = false;
+				document.documentElement.style.overflow = 'hidden';
+				viewer.focus({ preventScroll: true });
+			};
+
+			const close = () => {
+				viewer.hidden = true;
+				document.documentElement.style.overflow = '';
+				lastTrigger?.focus({ preventScroll: true });
+			};
+
+			items.forEach((btn, i) => {
+				btn.addEventListener('click', () => open(i, btn));
+			});
+
+			viewer.addEventListener('click', (e) => {
+				const target = e.target as HTMLElement;
+				if (target.closest('[data-lightbox-prev], [data-lightbox-next]')) return;
+				close();
+			});
+
+			prev?.addEventListener('click', (e) => {
+				e.stopPropagation();
+				show(currentIndex - 1);
+			});
+			next?.addEventListener('click', (e) => {
+				e.stopPropagation();
+				show(currentIndex + 1);
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (viewer.hidden) return;
+				if (e.key === 'Escape') close();
+				else if (e.key === 'ArrowLeft') show(currentIndex - 1);
+				else if (e.key === 'ArrowRight') show(currentIndex + 1);
+			});
+
+			let startX = 0;
+			let startY = 0;
+			let swiped = false;
+			viewer.addEventListener(
+				'touchstart',
+				(e) => {
+					const t = e.touches[0];
+					startX = t.clientX;
+					startY = t.clientY;
+					swiped = false;
+				},
+				{ passive: true },
+			);
+			viewer.addEventListener(
+				'touchend',
+				(e) => {
+					const t = e.changedTouches[0];
+					const dx = t.clientX - startX;
+					const dy = t.clientY - startY;
+					if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+						swiped = true;
+						show(dx < 0 ? currentIndex + 1 : currentIndex - 1);
+					}
+				},
+				{ passive: true },
+			);
+			viewer.addEventListener(
+				'click',
+				(e) => {
+					if (swiped) {
+						e.stopPropagation();
+						swiped = false;
+					}
+				},
+				true,
+			);
+		}
+	}
+
+	if (!customElements.get('noima-location-lightbox')) {
+		customElements.define('noima-location-lightbox', NoimaLocationLightbox);
+	}
+</script>
