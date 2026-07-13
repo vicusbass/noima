@@ -1,12 +1,14 @@
 ---
 import { contactInfo } from '../../lib/contact';
+import type { OpeningHoursRow } from '../../lib/opening-hours';
 
 interface Props {
 	showContactInfo?: boolean;
+	openingHours?: OpeningHoursRow[];
 }
 
-const { showContactInfo = true } = Astro.props;
-const { email, phone, phoneHref, hours } = contactInfo;
+const { showContactInfo = true, openingHours = [] } = Astro.props;
+const { email, phone, phoneHref } = contactInfo;
 
 const fieldInput =
 	'w-full py-[0.95rem] px-4 bg-surface border border-line-soft rounded-none text-ink text-[0.9375rem] transition-colors duration-200 placeholder:text-mute-soft placeholder:opacity-100 focus:outline-none focus:border-ink [&:user-invalid]:border-[#b14b4b]';
@@ -179,18 +181,20 @@ const fieldTextarea = `${fieldInput} resize-y min-h-32 leading-normal`;
               </dd>
             </div>
 
-            <div class="py-4">
-              <dt class="font-bold tracking-[0.06em] uppercase text-[0.9375rem] text-ink mb-2">
-                Program
-              </dt>
-              <dd class="m-0 text-[1.0625rem] leading-relaxed text-ink [&_p]:m-0 [&_p+p]:mt-1">
-                {hours.map((h) => (
-                  <p>
-                    {h.days}: {h.time}
-                  </p>
-                ))}
-              </dd>
-            </div>
+            {openingHours.length > 0 && (
+              <div class="py-4">
+                <dt class="font-bold tracking-[0.06em] uppercase text-[0.9375rem] text-ink mb-2">
+                  Program
+                </dt>
+                <dd class="m-0 text-[1.0625rem] leading-relaxed text-ink [&_p]:m-0 [&_p+p]:mt-1">
+                  {openingHours.map((h) => (
+                    <p>
+                      {h.label}: {h.value}
+                    </p>
+                  ))}
+                </dd>
+              </div>
+            )}
           </dl>
         </aside>
       )
