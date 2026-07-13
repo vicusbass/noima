@@ -2,6 +2,13 @@
 import { Image } from 'astro:assets';
 import splashImg from '../../assets/cafenea/splash.png';
 import { contactInfo } from '../../lib/contact';
+import type { OpeningHoursRow } from '../../lib/opening-hours';
+
+interface Props {
+	openingHours?: OpeningHoursRow[];
+}
+
+const { openingHours = [] } = Astro.props;
 ---
 
 <section id="contact" class="pt-0 pb-12 md:pb-20">
@@ -47,20 +54,22 @@ import { contactInfo } from '../../lib/contact';
 						</a>
 					</dd>
 				</div>
-				<div class="border-b border-line-soft pb-4 last:border-b-0 last:pb-0">
-					<dt class="mb-3 text-sm font-bold uppercase tracking-[0.18em] md:text-[0.9rem]">
-						program
-					</dt>
-					<dd class="m-0 text-base leading-[1.6] md:text-[1.0625rem]">
-						{
-							contactInfo.hours.map((h) => (
-								<div>
-									{h.days}: {h.time}
-								</div>
-							))
-						}
-					</dd>
-				</div>
+				{
+					openingHours.length > 0 && (
+						<div class="border-b border-line-soft pb-4 last:border-b-0 last:pb-0">
+							<dt class="mb-3 text-sm font-bold uppercase tracking-[0.18em] md:text-[0.9rem]">
+								program
+							</dt>
+							<dd class="m-0 text-base leading-[1.6] md:text-[1.0625rem]">
+								{openingHours.map((h) => (
+									<div>
+										{h.label}: {h.value}
+									</div>
+								))}
+							</dd>
+						</div>
+					)
+				}
 			</dl>
 		</div>
 	</div>

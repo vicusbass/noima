@@ -6,12 +6,14 @@ import { hero } from './objects/hero';
 import { locationGallery } from './objects/location-gallery';
 import { menuItem } from './objects/menu-item';
 import { offering } from './objects/offering';
+import { openingHoursRow } from './objects/opening-hours-row';
 
 export const schemaTypes: SchemaTypeDefinition[] = [
 	hero,
 	offering,
 	locationGallery,
 	menuItem,
+	openingHoursRow,
 	homePage,
 	cafeneaPage,
 	event,

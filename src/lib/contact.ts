@@ -7,11 +7,6 @@ export const contactInfo = {
 		city: 'Cluj-Napoca',
 		postalCode: '400628',
 	},
-	hours: [
-		{ days: 'Luni - Vineri', time: '07:30 - 17:30' },
-		{ days: 'Luni - Sâmbătă', time: '07:30 - 15:00' },
-		{ days: 'Duminică', time: '09:00 - 15:00' },
-	],
 } as const;
 
 export const operatorInfo = {

@@ -6,6 +6,10 @@ import LocationSection from '../components/cafenea/LocationSection.astro';
 import MenuSection from '../components/cafenea/MenuSection.astro';
 import Layout from '../layouts/Layout.astro';
 import { contactInfo } from '../lib/contact';
+import {
+	type OpeningHoursRow,
+	toOpeningHoursSpecification,
+} from '../lib/opening-hours';
 import { loadQuery } from '../sanity/lib/load-query';
 
 const today = new Date().toISOString().slice(0, 10);
@@ -46,6 +50,11 @@ const CAFENEA_QUERY = `*[_type == "cafeneaPage" && _id == "cafeneaPage"][0]{
 		bottomLeft { asset, alt },
 		bottomCenter { asset, alt },
 		bottomRight { asset, alt }
+	},
+	openingHours[]{
+		_key,
+		label,
+		value
 	}
 }`;
 
@@ -59,7 +68,10 @@ const { data: cafeneaPage } = await loadQuery<{
 		bottomCenter?: GalleryImage;
 		bottomRight?: GalleryImage;
 	};
+	openingHours?: (OpeningHoursRow & { _key: string })[];
 } | null>({ query: CAFENEA_QUERY });
+
+const openingHours = cafeneaPage?.openingHours ?? [];
 
 const cafeneaSchema = {
 	'@context': 'https://schema.org',
@@ -78,33 +90,13 @@ const cafeneaSchema = {
 		postalCode: contactInfo.address.postalCode,
 		addressCountry: 'RO',
 	},
-	openingHoursSpecification: [
-		{
-			'@type': 'OpeningHoursSpecification',
-			dayOfWeek: [
-				'Monday',
-				'Tuesday',
-				'Wednesday',
-				'Thursday',
-				'Friday',
-				'Saturday',
-			],
-			opens: '07:30',
-			closes: '19:00',
-		},
-		{
-			'@type': 'OpeningHoursSpecification',
-			dayOfWeek: 'Sunday',
-			opens: '09:00',
-			closes: '15:00',
-		},
-	],
+	openingHoursSpecification: toOpeningHoursSpecification(openingHours),
 };
 ---
 
 <Layout
 	title="Cafenea de specialitate în Cluj — Prăjitoria Noima"
-	description="Cafeneaua Noima pe Strada Bobâlnei 58, Cluj-Napoca. Cafea de specialitate, espresso, filtru și meniu zilnic. Deschis luni–sâmbătă 7:30–19:00, duminică 9:00–15:00."
+	description="Cafeneaua Noima pe Strada Bobâlnei 58, Cluj-Napoca. Cafea de specialitate, espresso, filtru și meniu zilnic."
 	jsonLd={cafeneaSchema}
 >
 	<div class="cafenea-page">
@@ -112,7 +104,7 @@ const cafeneaSchema = {
 		<MenuSection items={cafeneaPage?.menuItems ?? []} />
 		<EventsCarousel events={events ?? []} />
 		<LocationSection gallery={cafeneaPage?.locationGallery} />
-		<ContactSection />
+		<ContactSection openingHours={openingHours} />
 	</div>
 </Layout>
 
