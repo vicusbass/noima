@@ -13,6 +13,14 @@ export default defineConfig({
 	site: 'https://prajitorianoima.ro',
 	adapter: vercel({
 		imageService: true,
+		// `/` and `/cafenea` render on demand so their "upcoming events" filter is
+		// evaluated per request rather than frozen at build time. ISR keeps them
+		// edge-cached, so they stay effectively static between regenerations.
+		// The contact endpoint handles POSTs and must never be cached.
+		isr: {
+			expiration: 60 * 60,
+			exclude: ['/api/contact'],
+		},
 	}),
 	fonts: [
 		{

@@ -6,13 +6,18 @@ import LocationSection from '../components/cafenea/LocationSection.astro';
 import MenuSection from '../components/cafenea/MenuSection.astro';
 import Layout from '../layouts/Layout.astro';
 import { contactInfo } from '../lib/contact';
+import { todayInBucharest } from '../lib/events';
 import {
 	type OpeningHoursRow,
 	toOpeningHoursSpecification,
 } from '../lib/opening-hours';
 import { loadQuery } from '../sanity/lib/load-query';
 
-const today = new Date().toISOString().slice(0, 10);
+// Rendered on demand (ISR, see astro.config.mjs) so the upcoming-events
+// filter below is re-evaluated against the real date instead of build time.
+export const prerender = false;
+
+const today = todayInBucharest();
 
 const EVENTS_QUERY = `*[_type == "event" && date >= $today] | order(date asc){
 	_id,
