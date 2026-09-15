@@ -6,7 +6,12 @@ import OfferingSection from '../components/OfferingSection.astro';
 import WhySection from '../components/WhySection.astro';
 import Layout from '../layouts/Layout.astro';
 // import { getFeaturedProducts } from '../lib/shopify';
+import { todayInBucharest } from '../lib/events';
 import { loadQuery } from '../sanity/lib/load-query';
+
+// Rendered on demand (ISR, see astro.config.mjs) so the upcoming-events
+// filter below is re-evaluated against the real date instead of build time.
+export const prerender = false;
 
 const HOME_QUERY = `*[_type == "homePage" && _id == "homePage"][0]{
 	hero {
@@ -30,7 +35,7 @@ const { data: homePage } = await loadQuery<{
 	};
 }>({ query: HOME_QUERY });
 
-const today = new Date().toISOString().slice(0, 10);
+const today = todayInBucharest();
 
 const EVENTS_QUERY = `*[_type == "event" && date >= $today] | order(date asc){
 	_id,

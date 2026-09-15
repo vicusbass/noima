@@ -1,0 +1,98 @@
+---
+import EventCard from '../../components/EventCard.astro';
+import Layout from '../../layouts/Layout.astro';
+import { todayInBucharest } from '../../lib/events';
+import { loadQuery } from '../../sanity/lib/load-query';
+
+// Rendered on demand (ISR, see astro.config.mjs) so the upcoming/past split
+// below is evaluated against the real date instead of build time.
+export const prerender = false;
+
+type ArchiveEvent = {
+	_id: string;
+	title: string;
+	slug: string;
+	date: string;
+	image: { asset: { _ref: string }; alt?: string };
+};
+
+const EVENTS_QUERY = `*[_type == "event" && defined(slug.current)] | order(date desc){
+	_id,
+	title,
+	"slug": slug.current,
+	date,
+	image {
+		asset,
+		alt
+	}
+}`;
+
+const { data } = await loadQuery<ArchiveEvent[]>({ query: EVENTS_QUERY });
+
+const today = todayInBucharest();
+const allEvents = data ?? [];
+
+// Soonest first, so the next thing you can actually attend leads the page.
+const upcoming = allEvents.filter((event) => event.date >= today).reverse();
+
+// Newest first — the query already orders descending.
+const past = allEvents.filter((event) => event.date < today);
+---
+
+<Layout
+	title="Arhiva evenimente — Noima"
+	description="Toate evenimentele Noima: ce urmează la cafeneaua din Strada Bobâlnei 58 și ce s-a întâmplat până acum."
+>
+	<section class="py-16 md:py-24">
+		<div class="container-x">
+			<h1 class="section-heading mb-10 md:mb-14">arhiva evenimente</h1>
+
+			{
+				allEvents.length === 0 && (
+					<p class="body-copy text-center">
+						Nu am publicat încă niciun eveniment. Revino în curând.
+					</p>
+				)
+			}
+
+			{
+				upcoming.length > 0 && (
+					<div class="mb-16 md:mb-24">
+						<h2 class="eyebrow mb-5 md:mb-7">Urmează</h2>
+						<div class="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
+							{upcoming.map((event, i) => (
+								<EventCard
+									title={event.title}
+									slug={event.slug}
+									date={event.date}
+									image={event.image}
+									eager={i < 4}
+								/>
+							))}
+						</div>
+					</div>
+				)
+			}
+
+			{
+				past.length > 0 && (
+					<div>
+						<h2 class="eyebrow mb-5 md:mb-7">Au avut loc</h2>
+						<div class="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
+							{past.map((event, i) => (
+								<EventCard
+									title={event.title}
+									slug={event.slug}
+									date={event.date}
+									image={event.image}
+									past
+									eager={upcoming.length === 0 && i < 4}
+								/>
+							))}
+						</div>
+					</div>
+				)
+			}
+		</div>
+	</section>
+</Layout>
