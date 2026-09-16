@@ -18,6 +18,7 @@ type EventDoc = {
 	description?: PortableTextBlock[];
 	summary?: string;
 	buttonUrl?: string;
+	showReserveButton?: boolean;
 };
 
 export async function getStaticPaths() {
@@ -38,6 +39,7 @@ const { data: event } = await loadQuery<EventDoc | null>({
 		image { asset, alt },
 		description,
 		buttonUrl,
+		"showReserveButton": coalesce(showReserveButton, true),
 		"summary": pt::text(description)
 	}`,
 	params: { slug },
@@ -81,6 +83,7 @@ const DEFAULT_BUTTON_HREF = '/contact#formular';
 const configuredButtonUrl = event.buttonUrl?.trim();
 const buttonHref = configuredButtonUrl || DEFAULT_BUTTON_HREF;
 const buttonOpensNewTab = Boolean(configuredButtonUrl);
+const showReserveButton = event.showReserveButton !== false;
 
 const eventSchema = {
 	'@context': 'https://schema.org',
@@ -158,15 +161,19 @@ const eventSchema = {
 							</div>
 						)
 					}
-					<Button
-						href={buttonHref}
-						variant="dark"
-						class="self-start mt-4"
-						target={buttonOpensNewTab ? '_blank' : undefined}
-						rel={buttonOpensNewTab ? 'noopener noreferrer' : undefined}
-					>
-						REZERVĂ UN LOC
-					</Button>
+					{
+						showReserveButton && (
+							<Button
+								href={buttonHref}
+								variant="dark"
+								class="self-start mt-4"
+								target={buttonOpensNewTab ? '_blank' : undefined}
+								rel={buttonOpensNewTab ? 'noopener noreferrer' : undefined}
+							>
+								REZERVĂ UN LOC
+							</Button>
+						)
+					}
 				</div>
 			</div>
 		</div>
