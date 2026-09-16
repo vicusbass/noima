@@ -61,11 +61,20 @@ export const event = defineType({
 			validation: (rule) => rule.required(),
 		}),
 		defineField({
+			name: 'showReserveButton',
+			title: 'Afișează butonul „REZERVĂ UN LOC”',
+			description:
+				'Dacă este dezactivat, butonul nu apare pe pagina evenimentului.',
+			type: 'boolean',
+			initialValue: true,
+		}),
+		defineField({
 			name: 'buttonUrl',
 			title: 'Link buton „REZERVĂ UN LOC”',
 			description:
 				'Opțional. Dacă este completat, butonul deschide acest link într-o filă nouă (ex. formular Google, link mailto:, tel:). Dacă este gol, butonul trimite către pagina de contact.',
 			type: 'url',
+			hidden: ({ parent }) => parent?.showReserveButton === false,
 			validation: (rule) =>
 				rule.uri({
 					scheme: ['http', 'https', 'mailto', 'tel'],
